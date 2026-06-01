@@ -1,0 +1,907 @@
+Tu es un expert senior en architecture SaaS, marketplace multi-restaurants, UX/UI mobile-first et développement fullstack moderne.
+
+Tu dois transformer l’application existante “Guémon Délice” en une véritable plateforme SaaS de restauration locale multi-restaurants inspirée de Uber Eats, Glovo Food et Shopify, mais adaptée au contexte africain et ivoirien.
+
+IMPORTANT :
+
+* Tu dois améliorer intelligemment l’existant sans casser les fonctionnalités déjà développées.
+* Tu dois restructurer le projet proprement si nécessaire.
+* L’application doit être moderne, scalable, performante et prête pour une évolution future.
+* L’objectif est de créer une marketplace de restaurants/maquis locaux avec abonnement mensuel.
+
+====================================================
+🎯 VISION GLOBALE
+=================
+
+Guémon Délice devient une plateforme où plusieurs restaurants, maquis, grills, fast-foods et commerces alimentaires peuvent :
+
+* créer leur boutique personnalisée
+* publier leurs menus
+* recevoir des commandes
+* faire leur promotion
+* gérer leurs clients
+* payer un abonnement mensuel pour utiliser la plateforme
+
+L’application doit fonctionner comme une plateforme marketplace multi-vendeurs.
+
+====================================================
+🏗️ ARCHITECTURE TECHNIQUE
+==========================
+
+STACK :
+
+* Frontend : React + Tailwind CSS
+* Backend : Node.js + Express
+* Base de données : Supabase PostgreSQL
+* Authentification sécurisée
+* Architecture propre et modulaire
+* API REST structurée
+* Mobile-first responsive design
+* Prévoir évolutivité future mobile React Native / Expo
+
+====================================================
+👥 RÔLES UTILISATEURS
+=====================
+
+1. Client
+2. Restaurateur / Maquis
+3. Super Admin plateforme
+
+====================================================
+🍽️ FONCTIONNALITÉS CLIENT
+==========================
+
+Le client doit pouvoir :
+
+* créer un compte
+* se connecter
+* voir les restaurants disponibles
+* rechercher restaurants et plats
+* filtrer par :
+
+  * ouvert maintenant
+  * type de plat
+  * proximité
+  * populaire
+* voir les menus
+* personnaliser une commande
+
+Personnalisation commande :
+
+* type de cuisson :
+
+  * grillé
+  * sauce
+  * braisé
+  * patte
+* niveau de piment :
+
+  * sans
+  * un peu
+  * moyen
+  * fort
+* accompagnement :
+
+  * attiéké
+  * pain
+  * riz
+  * frites
+
+Le client doit pouvoir :
+
+* choisir quantité
+* choisir heure de retrait
+* payer une avance obligatoire
+* suivre le statut de commande :
+
+  * en attente
+  * validée
+  * préparation
+  * prête
+  * livrée / retirée
+
+====================================================
+💰 SYSTÈME DE PAIEMENT
+======================
+
+IMPORTANT :
+
+Implémenter un système “avance de réservation”.
+
+Exemple :
+
+* commande = 2500 FCFA
+* avance obligatoire = 500 FCFA
+
+Objectif :
+
+* éviter les fausses commandes
+* sécuriser les restaurateurs
+
+Prévoir architecture compatible future avec :
+
+* Wave
+* Orange Money
+* MTN Money
+
+Créer :
+
+* gestion paiements
+* historique
+* validation
+* logique commandes sécurisées
+
+====================================================
+🏪 FONCTIONNALITÉS RESTAURATEUR
+===============================
+
+Chaque restaurateur doit pouvoir :
+
+* créer son espace boutique
+
+* personnaliser sa boutique :
+
+  * logo
+  * bannière
+  * description
+  * horaires
+  * localisation
+  * téléphone
+
+* gérer son menu :
+
+  * catégories
+  * plats
+  * prix
+  * disponibilité
+  * images
+
+* gérer les commandes
+
+* modifier les statuts commandes
+
+* publier des annonces
+
+Exemples annonces :
+
+* “Porc disponible 🔥”
+* “Ouverture à 18h”
+* “Promo aujourd’hui”
+
+Créer dashboard professionnel avec :
+
+* statistiques
+* ventes du jour
+* commandes
+* revenus
+* clients
+
+====================================================
+📢 MARKETING & MONÉTISATION
+===========================
+
+Créer un système SaaS par abonnement.
+
+FORMULES :
+
+1. BASIC
+
+* 3000 FCFA/mois
+
+2. PRO
+
+* 5000 FCFA/mois
+
+3. PREMIUM
+
+* 7500 FCFA/mois
+
+Chaque formule débloque plus de fonctionnalités.
+
+Prévoir :
+
+* expiration abonnement
+* suspension automatique
+* renouvellement
+* historique abonnements
+
+====================================================
+⭐ SYSTÈME DE VISIBILITÉ
+=======================
+
+Créer système sponsorisé interne :
+
+Restaurants peuvent payer pour :
+
+* être mis en avant
+* apparaître en page d’accueil
+* être “restaurant populaire”
+* promouvoir des plats
+
+Créer :
+
+* section sponsorisée
+* algorithme de mise en avant
+
+====================================================
+📲 PAGE D’ACCUEIL MARKETPLACE
+=============================
+
+Créer une vraie marketplace moderne avec :
+
+* restaurants populaires
+* ouvert maintenant
+* promotions
+* nouveautés
+* recherche intelligente
+* catégories alimentaires
+
+Design moderne et premium.
+
+====================================================
+🔔 NOTIFICATIONS
+================
+
+Créer système notifications :
+
+* commandes
+* promotions
+* ouverture/fermeture
+* nouvelles annonces
+
+Prévoir notifications push futures.
+
+====================================================
+📊 SUPER ADMIN
+==============
+
+Créer dashboard Super Admin plateforme.
+
+Le Super Admin doit voir :
+
+* nombre restaurants
+* revenus plateforme
+* abonnements actifs
+* statistiques globales
+* commandes totales
+* restaurants sponsorisés
+
+Le Super Admin peut :
+
+* suspendre restaurant
+* gérer abonnements
+* gérer promotions
+* gérer plateforme
+
+====================================================
+🧠 FONCTIONNALITÉS FUTURES À PRÉPARER
+=====================================
+
+Prévoir architecture scalable pour :
+
+* livraison
+* géolocalisation
+* livreurs
+* IA recommandations
+* fidélité clients
+* coupons
+* stories restaurants type Instagram
+* chat client/restaurateur
+
+====================================================
+🎨 DESIGN & UX
+==============
+
+Le design doit être :
+
+* premium
+* moderne
+* rapide
+* très mobile-first
+* inspiré Uber Eats / Glovo / Airbnb
+
+Couleurs :
+
+* vert profond
+* jaune chaud
+* rouge léger
+* blanc propre
+
+Créer animations modernes et expérience fluide.
+
+====================================================
+⚠️ RÈGLES IMPORTANTES
+=====================
+
+* Ne jamais casser les fonctionnalités existantes
+* Refactoriser intelligemment
+* Produire du code propre et scalable
+* Sécuriser les APIs
+* Optimiser la base de données
+* Prévoir architecture production
+* Ajouter commentaires utiles
+* Préparer déploiement cloud
+
+====================================================
+🎯 OBJECTIF FINAL
+=================
+
+Transformer Guémon Délice en :
+“la plateforme digitale des restaurants et maquis locaux.”
+
+L’application doit être :
+
+* exploitable commercialement
+* prête à accueillir plusieurs restaurants
+* scalable
+* professionnelle
+* monétisable par abonnement et publicité interne.
+
+===============================================================
+
+====================================================
+🗄️ STRUCTURE BASE DE DONNÉES (SUPABASE)
+========================================
+
+Créer une structure SQL propre et scalable.
+
+TABLES PRINCIPALES :
+
+1. users
+
+* id
+* fullname
+* email
+* phone
+* password_hash
+* role :
+
+  * client
+  * restaurant
+  * admin
+* created_at
+
+2. restaurants
+
+* id
+* owner_id
+* name
+* slug
+* description
+* logo
+* banner
+* phone
+* address
+* city
+* latitude
+* longitude
+* opening_time
+* closing_time
+* is_open
+* is_verified
+* subscription_plan
+* subscription_expiry
+* created_at
+
+3. menu_categories
+
+* id
+* restaurant_id
+* name
+
+4. menu_items
+
+* id
+* restaurant_id
+* category_id
+* name
+* description
+* base_price
+* image
+* is_available
+* cooking_types
+* spice_levels
+* accompaniments
+* created_at
+
+5. orders
+
+* id
+* client_id
+* restaurant_id
+* total_amount
+* deposit_amount
+* remaining_amount
+* status
+* pickup_time
+* payment_status
+* created_at
+
+6. order_items
+
+* id
+* order_id
+* menu_item_id
+* quantity
+* selected_cooking_type
+* selected_spice_level
+* selected_accompaniment
+* notes
+
+7. announcements
+
+* id
+* restaurant_id
+* title
+* content
+* created_at
+
+8. subscriptions
+
+* id
+* restaurant_id
+* plan
+* amount
+* start_date
+* end_date
+* status
+
+9. sponsored_restaurants
+
+* id
+* restaurant_id
+* start_date
+* end_date
+* priority_level
+
+10. notifications
+
+* id
+* user_id
+* title
+* content
+* is_read
+* created_at
+
+====================================================
+🔐 AUTHENTIFICATION & SÉCURITÉ
+==============================
+
+Créer :
+
+* JWT sécurisé
+* middleware auth
+* gestion rôles
+* protection routes API
+* hash mot de passe bcrypt
+* validation données
+* rate limiting
+* sécurisation requêtes
+
+Créer :
+
+* login client
+* login restaurant
+* login super admin
+
+====================================================
+📁 STRUCTURE DOSSIERS
+=====================
+
+Créer architecture propre :
+
+/client
+/server
+/components
+/pages
+/layouts
+/services
+/hooks
+/context
+/api
+/middleware
+/utils
+/database
+/uploads
+
+====================================================
+📱 ÉCRANS À CRÉER
+=================
+
+CLIENT :
+
+* accueil marketplace
+* détails restaurant
+* menu restaurant
+* panier
+* paiement avance
+* suivi commande
+* profil utilisateur
+
+RESTAURANT :
+
+* dashboard
+* gestion menu
+* gestion commandes
+* gestion annonces
+* statistiques
+* paramètres boutique
+
+SUPER ADMIN :
+
+* dashboard global
+* gestion restaurants
+* gestion abonnements
+* gestion publicités
+* analytics
+
+====================================================
+🔥 FONCTIONNALITÉS PREMIUM IMPORTANTES
+======================================
+
+1. STATUT OUVERT / FERMÉ EN TEMPS RÉEL
+
+Le restaurant peut :
+
+* ouvrir
+* fermer
+* pause temporaire
+
+Afficher badge dynamique.
+
+====================================================
+
+2. STORIES RESTAURANTS
+
+Créer système type stories Instagram :
+
+* photo
+* vidéo courte
+* promo du jour
+* plats disponibles
+
+Expiration automatique après 24h.
+
+====================================================
+
+3. SYSTÈME FIDÉLITÉ
+
+Créer :
+
+* points fidélité
+* récompenses
+* coupons réduction
+
+====================================================
+
+4. SYSTÈME AVIS & NOTES
+
+Clients peuvent :
+
+* noter restaurant
+* laisser commentaire
+* voir moyenne
+
+====================================================
+
+5. GÉOLOCALISATION FUTURE
+
+Préparer architecture :
+
+* restaurants proches
+* distance
+* livraison future
+
+====================================================
+📈 ANALYTICS & STATISTIQUES
+===========================
+
+RESTAURATEUR :
+
+* ventes jour/semaine/mois
+* plats populaires
+* revenus
+* clients réguliers
+
+SUPER ADMIN :
+
+* croissance plateforme
+* revenus abonnements
+* restaurants actifs
+* commandes globales
+
+====================================================
+🎨 UX/UI
+========
+
+Créer interface premium avec :
+
+* cartes modernes
+* animations fluides
+* transitions
+* responsive parfait
+* expérience mobile ultra fluide
+
+Utiliser :
+
+* Tailwind CSS
+* composants modernes
+* design propre
+
+====================================================
+⚡ OPTIMISATION
+==============
+
+* Lazy loading
+* Pagination
+* Optimisation images
+* Caching
+* Optimisation API
+* Code splitting
+
+====================================================
+🚀 DÉPLOIEMENT
+==============
+
+Préparer application pour :
+
+* Vercel frontend
+* Render backend
+* Supabase production
+
+Créer :
+
+* variables environnement
+* scripts build
+* README professionnel
+
+====================================================
+🎯 PHILOSOPHIE DU PRODUIT
+=========================
+
+Guémon Délice n’est pas une simple app de commande.
+
+C’est :
+
+* une infrastructure digitale
+* une marketplace alimentaire
+* un SaaS de restauration locale
+* une plateforme de visibilité commerciale
+
+L’expérience doit être :
+
+* simple
+* rapide
+* moderne
+* adaptée au marché africain
+
+====================================================
+🔥 OBJECTIF FINAL
+=================
+
+Créer une plateforme capable d’accueillir :
+
+* milliers de restaurants
+* milliers de clients
+* commandes en temps réel
+* système d’abonnement scalable
+
+Le résultat doit être professionnel, moderne, monétisable et prêt pour une croissance réelle.
+
+=========================================================================
+
+====================================================
+🗺️ SYSTÈME CARTE INTELLIGENTE — GUÉMON DÉLICE MAP
+==================================================
+
+Ajouter une fonctionnalité majeure et stratégique :
+
+Créer une carte interactive intelligente de la Côte d’Ivoire avec focus spécial sur la région du Guémon.
+
+OBJECTIF :
+Permettre aux utilisateurs de visualiser en temps réel tous les établissements disponibles sur Guémon Délice selon leur proximité géographique.
+
+====================================================
+🌍 TYPES D’ÉTABLISSEMENTS
+=========================
+
+Afficher sur la carte :
+
+* restaurants
+* maquis
+* grills
+* porc braisé
+* buvettes
+* bars
+* night clubs
+* fast-foods
+* poissonneries
+* glaciers
+* cafés
+* lounges
+* commerces alimentaires
+
+Chaque établissement doit avoir :
+
+* un marqueur personnalisé
+* un statut dynamique
+* une fiche rapide
+* un accès direct commande
+
+====================================================
+📍 FONCTIONNALITÉS CARTE
+========================
+
+Créer une carte moderne interactive avec :
+
+* zoom
+* déplacement fluide
+* géolocalisation utilisateur
+* recherche par ville/quartier
+* recherche intelligente
+* filtrage par catégorie
+
+====================================================
+🏙️ LOCALISATION GÉOGRAPHIQUE
+=============================
+
+Précharger :
+
+* Côte d’Ivoire
+* région du Guémon
+* villes
+* communes
+* quartiers
+* zones populaires
+
+Exemples :
+
+* Duékoué
+* Bangolo
+* Kouibly
+* Facobly
+* quartiers et zones locales
+
+Prévoir architecture extensible à toute la Côte d’Ivoire.
+
+====================================================
+📡 AFFICHAGE TEMPS RÉEL
+=======================
+
+Les utilisateurs doivent voir en temps réel :
+
+* établissements ouverts
+* établissements fermés
+* promotions actives
+* restaurants sponsorisés
+* disponibilité plats
+
+Afficher badges dynamiques :
+
+* 🟢 ouvert
+* 🔴 fermé
+* 🔥 promo
+* ⭐ sponsorisé
+
+====================================================
+📱 EXPÉRIENCE UTILISATEUR
+=========================
+
+Quand un utilisateur clique sur un établissement :
+
+Afficher :
+
+* nom
+* logo
+* photo
+* distance
+* note moyenne
+* temps estimé
+* plats populaires
+* bouton commander
+* bouton voir menu
+* bouton contacter
+
+====================================================
+🧠 GÉOLOCALISATION INTELLIGENTE
+===============================
+
+Ajouter :
+
+* “Restaurants proches de moi”
+* “Ouvert maintenant”
+* “Les plus populaires dans ma zone”
+* “Tendances du quartier”
+
+====================================================
+🚀 FONCTIONNALITÉS FUTURES À PRÉPARER
+=====================================
+
+Préparer architecture pour :
+
+* suivi livraison temps réel
+* navigation GPS
+* livreurs
+* estimation trajet
+* heatmap activité restaurants
+* zones très fréquentées
+
+====================================================
+💰 MONÉTISATION CARTE
+=====================
+
+Créer système premium :
+
+Les restaurants peuvent payer pour :
+
+* apparaître en premier sur la carte
+* avoir un badge sponsorisé
+* être mis en avant selon la zone
+* afficher promotions visibles
+
+Créer :
+
+* système priorité affichage
+* publicité géolocalisée
+
+====================================================
+🎨 DESIGN MAP
+=============
+
+La carte doit être :
+
+* moderne
+* premium
+* ultra fluide
+* mobile-first
+* inspirée Uber Eats / Google Maps
+
+Utiliser :
+
+* Mapbox ou Leaflet
+* clustering intelligent
+* chargement optimisé
+
+====================================================
+⚡ OPTIMISATION
+==============
+
+Prévoir :
+
+* chargement rapide
+* gestion milliers établissements
+* clustering automatique
+* optimisation mobile
+* cache géographique
+
+====================================================
+🎯 OBJECTIF STRATÉGIQUE
+=======================
+
+Transformer Guémon Délice en :
+
+“la carte digitale intelligente des commerces alimentaires et lieux de vie du Guémon et de Côte d’Ivoire.”
+
+La carte devient :
+
+* un outil de découverte
+* un outil de commande
+* un outil marketing
+* un moteur de visibilité commerciale locale
+
+====================================================
+🔥 IMPACT BUSINESS
+==================
+
+Cette fonctionnalité doit devenir l’un des plus gros avantages concurrentiels de Guémon Délice.
+
+L’utilisateur ouvre l’application et voit immédiatement :
+
+* ce qui est ouvert autour de lui
+* où il y a l’ambiance
+* où commander
+* où sortir
+* quelles promotions existent
+
+L’application doit donner l’impression d’une ville vivante et connectée en temps réel.
+
