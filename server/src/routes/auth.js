@@ -55,14 +55,16 @@ router.post('/register', async (req, res) => {
     }
 
     // Si c'est un restaurateur, créer automatiquement son restaurant
+    let restaurant = null;
     if (userRole === 'restaurant') {
       const slug = email.split('@')[0].toLowerCase().replace(/[^a-z0-9]/g, '-');
-      await supabaseAdmin.from('restaurants').insert({
+      const { data: newRestaurant } = await supabaseAdmin.from('restaurants').insert({
         owner_id: user.id,
         name: fullname,
         slug: `${slug}-${Date.now()}`,
         module: 'top_delice',
-      });
+      }).select().single();
+      restaurant = newRestaurant;
     }
 
     // Générer le token
@@ -78,6 +80,7 @@ router.post('/register', async (req, res) => {
         phone: user.phone,
         role: user.role,
       },
+      restaurant,
     });
   } catch (error) {
     console.error('Erreur register:', error);

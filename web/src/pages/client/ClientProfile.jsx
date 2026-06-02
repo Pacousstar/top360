@@ -14,8 +14,13 @@ export default function ClientProfile() {
 
   const handleSave = async () => {
     setSaving(true);
-    await updateProfile(form);
-    setSaving(false);
+    try {
+      await updateProfile(form);
+    } catch (error) {
+      toast.error('Erreur lors de la mise à jour');
+    } finally {
+      setSaving(false);
+    }
   };
 
   return (

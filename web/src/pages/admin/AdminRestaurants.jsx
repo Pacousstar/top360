@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
 import { adminAPI } from '../../services/api';
 import toast from 'react-hot-toast';
-import { FiCheck, FiX } from 'react-icons/fi';
+import { FiCheck, FiX, FiExternalLink } from 'react-icons/fi';
+import { Link } from 'react-router-dom';
 
 export default function AdminRestaurants() {
   const [restaurants, setRestaurants] = useState([]);
@@ -22,7 +23,7 @@ export default function AdminRestaurants() {
     }
   };
 
-  const toggleVerify = async (id) => {
+  const toggleVerification = async (id) => {
     try {
       await adminAPI.toggleActive(id);
       loadRestaurants();
@@ -80,12 +81,22 @@ export default function AdminRestaurants() {
                       {r.is_open && <span className="ml-1 badge-green">Ouvert</span>}
                     </td>
                     <td className="p-4">
-                      <button
-                        onClick={() => toggleVerify(r.id)}
-                        className={`px-3 py-1.5 rounded-lg text-xs font-medium ${r.is_verified ? 'bg-red-100 text-red-700 hover:bg-red-200' : 'bg-orange-100 text-orange-700 hover:bg-orange-200'}`}
-                      >
-                        {r.is_verified ? 'Suspendre' : 'Activer'}
-                      </button>
+                      <div className="flex items-center gap-2">
+                        <Link
+                          to={`/restaurant/${r.slug}`}
+                          target="_blank"
+                          className="p-2 hover:bg-gray-100 rounded-lg text-gray-500"
+                          title="Voir la vitrine"
+                        >
+                          <FiExternalLink className="w-4 h-4" />
+                        </Link>
+                        <button
+                          onClick={() => toggleVerification(r.id)}
+                          className={`px-3 py-1.5 rounded-lg text-xs font-medium ${r.is_verified ? 'bg-red-100 text-red-700 hover:bg-red-200' : 'bg-orange-100 text-orange-700 hover:bg-orange-200'}`}
+                        >
+                          {r.is_verified ? 'Suspendre' : 'Activer'}
+                        </button>
+                      </div>
                     </td>
                   </tr>
                 ))}

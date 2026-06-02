@@ -14,6 +14,7 @@ export default function RestaurantMenu() {
     cooking_types: [], spice_levels: [], accompaniments: [],
   });
   const [showNewItem, setShowNewItem] = useState(false);
+  const [editingItem, setEditingItem] = useState(null);
 
   useEffect(() => {
     if (restaurant) loadMenu();
@@ -69,6 +70,34 @@ export default function RestaurantMenu() {
       toast.success('Plat ajouté');
     } catch (error) {
       toast.error('Erreur');
+    }
+  };
+
+  const startEdit = (item) => {
+    setEditingItem({ ...item, base_price: String(item.base_price) });
+  };
+
+  const updateItem = async () => {
+    if (!editingItem.name || !editingItem.base_price) {
+      toast.error('Nom et prix requis');
+      return;
+    }
+    try {
+      await menuAPI.updateItem(editingItem.id, {
+        name: editingItem.name,
+        description: editingItem.description,
+        base_price: parseInt(editingItem.base_price),
+        image: editingItem.image || null,
+        cooking_types: editingItem.cooking_types,
+        spice_levels: editingItem.spice_levels,
+        accompaniments: editingItem.accompaniments,
+        category_id: editingItem.category_id,
+      });
+      setEditingItem(null);
+      loadMenu();
+      toast.success('Plat modifié');
+    } catch (error) {
+      toast.error('Erreur modification');
     }
   };
 
@@ -193,6 +222,55 @@ export default function RestaurantMenu() {
         </div>
       )}
 
+      {/* Édition item modal */}
+      {editingItem && (
+        <div className="fixed inset-0 z-50 bg-black/50 flex items-center justify-center p-4">
+          <div className="bg-white rounded-2xl w-full max-w-lg max-h-[80vh] overflow-y-auto p-6">
+            <h2 className="text-xl font-bold mb-4">Modifier le plat</h2>
+            <div className="space-y-3">
+              <select
+                value={editingItem.category_id}
+                onChange={(e) => setEditingItem({ ...editingItem, category_id: e.target.value })}
+                className="input-field"
+              >
+                <option value="">Sélectionner une catégorie</option>
+                {categories.map(c => <option key={c.id} value={c.id}>{c.name}</option>)}
+              </select>
+              <input
+                type="text" placeholder="Nom du plat" value={editingItem.name}
+                onChange={(e) => setEditingItem({ ...editingItem, name: e.target.value })}
+                className="input-field"
+              />
+              <textarea
+                placeholder="Description" value={editingItem.description}
+                onChange={(e) => setEditingItem({ ...editingItem, description: e.target.value })}
+                className="input-field"
+              />
+              <input
+                type="number" placeholder="Prix (FCFA)" value={editingItem.base_price}
+                onChange={(e) => setEditingItem({ ...editingItem, base_price: e.target.value })}
+                className="input-field"
+              />
+              <div>
+                <label className="block text-sm font-medium mb-1">Image (URL)</label>
+                <div className="flex items-center gap-3">
+                  {editingItem.image && <img src={editingItem.image} alt="" className="w-14 h-14 rounded-xl object-cover border" />}
+                  <input
+                    type="text" placeholder="https://exemple.com/plat.jpg" value={editingItem.image}
+                    onChange={(e) => setEditingItem({ ...editingItem, image: e.target.value })}
+                    className="input-field flex-1"
+                  />
+                </div>
+              </div>
+              <div className="flex gap-2">
+                <button onClick={updateItem} className="btn-primary flex-1">Enregistrer</button>
+                <button onClick={() => setEditingItem(null)} className="btn-outline flex-1">Annuler</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Liste des catégories */}
       {loading ? (
         <div className="text-center py-8">
@@ -221,6 +299,9 @@ export default function RestaurantMenu() {
                       {item.description && <p className="text-sm text-gray-500 mt-0.5 truncate">{item.description}</p>}
                     </div>
                     <div className="flex items-center gap-2 flex-shrink-0">
+                      <button onClick={() => startEdit(item)} className="p-2 hover:bg-orange-50 rounded-lg text-orange-600" title="Modifier">
+                        <FiEdit2 className="w-4 h-4" />
+                      </button>
                       <button onClick={() => toggleItem(item.id)} className="p-2 hover:bg-gray-100 rounded-lg" title="Activer/Désactiver">
                         <FiToggleLeft className="w-4 h-4" />
                       </button>

@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { FiClock, FiPhone, FiMapPin, FiArrowLeft, FiCheck, FiShoppingCart } from 'react-icons/fi';
-import { restaurantAPI, reviewAPI } from '../services/api';
+import { FiClock, FiPhone, FiMapPin, FiArrowLeft, FiCheck, FiShoppingCart, FiStar } from 'react-icons/fi';
+import { restaurantAPI } from '../services/api';
 import { useAuth } from '../contexts/AuthContext';
 import toast from 'react-hot-toast';
 
@@ -207,6 +207,36 @@ export default function RestaurantDetail() {
         <div className="text-center py-12 text-gray-500">
           <p>Aucun menu disponible pour le moment</p>
         </div>
+      )}
+
+      {/* Avis clients */}
+      {restaurant.reviews?.length > 0 && (
+        <section className="mt-8">
+          <h2 className="section-title flex items-center gap-2">
+            <FiStar className="text-yellow-500" /> Avis clients ({restaurant.review_count})
+          </h2>
+          <div className="space-y-3">
+            {restaurant.reviews.map(review => (
+              <div key={review.id} className="card p-4">
+                <div className="flex items-center gap-2 mb-1">
+                  <div className="w-8 h-8 rounded-full bg-orange-100 flex items-center justify-center text-sm font-medium text-orange-700">
+                    {review.client?.fullname?.[0] || '?'}
+                  </div>
+                  <div>
+                    <p className="font-medium text-sm">{review.client?.fullname || 'Anonyme'}</p>
+                    <div className="flex items-center gap-0.5">
+                      {[1, 2, 3, 4, 5].map(star => (
+                        <span key={star} className={`text-sm ${star <= review.rating ? 'text-yellow-500' : 'text-gray-200'}`}>★</span>
+                      ))}
+                    </div>
+                  </div>
+                  <span className="text-xs text-gray-400 ml-auto">{new Date(review.created_at).toLocaleDateString('fr-FR')}</span>
+                </div>
+                {review.comment && <p className="text-sm text-gray-600">{review.comment}</p>}
+              </div>
+            ))}
+          </div>
+        </section>
       )}
 
       {/* Cart floating button */}

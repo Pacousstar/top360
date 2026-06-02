@@ -373,9 +373,58 @@ INSERT INTO users (id, fullname, email, phone, password_hash, role) VALUES
   ('10000000-0000-0000-0000-000000000001', 'Mamadou Koné', 'mamadou@test.ci', '+2250102030405', crypt('resto123', gen_salt('bf')), 'restaurant'),
   ('10000000-0000-0000-0000-000000000002', 'Fatou Diallo', 'fatou@test.ci', '+2250102030406', crypt('resto123', gen_salt('bf')), 'restaurant');
 
-INSERT INTO restaurants (owner_id, name, slug, description, module, phone, city, latitude, longitude, is_open, is_verified, subscription_plan) VALUES
-  ('10000000-0000-0000-0000-000000000001', 'Chez Tantie Marie', 'chez-tantie-marie', 'Véritable cuisine locale traditionnelle', 'top_delice', '+2250102030405', 'Duékoué', 6.7419, -7.3486, true, true, 'business'),
-  ('10000000-0000-0000-0000-000000000002', 'Porc Braisé du Carrefour', 'porc-braise-carrefour', 'Le meilleur porc braisé de la région', 'top_delice', '+2250102030406', 'Bangolo', 6.4850, -7.4120, true, true, 'starter');
+INSERT INTO restaurants (id, owner_id, name, slug, description, module, phone, city, latitude, longitude, is_open, is_verified, subscription_plan, logo, banner) VALUES
+  ('30000000-0000-0000-0000-000000000001', '10000000-0000-0000-0000-000000000001', 'Chez Tantie Marie', 'chez-tantie-marie', 'Véritable cuisine locale traditionnelle - plats africains faits maison', 'top_delice', '+2250102030405', 'Duékoué', 6.7419, -7.3486, true, true, 'business',
+    'https://images.unsplash.com/photo-1606787366850-de6330128bfc?w=200&h=200&fit=crop',
+    'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=1200&h=400&fit=crop'),
+  ('30000000-0000-0000-0000-000000000002', '10000000-0000-0000-0000-000000000002', 'Porc Braisé du Carrefour', 'porc-braise-carrefour', 'Le meilleur porc braisé de la région - grillades et sauce', 'top_delice', '+2250102030406', 'Bangolo', 6.4850, -7.4120, true, true, 'starter',
+    'https://images.unsplash.com/photo-1544025162-d76694265947?w=200&h=200&fit=crop',
+    'https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=1200&h=400&fit=crop');
+
+-- Menu catégories & plats pour Chez Tantie Marie
+INSERT INTO menu_categories (restaurant_id, name, sort_order) VALUES
+  ('30000000-0000-0000-0000-000000000001', 'Plats Principaux', 1),
+  ('30000000-0000-0000-0000-000000000001', 'Grillades', 2),
+  ('30000000-0000-0000-0000-000000000001', 'Boissons', 3);
+
+INSERT INTO menu_items (restaurant_id, category_id, name, description, base_price, image, is_available, cooking_types, accompaniments) VALUES
+  ('30000000-0000-0000-0000-000000000001', (SELECT id FROM menu_categories WHERE restaurant_id = '30000000-0000-0000-0000-000000000001' AND name = 'Plats Principaux' LIMIT 1),
+    'Attiéké Poisson', 'Attiéké frais avec poisson braisé et légumes', 2500,
+    'https://images.unsplash.com/photo-1604329760661-e71dc83f8f26?w=400&h=400&fit=crop', true, ARRAY['grillé', 'sauce'], ARRAY['attiéké', 'riz']),
+  ('30000000-0000-0000-0000-000000000001', (SELECT id FROM menu_categories WHERE restaurant_id = '30000000-0000-0000-0000-000000000001' AND name = 'Plats Principaux' LIMIT 1),
+    'Riz Sauce Graine', 'Riz blanc accompagné de sauce graine et poisson', 2000,
+    'https://images.unsplash.com/photo-1599043513900-6b3f05e5e3e9?w=400&h=400&fit=crop', true, ARRAY['sauce'], ARRAY['riz']),
+  ('30000000-0000-0000-0000-000000000001', (SELECT id FROM menu_categories WHERE restaurant_id = '30000000-0000-0000-0000-000000000001' AND name = 'Grillades' LIMIT 1),
+    'Poulet Braisé', 'Poulet fermier braisé accompagné d\'attiéké', 3500,
+    'https://images.unsplash.com/photo-1598103442097-8b74394b95c6?w=400&h=400&fit=crop', true, ARRAY['braisé', 'grillé'], ARRAY['attiéké', 'frites']),
+  ('30000000-0000-0000-0000-000000000001', (SELECT id FROM menu_categories WHERE restaurant_id = '30000000-0000-0000-0000-000000000001' AND name = 'Grillades' LIMIT 1),
+    'Poisson Braisé', 'Mérou braisé au four, sauce légumes', 4000,
+    'https://images.unsplash.com/photo-1514516345957-556ca7d90a29?w=400&h=400&fit=crop', true, ARRAY['braisé', 'grillé'], ARRAY['attiéké', 'riz', 'frites']),
+  ('30000000-0000-0000-0000-000000000001', (SELECT id FROM menu_categories WHERE restaurant_id = '30000000-0000-0000-0000-000000000001' AND name = 'Boissons' LIMIT 1),
+    'Jus de Bissap', 'Bissap frais fait maison', 1000,
+    'https://images.unsplash.com/photo-1544145945-f90425340c7e?w=400&h=400&fit=crop', true, ARRAY[]::TEXT[], ARRAY[]::TEXT[]),
+  ('30000000-0000-0000-0000-000000000001', (SELECT id FROM menu_categories WHERE restaurant_id = '30000000-0000-0000-0000-000000000001' AND name = 'Boissons' LIMIT 1),
+    'Jus de Gingembre', 'Gingembre frais, citron, menthe', 1000,
+    'https://images.unsplash.com/photo-1621263764928-df1444c5e859?w=400&h=400&fit=crop', true, ARRAY[]::TEXT[], ARRAY[]::TEXT[]);
+
+-- Menu catégories & plats pour Porc Braisé du Carrefour
+INSERT INTO menu_categories (restaurant_id, name, sort_order) VALUES
+  ('30000000-0000-0000-0000-000000000002', 'Spécialités', 1),
+  ('30000000-0000-0000-0000-000000000002', 'Accompagnements', 2);
+
+INSERT INTO menu_items (restaurant_id, category_id, name, description, base_price, image, is_available, cooking_types, accompaniments) VALUES
+  ('30000000-0000-0000-0000-000000000002', (SELECT id FROM menu_categories WHERE restaurant_id = '30000000-0000-0000-0000-000000000002' AND name = 'Spécialités' LIMIT 1),
+    'Porc Braisé', 'Porc braisé aux épices, sauce pimentée', 3000,
+    'https://images.unsplash.com/photo-1544025162-d76694265947?w=400&h=400&fit=crop', true, ARRAY['braisé', 'grillé'], ARRAY['attiéké', 'pain']),
+  ('30000000-0000-0000-0000-000000000002', (SELECT id FROM menu_categories WHERE restaurant_id = '30000000-0000-0000-0000-000000000002' AND name = 'Spécialités' LIMIT 1),
+    'Porc Sauce', 'Porc mijoté dans une sauce tomate relevée', 3000,
+    'https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=400&h=400&fit=crop', true, ARRAY['sauce'], ARRAY['riz', 'frites']),
+  ('30000000-0000-0000-0000-000000000002', (SELECT id FROM menu_categories WHERE restaurant_id = '30000000-0000-0000-0000-000000000002' AND name = 'Accompagnements' LIMIT 1),
+    'Alloco', 'Bananes plantain frites', 800,
+    'https://images.unsplash.com/photo-1604329760661-e71dc83f8f26?w=400&h=400&fit=crop', true, ARRAY[]::TEXT[], ARRAY[]::TEXT[]),
+  ('30000000-0000-0000-0000-000000000002', (SELECT id FROM menu_categories WHERE restaurant_id = '30000000-0000-0000-0000-000000000002' AND name = 'Accompagnements' LIMIT 1),
+    'Salade', 'Salade verte, tomate, oignon, vinaigrette', 500,
+    'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=400&h=400&fit=crop', true, ARRAY[]::TEXT[], ARRAY[]::TEXT[]);
 
 -- Clients de test
 INSERT INTO users (id, fullname, email, phone, password_hash, role) VALUES

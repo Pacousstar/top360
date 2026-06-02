@@ -51,7 +51,7 @@
   }
 
   .badge-green {
-    @apply badge bg-orange-100 text-orange-800;
+    @apply badge bg-forest-100 text-forest-800;
   }
 
   .badge-purple {

@@ -284,14 +284,55 @@
 - Build command: `cd web && npm install && npm run build`
 - Output directory: `web/dist`
 - Framework: Vite
+- Env vars: `VITE_API_URL` → Render API URL
 
 **Render (Backend) :**
 - Build command: `cd server && npm install`
 - Start command: `cd server && npm start`
+- Env vars: `SUPABASE_URL`, `SUPABASE_ANON_KEY`, `SUPABASE_SERVICE_KEY`, `JWT_SECRET`, `CLIENT_URL`
 
 **GitHub :**
 - Remote: `https://github.com/Pacousstar/top360.git`
-- Branche: `main`
+- Branche: `master`
+
+---
+
+# ✅ CHAPITRE 7 — FINITIONS & CORRECTIONS
+## 📅 02 Juin 2026 — 01h00 GMT
+
+### 🎨 Refonte Graphique
+| Changement | Détail |
+|-----------|--------|
+| **Couleur principale** | Hot Orange `#FF6E00` — palette orange vif |
+| **Couleur secondaire** | Forest Green `#06402B` — pour le logo TOP 360° et la carte interactive |
+| **PWA theme_color** | Mise à jour vers `#FF6E00` |
+| **Composants** | `btn-primary`, `input-field`, badges, status → orange |
+| **Dégradés Hero** | Orange → Rouge, avec effets de lumière |
+
+### 🐛 Corrections de Bugs
+| Bug | Cause | Fix |
+|-----|-------|-----|
+| **API 500 Restaurants** | `SUPABASE_SERVICE_KEY` invalide sur Render → `supabaseAdmin` échouait | Utilisation de `supabase` (clé anon) pour les endpoints publics de lecture |
+| **`.badge-green` orange** | La palette `green` avait été remplacée par orange | Utilisation de la palette `forest` (vrai vert) pour les badges |
+| **Bannières invisibles** | La liste "Découvrir" (Home.jsx) n'affichait pas les bannières des restaurants | Ajout de `{r.banner && <img .../>}` dans les cartes |
+| **Images plats absentes** | La liste admin du menu n'affichait pas les images des plats | Ajout de `{item.image && <img .../>}` dans chaque ligne de plat |
+| **Restaurant non chargé après inscription** | L'endpoint register ne retournait pas le restaurant créé | Ajout du restaurant dans la réponse + stockage dans AuthContext |
+| **Bouton "Activer/Suspendre"** | Noms de fonction confus (toggleVerify appelait toggleActive) | Renommage + ajout lien "Voir la vitrine" vers la page publique |
+| **Bouton sauvegarder bloqué** | `saving` state restait `true` en cas d'erreur | Ajout try/catch/finally dans ClientProfile |
+
+### ✨ Nouvelles Fonctionnalités
+| Fonctionnalité | Fichier | Détail |
+|---------------|---------|--------|
+| **Modifier un plat** | `RestaurantMenu.jsx` | Nouveau bouton d'édition avec modal pré-remplie → appel `menuAPI.updateItem` |
+| **Avis clients affichés** | `RestaurantDetail.jsx` | Section d'avis avec étoiles, nom, date et commentaire |
+| **Lien admin → vitrine** | `AdminRestaurants.jsx` | Icône lien externe pour voir la page publique du restaurant |
+
+### 🖼️ Données de Démo
+Le seed SQL inclut maintenant :
+- **Logos et bannières** réels (via Unsplash) pour les 2 restaurants de test
+- **6 plats** pour Chez Tantie Marie (Attiéké Poisson, Riz Sauce Graine, Poulet Braisé, Poisson Braisé, Jus Bissap, Jus Gingembre)
+- **4 plats** pour Porc Braisé du Carrefour (Porc Braisé, Porc Sauce, Alloco, Salade)
+- Tous les plats ont des **images réelles** et des options de cuisson/accompagnement
 
 ---
 
@@ -305,33 +346,34 @@
 | API REST (30+ endpoints) | ✅ 100% |
 | Authentification JWT + rôles | ✅ 100% |
 | Page d'accueil marketplace | ✅ 100% |
-| Détail restaurant + menu | ✅ 100% |
+| Détail restaurant + menu + avis | ✅ 100% |
 | Panier + avance obligatoire | ✅ 100% |
 | Dashboard restaurateur | ✅ 100% |
 | Dashboard super admin | ✅ 100% |
 | Carte interactive (Leaflet) | ✅ 100% |
 | Recherche intelligente | ✅ 100% |
-| Notifications | ✅ 100% |
+| Notifications (API) | ✅ 100% |
 | Système d'abonnements | ✅ 100% |
 | Design mobile-first | ✅ 100% |
 | PWA | ✅ 100% |
-| GitHub | ⏳ Push initial |
-| Supabase | ⏳ À connecter |
-| Vercel | ⏳ À déployer |
+| Édition menu (CRUD complet) | ✅ 100% |
+| GitHub | ✅ 63 commits |
+| Supabase | ✅ Connectée + seedée |
+| Vercel | ✅ https://top360.vercel.app |
+| Render | ✅ https://top360-api.onrender.com |
 
 ---
 
-# 📋 PROCHAINES ÉTAPES POUR TOI
+# 📋 PROCHAINES ÉTAPES
 
-1. **Créer un compte Supabase** (gratuit sur supabase.com)
-2. **Créer un bucket storage** `top360-uploads`
-3. **Copier les fichiers `.env.example` en `.env`**
-4. **Lancer le projet en local** → `npm run dev`
-5. **Pousser sur GitHub** → `git push origin main`
-6. **Déployer sur Vercel** (frontend)
-7. **Déployer sur Render** (backend)
+- [ ] Paiement Wave/Orange Money
+- [ ] Module mobile React Native / Expo
+- [ ] Upload d'images (file picker au lieu d'URL)
+- [ ] Notifications UI (centre de notifications)
+- [ ] Ajout des autres modules (TOP BAT, HOTEL, SHOP, AUTO...)
+- [ ] Tests E2E complets
 
 ---
 
 *Document rédigé avec ❤️ par l'équipe TOP 360°*
-*Dernière mise à jour : 02/06/2026 à 00h00 GMT*
+*Dernière mise à jour : 02/06/2026 à 02h30 GMT*

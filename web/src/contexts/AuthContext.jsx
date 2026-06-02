@@ -56,11 +56,12 @@ export function AuthProvider({ children }) {
   const register = async (data) => {
     try {
       const res = await axios.post(`${API_URL}/auth/register`, data);
-      const { token, user: userData } = res.data;
+      const { token, user: userData, restaurant: restaurantData } = res.data;
       localStorage.setItem('top360_token', token);
       setUser(userData);
+      if (restaurantData) setRestaurant(restaurantData);
       toast.success('Compte créé avec succès !');
-      return { success: true, user: userData };
+      return { success: true, user: userData, restaurant: restaurantData };
     } catch (error) {
       const message = error.response?.data?.error || "Erreur d'inscription";
       toast.error(message);
