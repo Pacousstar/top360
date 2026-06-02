@@ -100,6 +100,7 @@ router.post('/', authenticate, async (req, res) => {
         notes: notes || null,
         status: 'en_attente',
         payment_status: 'en_attente',
+        payment_reference: null,
       })
       .select()
       .single();
@@ -155,6 +156,7 @@ router.post('/', authenticate, async (req, res) => {
         deposit_amount: deposit,
         remaining_amount: remaining,
       },
+      requires_payment: deposit > 0,
     });
   } catch (error) {
     console.error('Erreur create order:', error);

@@ -15,6 +15,7 @@ import reviewRoutes from './routes/reviews.js';
 import notificationRoutes from './routes/notifications.js';
 import searchRoutes from './routes/search.js';
 import uploadRoutes from './routes/upload.js';
+import paymentRoutes from './routes/payments.js';
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -47,6 +48,7 @@ app.use('/api/reviews', reviewRoutes);
 app.use('/api/notifications', notificationRoutes);
 app.use('/api/search', searchRoutes);
 app.use('/api/upload', uploadRoutes);
+app.use('/api/payments', paymentRoutes);
 
 // Health check
 app.get('/api/health', (req, res) => {

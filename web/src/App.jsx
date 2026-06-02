@@ -11,6 +11,7 @@ import Home from './pages/Home';
 import VitrinePage from './pages/VitrinePage';
 import SearchResults from './pages/SearchResults';
 import MapView from './pages/MapView';
+import PaymentCallback from './pages/client/PaymentCallback';
 
 // Auth
 import Login from './pages/auth/Login';
@@ -64,6 +65,7 @@ export default function App() {
         <Route path="/restaurant/:slug" element={<VitrinePage />} />
         <Route path="/search" element={<SearchResults />} />
         <Route path="/map" element={<MapView />} />
+        <Route path="/payment/callback" element={<PaymentCallback />} />
       </Route>
 
       {/* Auth */}

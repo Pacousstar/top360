@@ -30,6 +30,20 @@ export default function ClientOrders() {
     annulee: 'text-red-600 bg-red-50',
   };
 
+  const paymentLabels = {
+    en_attente: 'Paiement en attente',
+    avance_payee: 'Avance payée',
+    payee: 'Payée',
+    remboursee: 'Remboursée',
+  };
+
+  const paymentColors = {
+    en_attente: 'text-gray-500',
+    avance_payee: 'text-green-600',
+    payee: 'text-green-700',
+    remboursee: 'text-red-500',
+  };
+
   return (
     <div>
       <h1 className="text-2xl font-bold mb-6">Mes commandes</h1>
@@ -53,7 +67,9 @@ export default function ClientOrders() {
               </div>
               <div className="flex items-center justify-between text-xs text-gray-400">
                 <span>{new Date(order.created_at).toLocaleString('fr-FR')}</span>
-                <span>Avance: {order.deposit_amount?.toLocaleString()} FCFA</span>
+                <span className={paymentColors[order.payment_status] || 'text-gray-400'}>
+                  {paymentLabels[order.payment_status] || order.payment_status}
+                </span>
               </div>
             </Link>
           ))}

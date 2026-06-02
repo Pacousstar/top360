@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { useLocation, useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
-import { orderAPI } from '../../services/api';
+import { orderAPI, paymentAPI } from '../../services/api';
 import toast from 'react-hot-toast';
-import { FiArrowLeft, FiCheck } from 'react-icons/fi';
+import { FiArrowLeft, FiCheck, FiSmartphone } from 'react-icons/fi';
 
 export default function Cart() {
   const location = useLocation();
@@ -14,6 +14,8 @@ export default function Cart() {
   const [pickupTime, setPickupTime] = useState('');
   const [notes, setNotes] = useState('');
   const [loading, setLoading] = useState(false);
+  const [order, setOrder] = useState(null);
+  const [paying, setPaying] = useState(false);
 
   if (!data) {
     return (
@@ -53,14 +55,80 @@ export default function Cart() {
       };
 
       const res = await orderAPI.create(orderData);
-      toast.success('Commande créée avec succès !');
-      navigate('/client/orders');
+      setOrder(res.data.order);
+      toast.success('Commande créée !');
+
+      if (res.data.requires_payment) {
+        await handlePayment(res.data.order.id);
+      } else {
+        navigate('/client/orders');
+      }
     } catch (error) {
       toast.error(error.response?.data?.error || 'Erreur lors de la commande');
     } finally {
       setLoading(false);
     }
   };
+
+  const handlePayment = async (orderId) => {
+    setPaying(true);
+    try {
+      const res = await paymentAPI.initiate(orderId);
+      const { payment_url, session_id, mock } = res.data;
+
+      if (payment_url) {
+        window.location.href = payment_url;
+      }
+    } catch (error) {
+      toast.error('Erreur lors du paiement');
+      setPaying(false);
+    }
+  };
+
+  const handlePayLater = () => {
+    navigate('/client/orders');
+  };
+
+  if (order) {
+    return (
+      <div className="max-w-lg mx-auto px-4 py-6 text-center">
+        <div className="bg-white rounded-2xl p-8 shadow-lg">
+          <div className="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-4">
+            <FiSmartphone className="w-8 h-8 text-orange-600" />
+          </div>
+          <h2 className="text-xl font-bold mb-2">Paiement de l'avance</h2>
+          <p className="text-gray-500 mb-2">Commande #{order.id?.slice(0, 8)}</p>
+          <p className="text-3xl font-bold text-orange-700 mb-6">
+            {depositAmount.toLocaleString()} FCFA
+          </p>
+
+          <button
+            onClick={() => handlePayment(order.id)}
+            disabled={paying}
+            className="btn-primary w-full flex items-center justify-center gap-2 py-4 text-lg mb-3"
+          >
+            {paying ? (
+              <span className="animate-spin w-5 h-5 border-2 border-white border-t-transparent rounded-full" />
+            ) : (
+              <FiSmartphone className="w-5 h-5" />
+            )}
+            {paying ? 'Redirection Wave...' : 'Payer avec Wave'}
+          </button>
+
+          <p className="text-xs text-gray-400 mb-4">
+            Paiement sécurisé via Wave. Aucune commission supplémentaire.
+          </p>
+
+          <button
+            onClick={handlePayLater}
+            className="text-sm text-gray-500 hover:text-gray-700 underline"
+          >
+            Payer plus tard
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="max-w-lg mx-auto px-4 py-6">
@@ -71,7 +139,6 @@ export default function Cart() {
       <h1 className="text-2xl font-bold mb-2">Votre commande</h1>
       <p className="text-gray-500 mb-6">{restaurant.name}</p>
 
-      {/* Récapitulatif */}
       <div className="space-y-3 mb-6">
         {cart.map((item) => (
           <div key={item.id} className="card p-4 flex items-center justify-between">
@@ -84,7 +151,6 @@ export default function Cart() {
         ))}
       </div>
 
-      {/* Options */}
       <div className="space-y-4 mb-6">
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">Heure de retrait souhaitée</label>
@@ -107,7 +173,6 @@ export default function Cart() {
         </div>
       </div>
 
-      {/* Paiement */}
       <div className="card p-4 mb-6">
         <h3 className="font-semibold mb-3">Récapitulatif paiement</h3>
         <div className="space-y-2 text-sm">

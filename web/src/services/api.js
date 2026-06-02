@@ -115,4 +115,11 @@ export const uploadAPI = {
   },
 };
 
+// Paiement
+export const paymentAPI = {
+  initiate: (orderId) => api.post('/payments/initiate', { order_id: orderId }),
+  confirm: (orderId, sessionId) => api.post('/payments/confirm', { order_id: orderId, session_id: sessionId }),
+  status: (reference) => api.get(`/payments/status/${reference}`),
+};
+
 export default api;

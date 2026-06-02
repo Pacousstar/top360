@@ -133,6 +133,7 @@ CREATE TABLE orders (
   status            order_status NOT NULL DEFAULT 'en_attente',
   pickup_time       TIMESTAMPTZ,
   payment_status    payment_status NOT NULL DEFAULT 'en_attente',
+  payment_reference TEXT,
   notes             TEXT,
   created_at        TIMESTAMPTZ DEFAULT NOW(),
   updated_at        TIMESTAMPTZ DEFAULT NOW()
