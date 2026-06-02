@@ -1,18 +1,35 @@
 import { useState } from 'react';
 import { FiMapPin, FiSend } from 'react-icons/fi';
+import { appointmentAPI } from '../../services/api';
 import toast from 'react-hot-toast';
 
 export default function VitrineImmo({ restaurant }) {
   const categories = restaurant.menu_categories || [];
   const [selectedCat, setSelectedCat] = useState(categories[0]?.id || null);
   const [contact, setContact] = useState({ item: null, name: '', phone: '', message: '' });
+  const [loading, setLoading] = useState(false);
 
   const openContact = (item) => setContact({ item, name: '', phone: '', message: `Bonjour, je suis intéressé par ${item.name}. Merci de me contacter.` });
 
-  const submitContact = () => {
+  const submitContact = async () => {
     if (!contact.name || !contact.phone) { toast.error('Nom et téléphone requis'); return; }
-    toast.success(`Demande envoyée pour ${contact.item.name}`);
-    setContact({ item: null, name: '', phone: '', message: '' });
+    setLoading(true);
+    try {
+      await appointmentAPI.create({
+        restaurant_id: restaurant.id,
+        type: 'immo',
+        item_name: contact.item.name,
+        client_name: contact.name,
+        client_phone: contact.phone,
+        message: contact.message || null,
+      });
+      toast.success('Demande envoyée avec succès !');
+      setContact({ item: null, name: '', phone: '', message: '' });
+    } catch (error) {
+      toast.error(error.response?.data?.error || 'Erreur lors de l\'envoi');
+    } finally {
+      setLoading(false);
+    }
   };
 
   if (!categories.length) {
@@ -70,8 +87,9 @@ export default function VitrineImmo({ restaurant }) {
               <textarea placeholder="Message" value={contact.message}
                 onChange={e => setContact({ ...contact, message: e.target.value })} className="input-field" rows={3} />
               <div className="flex gap-2">
-                <button onClick={submitContact} className="btn-primary flex-1 flex items-center justify-center gap-2">
-                  <FiSend /> Envoyer
+                <button onClick={submitContact} disabled={loading} className="btn-primary flex-1 flex items-center justify-center gap-2">
+                  {loading ? <span className="animate-spin w-4 h-4 border-2 border-white border-t-transparent rounded-full" /> : <FiSend />}
+                  {loading ? 'Envoi...' : 'Envoyer'}
                 </button>
                 <button onClick={() => setContact({ ...contact, item: null })} className="btn-outline flex-1">Annuler</button>
               </div>

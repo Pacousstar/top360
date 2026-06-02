@@ -1,18 +1,36 @@
 import { useState } from 'react';
 import { FiBookOpen, FiClock, FiSend } from 'react-icons/fi';
+import { appointmentAPI } from '../../services/api';
 import toast from 'react-hot-toast';
 
 export default function VitrineEducation({ restaurant }) {
   const categories = restaurant.menu_categories || [];
   const [selectedCat, setSelectedCat] = useState(categories[0]?.id || null);
   const [insc, setInsc] = useState({ item: null, name: '', phone: '', email: '', niveau: '' });
+  const [loading, setLoading] = useState(false);
 
   const openInsc = (item) => setInsc({ item, name: '', phone: '', email: '', niveau: '' });
 
-  const submitInsc = () => {
+  const submitInsc = async () => {
     if (!insc.name || !insc.phone) { toast.error('Nom et téléphone requis'); return; }
-    toast.success(`Inscription à ${insc.item.name} envoyée`);
-    setInsc({ item: null, name: '', phone: '', email: '', niveau: '' });
+    setLoading(true);
+    try {
+      await appointmentAPI.create({
+        restaurant_id: restaurant.id,
+        type: 'education',
+        item_name: insc.item.name,
+        client_name: insc.name,
+        client_phone: insc.phone,
+        client_email: insc.email || null,
+        niveau: insc.niveau || null,
+      });
+      toast.success('Inscription envoyée avec succès !');
+      setInsc({ item: null, name: '', phone: '', email: '', niveau: '' });
+    } catch (error) {
+      toast.error(error.response?.data?.error || 'Erreur lors de l\'inscription');
+    } finally {
+      setLoading(false);
+    }
   };
 
   if (!categories.length) {
@@ -80,8 +98,9 @@ export default function VitrineEducation({ restaurant }) {
                 <option value="professionnel">Professionnel</option>
               </select>
               <div className="flex gap-2">
-                <button onClick={submitInsc} className="btn-primary flex-1 flex items-center justify-center gap-2">
-                  <FiSend /> Envoyer
+                <button onClick={submitInsc} disabled={loading} className="btn-primary flex-1 flex items-center justify-center gap-2">
+                  {loading ? <span className="animate-spin w-4 h-4 border-2 border-white border-t-transparent rounded-full" /> : <FiSend />}
+                  {loading ? 'Envoi...' : 'Envoyer'}
                 </button>
                 <button onClick={() => setInsc({ ...insc, item: null })} className="btn-outline flex-1">Annuler</button>
               </div>

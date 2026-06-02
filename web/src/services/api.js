@@ -122,4 +122,11 @@ export const paymentAPI = {
   status: (reference) => api.get(`/payments/status/${reference}`),
 };
 
+// Réservations & rendez-vous
+export const appointmentAPI = {
+  create: (data) => api.post('/appointments', data),
+  list: (params) => api.get('/appointments', { params }),
+  updateStatus: (id, status) => api.put(`/appointments/${id}/status`, { status }),
+};
+
 export default api;

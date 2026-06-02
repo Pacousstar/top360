@@ -1,6 +1,6 @@
 import { Outlet, Link, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
-import { FiHome, FiShoppingBag, FiClipboard, FiSettings, FiBarChart2, FiUsers, FiCreditCard, FiLogOut, FiBell, FiMenu, FiX, FiMapPin } from 'react-icons/fi';
+import { FiHome, FiShoppingBag, FiClipboard, FiSettings, FiBarChart2, FiUsers, FiCreditCard, FiLogOut, FiBell, FiMenu, FiX, FiMapPin, FiCalendar } from 'react-icons/fi';
 import { useState } from 'react';
 
 export default function DashboardLayout({ role }) {
@@ -19,6 +19,7 @@ export default function DashboardLayout({ role }) {
     { icon: FiBarChart2, label: 'Dashboard', path: '/restaurant/dashboard' },
     { icon: FiClipboard, label: 'Menu', path: '/restaurant/menu' },
     { icon: FiShoppingBag, label: 'Commandes', path: '/restaurant/orders' },
+    { icon: FiCalendar, label: 'Rendez-vous', path: '/restaurant/appointments' },
     { icon: FiBell, label: 'Annonces', path: '/restaurant/announcements' },
     { icon: FiBarChart2, label: 'Statistiques', path: '/restaurant/stats' },
     { icon: FiSettings, label: 'Paramètres', path: '/restaurant/settings' },

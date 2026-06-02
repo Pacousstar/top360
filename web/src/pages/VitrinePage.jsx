@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { FiClock, FiPhone, FiMapPin, FiArrowLeft, FiStar } from 'react-icons/fi';
-import { restaurantAPI } from '../services/api';
+import { FiClock, FiPhone, FiMapPin, FiArrowLeft, FiStar, FiSend } from 'react-icons/fi';
+import { restaurantAPI, reviewAPI } from '../services/api';
+import toast from 'react-hot-toast';
 import VitrineDelice from './vitrine/VitrineDelice';
 import VitrineHotel from './vitrine/VitrineHotel';
 import VitrineShop from './vitrine/VitrineShop';
@@ -43,6 +44,8 @@ export default function VitrinePage() {
   const { slug } = useParams();
   const [restaurant, setRestaurant] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [reviewForm, setReviewForm] = useState({ rating: 5, comment: '' });
+  const [reviewSubmitting, setReviewSubmitting] = useState(false);
 
   useEffect(() => {
     loadRestaurant();
@@ -145,11 +148,45 @@ export default function VitrinePage() {
       <ContentComponent restaurant={restaurant} />
 
       {/* Avis */}
-      {restaurant.reviews?.length > 0 && (
-        <section className="mt-8">
-          <h2 className="section-title flex items-center gap-2">
-            <FiStar className="text-yellow-500" /> Avis clients ({restaurant.review_count})
-          </h2>
+      <section className="mt-8">
+        <h2 className="section-title flex items-center gap-2">
+          <FiStar className="text-yellow-500" /> Avis clients ({restaurant.review_count || 0})
+        </h2>
+
+        {/* Formulaire d'avis */}
+        <div className="card p-4 mb-4">
+          <h3 className="font-semibold text-sm mb-3">Donner mon avis</h3>
+          <div className="flex items-center gap-1 mb-3">
+            {[1, 2, 3, 4, 5].map(star => (
+              <button key={star} onClick={() => setReviewForm({ ...reviewForm, rating: star })}
+                className={`text-2xl transition-colors ${star <= reviewForm.rating ? 'text-yellow-500' : 'text-gray-200 hover:text-yellow-300'}`}>
+                ★
+              </button>
+            ))}
+          </div>
+          <textarea placeholder="Votre commentaire..." value={reviewForm.comment}
+            onChange={e => setReviewForm({ ...reviewForm, comment: e.target.value })}
+            className="input-field mb-3" rows={2} />
+          <button onClick={async () => {
+            if (!reviewForm.comment.trim()) { toast.error('Veuillez écrire un commentaire'); return; }
+            setReviewSubmitting(true);
+            try {
+              await reviewAPI.create({ restaurant_id: restaurant.id, rating: reviewForm.rating, comment: reviewForm.comment });
+              toast.success('Avis envoyé avec succès !');
+              setReviewForm({ rating: 5, comment: '' });
+              loadRestaurant();
+            } catch (error) {
+              toast.error(error.response?.data?.error || 'Erreur lors de l\'envoi');
+            } finally {
+              setReviewSubmitting(false);
+            }
+          }} disabled={reviewSubmitting} className="btn-primary text-sm px-4 py-2 flex items-center gap-2">
+            {reviewSubmitting ? <span className="animate-spin w-4 h-4 border-2 border-white border-t-transparent rounded-full" /> : <FiSend />}
+            {reviewSubmitting ? 'Envoi...' : 'Envoyer'}
+          </button>
+        </div>
+
+        {restaurant.reviews?.length > 0 && (
           <div className="space-y-3">
             {restaurant.reviews.map(review => (
               <div key={review.id} className="card p-4">
@@ -171,8 +208,8 @@ export default function VitrinePage() {
               </div>
             ))}
           </div>
-        </section>
-      )}
+        )}
+      </section>
     </div>
   );
 }

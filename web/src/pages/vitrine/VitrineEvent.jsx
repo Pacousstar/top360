@@ -1,18 +1,37 @@
 import { useState } from 'react';
 import { FiSend } from 'react-icons/fi';
+import { appointmentAPI } from '../../services/api';
 import toast from 'react-hot-toast';
 
 export default function VitrineEvent({ restaurant }) {
   const categories = restaurant.menu_categories || [];
   const [selectedCat, setSelectedCat] = useState(categories[0]?.id || null);
   const [devis, setDevis] = useState({ item: null, name: '', phone: '', date: '', invite: '', message: '' });
+  const [loading, setLoading] = useState(false);
 
   const openDevis = (item) => setDevis({ item, name: '', phone: '', date: '', invite: '', message: '' });
 
-  const submitDevis = () => {
+  const submitDevis = async () => {
     if (!devis.name || !devis.phone) { toast.error('Nom et téléphone requis'); return; }
-    toast.success(`Demande de devis envoyée pour ${devis.item.name}`);
-    setDevis({ item: null, name: '', phone: '', date: '', invite: '', message: '' });
+    setLoading(true);
+    try {
+      await appointmentAPI.create({
+        restaurant_id: restaurant.id,
+        type: 'event',
+        item_name: devis.item.name,
+        client_name: devis.name,
+        client_phone: devis.phone,
+        preferred_date: devis.date || null,
+        guests: devis.invite ? parseInt(devis.invite) : null,
+        message: devis.message || null,
+      });
+      toast.success('Demande de devis envoyée avec succès !');
+      setDevis({ item: null, name: '', phone: '', date: '', invite: '', message: '' });
+    } catch (error) {
+      toast.error(error.response?.data?.error || 'Erreur lors de l\'envoi');
+    } finally {
+      setLoading(false);
+    }
   };
 
   if (!categories.length) {
@@ -75,8 +94,9 @@ export default function VitrineEvent({ restaurant }) {
               <textarea placeholder="Détails de votre projet..." value={devis.message}
                 onChange={e => setDevis({ ...devis, message: e.target.value })} className="input-field" rows={3} />
               <div className="flex gap-2">
-                <button onClick={submitDevis} className="btn-primary flex-1 flex items-center justify-center gap-2">
-                  <FiSend /> Envoyer
+                <button onClick={submitDevis} disabled={loading} className="btn-primary flex-1 flex items-center justify-center gap-2">
+                  {loading ? <span className="animate-spin w-4 h-4 border-2 border-white border-t-transparent rounded-full" /> : <FiSend />}
+                  {loading ? 'Envoi...' : 'Envoyer'}
                 </button>
                 <button onClick={() => setDevis({ ...devis, item: null })} className="btn-outline flex-1">Annuler</button>
               </div>

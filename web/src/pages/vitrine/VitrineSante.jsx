@@ -1,18 +1,37 @@
 import { useState } from 'react';
-import { FiCalendar, FiPhone, FiSend } from 'react-icons/fi';
+import { FiCalendar, FiSend } from 'react-icons/fi';
+import { appointmentAPI } from '../../services/api';
 import toast from 'react-hot-toast';
 
 export default function VitrineSante({ restaurant }) {
   const categories = restaurant.menu_categories || [];
   const [selectedCat, setSelectedCat] = useState(categories[0]?.id || null);
   const [rdv, setRdv] = useState({ item: null, name: '', phone: '', date: '', time: '', motif: '' });
+  const [loading, setLoading] = useState(false);
 
   const openRdv = (item) => setRdv({ item, name: '', phone: '', date: '', time: '', motif: '' });
 
-  const submitRdv = () => {
+  const submitRdv = async () => {
     if (!rdv.name || !rdv.phone || !rdv.date) { toast.error('Nom, téléphone et date requis'); return; }
-    toast.success(`Rendez-vous pris pour ${rdv.item.name}`);
-    setRdv({ item: null, name: '', phone: '', date: '', time: '', motif: '' });
+    setLoading(true);
+    try {
+      await appointmentAPI.create({
+        restaurant_id: restaurant.id,
+        type: 'sante',
+        item_name: rdv.item.name,
+        client_name: rdv.name,
+        client_phone: rdv.phone,
+        preferred_date: rdv.date,
+        preferred_time: rdv.time || null,
+        motif: rdv.motif || null,
+      });
+      toast.success('Rendez-vous pris avec succès !');
+      setRdv({ item: null, name: '', phone: '', date: '', time: '', motif: '' });
+    } catch (error) {
+      toast.error(error.response?.data?.error || 'Erreur lors de la réservation');
+    } finally {
+      setLoading(false);
+    }
   };
 
   if (!categories.length) {
@@ -73,8 +92,9 @@ export default function VitrineSante({ restaurant }) {
               <textarea placeholder="Motif de la consultation" value={rdv.motif}
                 onChange={e => setRdv({ ...rdv, motif: e.target.value })} className="input-field" rows={2} />
               <div className="flex gap-2">
-                <button onClick={submitRdv} className="btn-primary flex-1 flex items-center justify-center gap-2">
-                  <FiSend /> Confirmer
+                <button onClick={submitRdv} disabled={loading} className="btn-primary flex-1 flex items-center justify-center gap-2">
+                  {loading ? <span className="animate-spin w-4 h-4 border-2 border-white border-t-transparent rounded-full" /> : <FiSend />}
+                  {loading ? 'Envoi...' : 'Confirmer'}
                 </button>
                 <button onClick={() => setRdv({ ...rdv, item: null })} className="btn-outline flex-1">Annuler</button>
               </div>

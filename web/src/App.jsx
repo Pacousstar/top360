@@ -30,6 +30,7 @@ import RestaurantOrders from './pages/restaurant/RestaurantOrders';
 import RestaurantSettings from './pages/restaurant/RestaurantSettings';
 import RestaurantStats from './pages/restaurant/RestaurantStats';
 import RestaurantAnnouncements from './pages/restaurant/RestaurantAnnouncements';
+import RestaurantAppointments from './pages/restaurant/RestaurantAppointments';
 
 // Admin
 import AdminDashboard from './pages/admin/AdminDashboard';
@@ -102,6 +103,7 @@ export default function App() {
         <Route path="/restaurant/settings" element={<RestaurantSettings />} />
         <Route path="/restaurant/stats" element={<RestaurantStats />} />
         <Route path="/restaurant/announcements" element={<RestaurantAnnouncements />} />
+        <Route path="/restaurant/appointments" element={<RestaurantAppointments />} />
       </Route>
 
       {/* Espace Admin */}

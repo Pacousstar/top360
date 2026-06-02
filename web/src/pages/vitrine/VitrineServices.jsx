@@ -1,18 +1,36 @@
 import { useState } from 'react';
 import { FiCalendar, FiSend } from 'react-icons/fi';
+import { appointmentAPI } from '../../services/api';
 import toast from 'react-hot-toast';
 
 export default function VitrineServices({ restaurant }) {
   const categories = restaurant.menu_categories || [];
   const [selectedCat, setSelectedCat] = useState(categories[0]?.id || null);
   const [booking, setBooking] = useState({ item: null, name: '', phone: '', date: '', time: '' });
+  const [loading, setLoading] = useState(false);
 
   const openBooking = (item) => setBooking({ ...booking, item, name: '', phone: '', date: '', time: '' });
 
-  const submitBooking = () => {
+  const submitBooking = async () => {
     if (!booking.name || !booking.phone) { toast.error('Nom et téléphone requis'); return; }
-    toast.success(`Rendez-vous demandé pour ${booking.item.name}`);
-    setBooking({ item: null, name: '', phone: '', date: '', time: '' });
+    setLoading(true);
+    try {
+      await appointmentAPI.create({
+        restaurant_id: restaurant.id,
+        type: 'service',
+        item_name: booking.item.name,
+        client_name: booking.name,
+        client_phone: booking.phone,
+        preferred_date: booking.date || null,
+        preferred_time: booking.time || null,
+      });
+      toast.success('Rendez-vous demandé avec succès !');
+      setBooking({ item: null, name: '', phone: '', date: '', time: '' });
+    } catch (error) {
+      toast.error(error.response?.data?.error || 'Erreur lors de la réservation');
+    } finally {
+      setLoading(false);
+    }
   };
 
   if (!categories.length) {
@@ -54,7 +72,6 @@ export default function VitrineServices({ restaurant }) {
         </div>
       ))}
 
-      {/* Modal réservation */}
       {booking.item && (
         <div className="fixed inset-0 z-50 bg-black/50 flex items-center justify-center p-4">
           <div className="bg-white rounded-2xl w-full max-w-md p-6">
@@ -72,8 +89,9 @@ export default function VitrineServices({ restaurant }) {
                   onChange={e => setBooking({ ...booking, time: e.target.value })} className="input-field" />
               </div>
               <div className="flex gap-2">
-                <button onClick={submitBooking} className="btn-primary flex-1 flex items-center justify-center gap-2">
-                  <FiSend /> Envoyer
+                <button onClick={submitBooking} disabled={loading} className="btn-primary flex-1 flex items-center justify-center gap-2">
+                  {loading ? <span className="animate-spin w-4 h-4 border-2 border-white border-t-transparent rounded-full" /> : <FiSend />}
+                  {loading ? 'Envoi...' : 'Envoyer'}
                 </button>
                 <button onClick={() => setBooking({ ...booking, item: null })} className="btn-outline flex-1">Annuler</button>
               </div>

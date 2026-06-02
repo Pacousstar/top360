@@ -232,6 +232,34 @@ CREATE INDEX idx_reviews_restaurant ON reviews(restaurant_id);
 CREATE INDEX idx_reviews_client ON reviews(client_id);
 
 -- ==========================================================
+-- 12b. TABLE: appointments (réservations & rendez-vous)
+-- ==========================================================
+CREATE TYPE appointment_type AS ENUM ('service', 'sante', 'education', 'immo', 'event');
+CREATE TYPE appointment_status AS ENUM ('en_attente', 'confirme', 'refuse', 'annule');
+
+CREATE TABLE appointments (
+  id                UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  restaurant_id     UUID NOT NULL REFERENCES restaurants(id) ON DELETE CASCADE,
+  type              appointment_type NOT NULL,
+  item_name         TEXT NOT NULL,
+  client_name       TEXT NOT NULL,
+  client_phone      TEXT NOT NULL,
+  client_email      TEXT,
+  preferred_date    DATE,
+  preferred_time    TIME,
+  message           TEXT,
+  guests            INTEGER,
+  niveau            TEXT,
+  motif             TEXT,
+  status            appointment_status NOT NULL DEFAULT 'en_attente',
+  created_at        TIMESTAMPTZ DEFAULT NOW(),
+  updated_at        TIMESTAMPTZ DEFAULT NOW()
+);
+
+CREATE INDEX idx_appointments_restaurant ON appointments(restaurant_id);
+CREATE INDEX idx_appointments_status ON appointments(status);
+
+-- ==========================================================
 -- 13. TABLE: notifications
 -- ==========================================================
 CREATE TABLE notifications (
