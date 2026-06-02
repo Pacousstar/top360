@@ -3,6 +3,7 @@ import { useAuth } from '../../contexts/AuthContext';
 import { menuAPI } from '../../services/api';
 import toast from 'react-hot-toast';
 import { FiPlus, FiEdit2, FiTrash2, FiToggleLeft } from 'react-icons/fi';
+import ImageUpload from '../../components/ImageUpload';
 
 export default function RestaurantMenu() {
   const { restaurant } = useAuth();
@@ -186,19 +187,11 @@ export default function RestaurantMenu() {
                 onChange={(e) => setNewItem({ ...newItem, base_price: e.target.value })}
                 className="input-field"
               />
-              <div>
-                <label className="block text-sm font-medium mb-1">Image (URL)</label>
-                <div className="flex items-center gap-3">
-                  {newItem.image && <img src={newItem.image} alt="" className="w-14 h-14 rounded-xl object-cover border" />}
-                  <input
-                    type="text"
-                    placeholder="https://exemple.com/plat.jpg"
-                    value={newItem.image}
-                    onChange={(e) => setNewItem({ ...newItem, image: e.target.value })}
-                    className="input-field flex-1"
-                  />
-                </div>
-              </div>
+              <ImageUpload
+                currentUrl={newItem.image}
+                onUpload={(url) => setNewItem({ ...newItem, image: url })}
+                label="Image du plat"
+              />
               <div>
                 <label className="block text-sm font-medium mb-1">Types de cuisson</label>
                 <div className="flex flex-wrap gap-2">
@@ -251,17 +244,11 @@ export default function RestaurantMenu() {
                 onChange={(e) => setEditingItem({ ...editingItem, base_price: e.target.value })}
                 className="input-field"
               />
-              <div>
-                <label className="block text-sm font-medium mb-1">Image (URL)</label>
-                <div className="flex items-center gap-3">
-                  {editingItem.image && <img src={editingItem.image} alt="" className="w-14 h-14 rounded-xl object-cover border" />}
-                  <input
-                    type="text" placeholder="https://exemple.com/plat.jpg" value={editingItem.image}
-                    onChange={(e) => setEditingItem({ ...editingItem, image: e.target.value })}
-                    className="input-field flex-1"
-                  />
-                </div>
-              </div>
+              <ImageUpload
+                currentUrl={editingItem.image}
+                onUpload={(url) => setEditingItem({ ...editingItem, image: url })}
+                label="Image du plat"
+              />
               <div className="flex gap-2">
                 <button onClick={updateItem} className="btn-primary flex-1">Enregistrer</button>
                 <button onClick={() => setEditingItem(null)} className="btn-outline flex-1">Annuler</button>

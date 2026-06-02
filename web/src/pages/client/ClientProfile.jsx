@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useAuth } from '../../contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
+import ImageUpload from '../../components/ImageUpload';
 
 export default function ClientProfile() {
   const { user, updateProfile, logout } = useAuth();
@@ -9,6 +10,7 @@ export default function ClientProfile() {
   const [form, setForm] = useState({
     fullname: user?.fullname || '',
     phone: user?.phone || '',
+    avatar: user?.avatar || '',
   });
   const [saving, setSaving] = useState(false);
 
@@ -28,6 +30,11 @@ export default function ClientProfile() {
       <h1 className="text-2xl font-bold mb-6">Mon profil</h1>
 
       <div className="card p-6 space-y-4">
+        <ImageUpload
+          currentUrl={form.avatar}
+          onUpload={(url) => setForm({ ...form, avatar: url })}
+          label="Photo de profil"
+        />
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">Nom complet</label>
           <input

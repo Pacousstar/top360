@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { useAuth } from '../../contexts/AuthContext';
-import { restaurantAPI } from '../../services/api';
-import { subscriptionAPI } from '../../services/api';
+import { restaurantAPI, subscriptionAPI } from '../../services/api';
 import toast from 'react-hot-toast';
+import ImageUpload from '../../components/ImageUpload';
 
 const PLANS = [
   { key: 'starter', name: 'Starter', price: '3 000', desc: 'Pour petits commerces', features: ['Vitrine numérique', 'Catalogue produits', 'Commandes', 'Notifications'] },
@@ -73,18 +73,16 @@ export default function RestaurantSettings() {
               <label className="block text-sm font-medium text-gray-700 mb-1">Description</label>
               <textarea value={form.description} onChange={(e) => setForm({ ...form, description: e.target.value })} className="input-field" rows={3} />
             </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Logo (URL)</label>
-              <div className="flex items-center gap-3">
-                {form.logo && <img src={form.logo} alt="logo" className="w-12 h-12 rounded-xl object-cover border" />}
-                <input type="text" value={form.logo} onChange={(e) => setForm({ ...form, logo: e.target.value })} className="input-field flex-1" placeholder="https://exemple.com/logo.png" />
-              </div>
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Bannière (URL)</label>
-              {form.banner && <div className="h-20 rounded-xl bg-gray-100 mb-2 overflow-hidden"><img src={form.banner} alt="banner" className="w-full h-full object-cover" /></div>}
-              <input type="text" value={form.banner} onChange={(e) => setForm({ ...form, banner: e.target.value })} className="input-field" placeholder="https://exemple.com/banniere.png" />
-            </div>
+            <ImageUpload
+              currentUrl={form.logo}
+              onUpload={(url) => setForm({ ...form, logo: url })}
+              label="Logo"
+            />
+            <ImageUpload
+              currentUrl={form.banner}
+              onUpload={(url) => setForm({ ...form, banner: url })}
+              label="Bannière"
+            />
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">Module</label>
               <select value={form.module} onChange={(e) => setForm({ ...form, module: e.target.value })} className="input-field">

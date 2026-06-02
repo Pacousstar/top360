@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { FiSearch, FiMapPin, FiMenu, FiX, FiUser, FiLogOut } from 'react-icons/fi';
+import NotificationBell from './NotificationBell';
 
 export default function Navbar() {
   const { user, logout } = useAuth();
@@ -57,7 +58,8 @@ export default function Navbar() {
             </Link>
 
             {user ? (
-              <div className="flex items-center gap-3">
+              <div className="flex items-center gap-1">
+                <NotificationBell />
                 <Link to={getDashboardLink()} className="hidden sm:flex items-center gap-2 px-4 py-2 bg-orange-600 text-white text-sm rounded-xl hover:bg-orange-700 transition-all shadow-md">
                   <FiUser className="w-4 h-4" />
                   <span>Mon espace</span>
