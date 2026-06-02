@@ -68,7 +68,7 @@ export default function Home() {
                 className="w-full pl-12 pr-4 py-4 rounded-xl text-gray-900 bg-white shadow-lg focus:ring-2 focus:ring-orange-400 outline-none text-base"
               />
             </div>
-            <Link to="/map" className="w-full sm:inline-flex items-center justify-center gap-2 mt-6 px-6 py-3 bg-forest-700 text-white font-bold rounded-xl hover:bg-forest-600 transition-all hover:scale-105 shadow-lg">
+            <Link to="/map" className="flex w-full sm:inline-flex sm:w-auto items-center justify-center gap-2 mt-6 px-6 py-3 bg-forest-700 text-white font-bold rounded-xl hover:bg-forest-600 transition-all hover:scale-105 shadow-lg">
               <FiMapPin className="w-5 h-5" />
               Explorer la carte interactive
             </Link>
@@ -214,7 +214,7 @@ export default function Home() {
           <p className="text-orange-100 mb-8 max-w-2xl mx-auto">
             Créez votre vitrine numérique, gérez vos commandes, et faites-vous connaître des milliers de clients.
           </p>
-          <Link to="/register" className="w-full sm:inline-flex items-center justify-center gap-2 px-8 py-4 bg-forest-700 text-white font-bold text-lg rounded-xl hover:bg-forest-600 transition-all hover:scale-105 shadow-lg">
+          <Link to="/register" className="flex w-full sm:inline-flex sm:w-auto items-center justify-center gap-2 px-8 py-4 bg-forest-700 text-white font-bold text-lg rounded-xl hover:bg-forest-600 transition-all hover:scale-105 shadow-lg">
             Créer ma vitrine gratuitement
           </Link>
         </div>
