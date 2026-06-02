@@ -6,7 +6,7 @@ export default function Footer() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div>
-            <h3 className="text-xl font-bold text-forest-300 mb-4">TOP 360°</h3>
+            <h3 className="text-xl font-bold text-forest-500 mb-4">TOP 360°</h3>
             <p className="text-orange-200 text-sm">
               La plateforme digitale qui référence, organise et connecte l'ensemble des commerces et services locaux.
             </p>
@@ -19,6 +19,11 @@ export default function Footer() {
               <li>🏨 TOP HOTEL</li>
               <li>🛍️ TOP SHOP</li>
               <li>🚗 TOP AUTO</li>
+              <li>🏥 TOP SANTÉ</li>
+              <li>🎓 TOP ÉDUCATION</li>
+              <li>🏠 TOP IMMO</li>
+              <li>🎉 TOP EVENT</li>
+              <li>⚖️ TOP SERVICES</li>
             </ul>
           </div>
           <div>
@@ -34,7 +39,7 @@ export default function Footer() {
             <h4 className="font-semibold mb-3">Contact</h4>
             <ul className="space-y-2 text-sm text-orange-200">
               <li>📧 contact@top360.ci</li>
-              <li>📱 +225 01 01 02 03 04</li>
+              <li>📱 +225 05 44 81 49 24</li>
               <li>📍 Duékoué, Côte d'Ivoire</li>
             </ul>
           </div>

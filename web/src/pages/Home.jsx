@@ -4,12 +4,16 @@ import { FiMapPin, FiSearch, FiTrendingUp, FiClock, FiStar, FiChevronRight } fro
 import { restaurantAPI } from '../services/api';
 
 const MODULES = [
-  { key: 'top_delice', name: 'TOP DÉLICE', icon: '🍽️', desc: 'Restaurants, maquis, bars', color: 'from-orange-500 to-red-500' },
-  { key: 'top_bat', name: 'TOP BAT', icon: '🏗️', desc: 'BTP & quincailleries', color: 'from-blue-500 to-blue-700' },
-  { key: 'top_hotel', name: 'TOP HOTEL', icon: '🏨', desc: 'Hôtels & tourisme', color: 'from-purple-500 to-purple-700' },
-  { key: 'top_shop', name: 'TOP SHOP', icon: '🛍️', desc: 'Commerces & boutiques', color: 'from-pink-500 to-rose-600' },
-  { key: 'top_auto', name: 'TOP AUTO', icon: '🚗', desc: 'Automobile', color: 'from-cyan-500 to-cyan-700' },
-  { key: 'top_services', name: 'TOP SERVICES', icon: '⚖️', desc: 'Prestataires & services', color: 'from-amber-500 to-amber-700' },
+  { key: 'top_delice', name: 'TOP DÉLICE', icon: '🍽️', desc: 'Restaurants, maquis, bars' },
+  { key: 'top_bat', name: 'TOP BAT', icon: '🏗️', desc: 'BTP & quincailleries' },
+  { key: 'top_hotel', name: 'TOP HOTEL', icon: '🏨', desc: 'Hôtels & tourisme' },
+  { key: 'top_shop', name: 'TOP SHOP', icon: '🛍️', desc: 'Commerces & boutiques' },
+  { key: 'top_auto', name: 'TOP AUTO', icon: '🚗', desc: 'Automobile' },
+  { key: 'top_sante', name: 'TOP SANTÉ', icon: '🏥', desc: 'Santé & bien-être' },
+  { key: 'top_education', name: 'TOP ÉDUCATION', icon: '🎓', desc: 'Écoles & formations' },
+  { key: 'top_immo', name: 'TOP IMMO', icon: '🏠', desc: 'Immobilier & logement' },
+  { key: 'top_event', name: 'TOP EVENT', icon: '🎉', desc: 'Événements & loisirs' },
+  { key: 'top_services', name: 'TOP SERVICES', icon: '⚖️', desc: 'Prestataires & services' },
 ];
 
 export default function Home() {
@@ -74,15 +78,15 @@ export default function Home() {
 
       {/* Modules rapides */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-8 relative z-10">
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3">
           {MODULES.map((mod) => (
             <Link
               key={mod.key}
               to={`/search?module=${mod.key}`}
-              className={`bg-white rounded-xl shadow-md border p-4 text-center hover:shadow-lg transition-all hover:-translate-y-1`}
+              className="bg-white rounded-xl shadow-md border-2 border-orange-500 p-4 text-center hover:shadow-lg transition-all hover:-translate-y-1"
             >
               <span className="text-2xl block mb-1">{mod.icon}</span>
-              <span className="text-sm font-semibold text-gray-800">{mod.name}</span>
+              <span className="text-sm font-semibold text-orange-700">{mod.name}</span>
               <span className="text-xs text-gray-500 block mt-0.5">{mod.desc}</span>
             </Link>
           ))}
@@ -210,7 +214,7 @@ export default function Home() {
           <p className="text-orange-100 mb-8 max-w-2xl mx-auto">
             Créez votre vitrine numérique, gérez vos commandes, et faites-vous connaître des milliers de clients.
           </p>
-          <Link to="/register" className="inline-flex items-center gap-2 px-8 py-4 bg-white text-orange-700 font-bold text-lg rounded-xl hover:bg-orange-50 transition-all hover:scale-105 shadow-lg">
+          <Link to="/register" className="inline-flex items-center gap-2 px-8 py-4 bg-forest-700 text-white font-bold text-lg rounded-xl hover:bg-forest-600 transition-all hover:scale-105 shadow-lg">
             Créer ma vitrine gratuitement
           </Link>
         </div>
