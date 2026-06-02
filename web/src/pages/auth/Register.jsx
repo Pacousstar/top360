@@ -5,6 +5,15 @@ import { useAuth } from '../../contexts/AuthContext';
 export default function Register() {
   const { register } = useAuth();
   const navigate = useNavigate();
+  const MODULES = [
+    { key: 'top_delice', label: 'TOP DÉLICE', emoji: '🍽️', desc: 'Restaurant, maquis, bar' },
+    { key: 'top_hotel', label: 'TOP HÔTEL', emoji: '🏨', desc: 'Hôtel, résidence, auberge' },
+    { key: 'top_bat', label: 'TOP BAT', emoji: '🏗️', desc: 'BTP, construction, rénovation' },
+    { key: 'top_shop', label: 'TOP SHOP', emoji: '🛍️', desc: 'Boutique, magasin, superette' },
+    { key: 'top_auto', label: 'TOP AUTO', emoji: '🚗', desc: 'Garage, vente auto, location' },
+    { key: 'top_services', label: 'TOP SERVICES', emoji: '⚖️', desc: 'Conseil, transport, services' },
+  ];
+
   const [form, setForm] = useState({
     fullname: '',
     email: '',
@@ -12,6 +21,7 @@ export default function Register() {
     password: '',
     confirmPassword: '',
     role: 'client',
+    module: 'top_delice',
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
@@ -37,6 +47,7 @@ export default function Register() {
       phone: form.phone,
       password: form.password,
       role: form.role,
+      module: form.role === 'restaurant' ? form.module : undefined,
     });
     setLoading(false);
 
@@ -90,9 +101,34 @@ export default function Register() {
         </div>
 
         {form.role === 'restaurant' && (
-          <div className="p-3 bg-blue-50 border border-blue-200 rounded-xl text-sm text-blue-700">
-            💡 Après inscription, votre vitrine sera créée automatiquement. Vous pourrez la personnaliser dans votre espace.
-          </div>
+          <>
+            <div className="p-3 bg-blue-50 border border-blue-200 rounded-xl text-sm text-blue-700">
+              💡 Après inscription, votre vitrine sera créée automatiquement. Vous pourrez la personnaliser dans votre espace.
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">Secteur d'activité</label>
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+                {MODULES.map(m => (
+                  <button
+                    key={m.key}
+                    type="button"
+                    onClick={() => setForm({ ...form, module: m.key })}
+                    className={`p-3 rounded-xl border-2 text-center transition-all ${
+                      form.module === m.key
+                        ? 'border-orange-500 bg-orange-50 text-orange-600'
+                        : 'border-gray-200 text-gray-600 hover:border-gray-300'
+                    }`}
+                  >
+                    <span className="text-xl block">{m.emoji}</span>
+                    <span className="text-xs font-medium">{m.label}</span>
+                  </button>
+                ))}
+              </div>
+              <p className="text-xs text-gray-400 mt-1">
+                {MODULES.find(m => m.key === form.module)?.desc}
+              </p>
+            </div>
+          </>
         )}
 
         <div>

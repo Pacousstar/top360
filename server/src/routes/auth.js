@@ -8,7 +8,7 @@ const router = Router();
 // POST /api/auth/register — Inscription
 router.post('/register', async (req, res) => {
   try {
-    const { fullname, email, phone, password, role } = req.body;
+    const { fullname, email, phone, password, role, module: selectedModule } = req.body;
 
     // Validation
     if (!fullname || !email || !password) {
@@ -62,7 +62,7 @@ router.post('/register', async (req, res) => {
         owner_id: user.id,
         name: fullname,
         slug: `${slug}-${Date.now()}`,
-        module: 'top_delice',
+        module: selectedModule || 'top_delice',
       }).select().single();
       restaurant = newRestaurant;
     }

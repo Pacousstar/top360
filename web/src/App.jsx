@@ -8,7 +8,7 @@ import DashboardLayout from './layouts/DashboardLayout';
 
 // Pages publiques
 import Home from './pages/Home';
-import RestaurantDetail from './pages/RestaurantDetail';
+import VitrinePage from './pages/VitrinePage';
 import SearchResults from './pages/SearchResults';
 import MapView from './pages/MapView';
 
@@ -61,7 +61,7 @@ export default function App() {
       {/* Routes publiques */}
       <Route element={<MainLayout />}>
         <Route path="/" element={<Home />} />
-        <Route path="/restaurant/:slug" element={<RestaurantDetail />} />
+        <Route path="/restaurant/:slug" element={<VitrinePage />} />
         <Route path="/search" element={<SearchResults />} />
         <Route path="/map" element={<MapView />} />
       </Route>

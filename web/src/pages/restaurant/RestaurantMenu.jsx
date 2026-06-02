@@ -5,8 +5,18 @@ import toast from 'react-hot-toast';
 import { FiPlus, FiEdit2, FiTrash2, FiToggleLeft } from 'react-icons/fi';
 import ImageUpload from '../../components/ImageUpload';
 
+const MODULE_LABELS = {
+  top_delice: { item: 'plat', items: 'plats', title: 'Gestion du menu', name: 'Nom du plat', img: 'Image du plat', cooking: true },
+  top_hotel: { item: 'chambre', items: 'chambres', title: 'Gestion des chambres', name: 'Type de chambre', img: 'Photo de la chambre', cooking: false },
+  top_bat: { item: 'service', items: 'services', title: 'Gestion des services', name: 'Nom du service', img: 'Image', cooking: false },
+  top_shop: { item: 'produit', items: 'produits', title: 'Gestion des produits', name: 'Nom du produit', img: 'Image du produit', cooking: false },
+  top_auto: { item: 'véhicule', items: 'véhicules', title: 'Gestion des véhicules', name: 'Modèle', img: 'Photo du véhicule', cooking: false },
+  top_services: { item: 'prestation', items: 'prestations', title: 'Gestion des prestations', name: 'Nom du service', img: 'Image', cooking: false },
+};
+
 export default function RestaurantMenu() {
   const { restaurant } = useAuth();
+  const mod = MODULE_LABELS[restaurant?.module] || MODULE_LABELS.top_delice;
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
   const [newCategory, setNewCategory] = useState('');
@@ -135,9 +145,9 @@ export default function RestaurantMenu() {
   return (
     <div>
       <div className="flex items-center justify-between mb-6">
-        <h1 className="text-2xl font-bold">Gestion du menu</h1>
+        <h1 className="text-2xl font-bold">{mod.title}</h1>
         <button onClick={() => setShowNewItem(true)} className="btn-primary flex items-center gap-2 text-sm">
-          <FiPlus /> Ajouter un plat
+          <FiPlus /> Ajouter un {mod.item}
         </button>
       </div>
 
@@ -157,7 +167,7 @@ export default function RestaurantMenu() {
       {showNewItem && (
         <div className="fixed inset-0 z-50 bg-black/50 flex items-center justify-center p-4">
           <div className="bg-white rounded-2xl w-full max-w-lg max-h-[80vh] overflow-y-auto p-6">
-            <h2 className="text-xl font-bold mb-4">Nouveau plat</h2>
+            <h2 className="text-xl font-bold mb-4">Nouveau {mod.item}</h2>
             <div className="space-y-3">
               <select
                 value={newItem.category_id}
@@ -167,13 +177,13 @@ export default function RestaurantMenu() {
                 <option value="">Sélectionner une catégorie</option>
                 {categories.map(c => <option key={c.id} value={c.id}>{c.name}</option>)}
               </select>
-              <input
-                type="text"
-                placeholder="Nom du plat"
-                value={newItem.name}
-                onChange={(e) => setNewItem({ ...newItem, name: e.target.value })}
-                className="input-field"
-              />
+                <input
+                  type="text"
+                  placeholder={mod.name}
+                  value={newItem.name}
+                  onChange={(e) => setNewItem({ ...newItem, name: e.target.value })}
+                  className="input-field"
+                />
               <textarea
                 placeholder="Description"
                 value={newItem.description}
@@ -190,9 +200,9 @@ export default function RestaurantMenu() {
               <ImageUpload
                 currentUrl={newItem.image}
                 onUpload={(url) => setNewItem({ ...newItem, image: url })}
-                label="Image du plat"
+                label={mod.img}
               />
-              <div>
+              {mod.cooking && (<div>
                 <label className="block text-sm font-medium mb-1">Types de cuisson</label>
                 <div className="flex flex-wrap gap-2">
                   {['grillé', 'sauce', 'braisé', 'patte'].map(t => (
@@ -205,7 +215,7 @@ export default function RestaurantMenu() {
                     </button>
                   ))}
                 </div>
-              </div>
+              </div>)}
               <div className="flex gap-2">
                 <button onClick={addItem} className="btn-primary flex-1">Ajouter</button>
                 <button onClick={() => setShowNewItem(false)} className="btn-outline flex-1">Annuler</button>
@@ -219,7 +229,7 @@ export default function RestaurantMenu() {
       {editingItem && (
         <div className="fixed inset-0 z-50 bg-black/50 flex items-center justify-center p-4">
           <div className="bg-white rounded-2xl w-full max-w-lg max-h-[80vh] overflow-y-auto p-6">
-            <h2 className="text-xl font-bold mb-4">Modifier le plat</h2>
+            <h2 className="text-xl font-bold mb-4">Modifier le {mod.item}</h2>
             <div className="space-y-3">
               <select
                 value={editingItem.category_id}
@@ -230,7 +240,7 @@ export default function RestaurantMenu() {
                 {categories.map(c => <option key={c.id} value={c.id}>{c.name}</option>)}
               </select>
               <input
-                type="text" placeholder="Nom du plat" value={editingItem.name}
+                type="text" placeholder={mod.name} value={editingItem.name}
                 onChange={(e) => setEditingItem({ ...editingItem, name: e.target.value })}
                 className="input-field"
               />
@@ -247,7 +257,7 @@ export default function RestaurantMenu() {
               <ImageUpload
                 currentUrl={editingItem.image}
                 onUpload={(url) => setEditingItem({ ...editingItem, image: url })}
-                label="Image du plat"
+                label={mod.img}
               />
               <div className="flex gap-2">
                 <button onClick={updateItem} className="btn-primary flex-1">Enregistrer</button>
@@ -299,7 +309,7 @@ export default function RestaurantMenu() {
                   </div>
                 ))}
                 {(!cat.menu_items || cat.menu_items.length === 0) && (
-                  <p className="p-4 text-sm text-gray-400 text-center">Aucun plat dans cette catégorie</p>
+                  <p className="p-4 text-sm text-gray-400 text-center">Aucun {mod.item} dans cette catégorie</p>
                 )}
               </div>
             </div>
@@ -307,8 +317,8 @@ export default function RestaurantMenu() {
 
           {categories.length === 0 && (
             <div className="text-center py-12 text-gray-500">
-              <p className="text-lg mb-2">Votre menu est vide</p>
-              <p>Ajoutez des catégories et des plats</p>
+              <p className="text-lg mb-2">Votre catalogue est vide</p>
+              <p>Ajoutez des catégories et des {mod.items}</p>
             </div>
           )}
         </div>
