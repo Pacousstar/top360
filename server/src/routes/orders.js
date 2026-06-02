@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { supabase } from '../config/supabase.js';
+import { supabaseAdmin } from '../config/supabase.js';
 import { authenticate } from '../middlewares/auth.js';
 
 const router = Router();
@@ -9,7 +9,7 @@ router.get('/', authenticate, async (req, res) => {
   try {
     const { status, page = 1, limit = 20 } = req.query;
 
-    let query = supabase
+    let query = supabaseAdmin
       .from('orders')
       .select(`
         *,
@@ -23,7 +23,7 @@ router.get('/', authenticate, async (req, res) => {
     if (req.user.role === 'client') {
       query = query.eq('client_id', req.user.id);
     } else if (req.user.role === 'restaurant') {
-      const { data: restaurants } = await supabase
+      const { data: restaurants } = await supabaseAdmin
         .from('restaurants')
         .select('id')
         .eq('owner_id', req.user.id);
@@ -70,7 +70,7 @@ router.post('/', authenticate, async (req, res) => {
     // Calculer le total
     let total_amount = 0;
     for (const item of items) {
-      const { data: menuItem } = await supabase
+      const { data: menuItem } = await supabaseAdmin
         .from('menu_items')
         .select('base_price')
         .eq('id', item.menu_item_id)
@@ -88,7 +88,7 @@ router.post('/', authenticate, async (req, res) => {
     const remaining = total_amount - deposit;
 
     // Créer la commande
-    const { data: order, error: orderError } = await supabase
+    const { data: order, error: orderError } = await supabaseAdmin
       .from('orders')
       .insert({
         client_id: req.user.id,
@@ -121,7 +121,7 @@ router.post('/', authenticate, async (req, res) => {
       notes: item.notes || null,
     }));
 
-    const { error: itemsError } = await supabase
+    const { error: itemsError } = await supabaseAdmin
       .from('order_items')
       .insert(orderItems);
 
@@ -131,14 +131,14 @@ router.post('/', authenticate, async (req, res) => {
     }
 
     // Notification au restaurateur
-    const { data: restaurant } = await supabase
+    const { data: restaurant } = await supabaseAdmin
       .from('restaurants')
       .select('owner_id, name')
       .eq('id', restaurant_id)
       .single();
 
     if (restaurant) {
-      await supabase.from('notifications').insert({
+      await supabaseAdmin.from('notifications').insert({
         user_id: restaurant.owner_id,
         title: 'Nouvelle commande',
         content: `Nouvelle commande de ${total_amount.toLocaleString()} FCFA chez ${restaurant.name}`,
@@ -172,7 +172,7 @@ router.put('/:id/status', authenticate, async (req, res) => {
       return res.status(400).json({ error: 'Statut invalide' });
     }
 
-    const { data: order } = await supabase
+    const { data: order } = await supabaseAdmin
       .from('orders')
       .select('*')
       .eq('id', req.params.id)
@@ -185,7 +185,7 @@ router.put('/:id/status', authenticate, async (req, res) => {
       return res.status(403).json({ error: 'Vous ne pouvez qu\'annuler votre commande' });
     }
 
-    const { data: updated } = await supabase
+    const { data: updated } = await supabaseAdmin
       .from('orders')
       .update({ status })
       .eq('id', req.params.id)
@@ -194,7 +194,7 @@ router.put('/:id/status', authenticate, async (req, res) => {
 
     // Notifier le client
     if (status !== 'annulee') {
-      await supabase.from('notifications').insert({
+      await supabaseAdmin.from('notifications').insert({
         user_id: order.client_id,
         title: 'Commande mise à jour',
         content: `Votre commande est maintenant : ${status}`,
@@ -213,7 +213,7 @@ router.put('/:id/status', authenticate, async (req, res) => {
 // GET /api/orders/:id — Détail d'une commande
 router.get('/:id', authenticate, async (req, res) => {
   try {
-    const { data: order, error } = await supabase
+    const { data: order, error } = await supabaseAdmin
       .from('orders')
       .select(`
         *,
@@ -234,7 +234,7 @@ router.get('/:id', authenticate, async (req, res) => {
     // Vérifier accès
     const isClient = order.client_id === req.user.id;
     const isOwner = req.user.role === 'restaurant' && (
-      await supabase.from('restaurants').select('owner_id').eq('id', order.restaurant_id).single()
+      await supabaseAdmin.from('restaurants').select('owner_id').eq('id', order.restaurant_id).single()
     ).data?.owner_id === req.user.id;
     const isAdmin = req.user.role === 'admin';
 

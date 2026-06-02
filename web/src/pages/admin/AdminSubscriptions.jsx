@@ -27,7 +27,7 @@ export default function AdminSubscriptions() {
 
       {loading ? (
         <div className="text-center py-12">
-          <div className="animate-spin rounded-full h-8 w-8 border-4 border-green-500 border-t-transparent mx-auto" />
+          <div className="animate-spin rounded-full h-8 w-8 border-4 border-orange-500 border-t-transparent mx-auto" />
         </div>
       ) : (
         <div className="card overflow-hidden">

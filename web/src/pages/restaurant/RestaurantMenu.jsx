@@ -10,7 +10,7 @@ export default function RestaurantMenu() {
   const [loading, setLoading] = useState(true);
   const [newCategory, setNewCategory] = useState('');
   const [newItem, setNewItem] = useState({
-    category_id: '', name: '', description: '', base_price: '',
+    category_id: '', name: '', description: '', base_price: '', image: '',
     cooking_types: [], spice_levels: [], accompaniments: [],
   });
   const [showNewItem, setShowNewItem] = useState(false);
@@ -63,7 +63,7 @@ export default function RestaurantMenu() {
         ...newItem,
         base_price: parseInt(newItem.base_price),
       });
-      setNewItem({ category_id: '', name: '', description: '', base_price: '', cooking_types: [], spice_levels: [], accompaniments: [] });
+      setNewItem({ category_id: '', name: '', description: '', base_price: '', image: '', cooking_types: [], spice_levels: [], accompaniments: [] });
       setShowNewItem(false);
       loadMenu();
       toast.success('Plat ajouté');
@@ -158,13 +158,26 @@ export default function RestaurantMenu() {
                 className="input-field"
               />
               <div>
+                <label className="block text-sm font-medium mb-1">Image (URL)</label>
+                <div className="flex items-center gap-3">
+                  {newItem.image && <img src={newItem.image} alt="" className="w-14 h-14 rounded-xl object-cover border" />}
+                  <input
+                    type="text"
+                    placeholder="https://exemple.com/plat.jpg"
+                    value={newItem.image}
+                    onChange={(e) => setNewItem({ ...newItem, image: e.target.value })}
+                    className="input-field flex-1"
+                  />
+                </div>
+              </div>
+              <div>
                 <label className="block text-sm font-medium mb-1">Types de cuisson</label>
                 <div className="flex flex-wrap gap-2">
                   {['grillé', 'sauce', 'braisé', 'patte'].map(t => (
                     <button
                       key={t}
                       onClick={() => toggleArrayField('cooking_types', t)}
-                      className={`px-3 py-1 rounded-lg text-sm border ${newItem.cooking_types.includes(t) ? 'bg-green-100 border-green-500 text-green-700' : 'bg-gray-50 border-gray-200'}`}
+                      className={`px-3 py-1 rounded-lg text-sm border ${newItem.cooking_types.includes(t) ? 'bg-orange-100 border-orange-500 text-orange-700' : 'bg-gray-50 border-gray-200'}`}
                     >
                       {t}
                     </button>
@@ -183,7 +196,7 @@ export default function RestaurantMenu() {
       {/* Liste des catégories */}
       {loading ? (
         <div className="text-center py-8">
-          <div className="animate-spin rounded-full h-8 w-8 border-4 border-green-500 border-t-transparent mx-auto" />
+          <div className="animate-spin rounded-full h-8 w-8 border-4 border-orange-500 border-t-transparent mx-auto" />
         </div>
       ) : (
         <div className="space-y-6">
@@ -200,9 +213,9 @@ export default function RestaurantMenu() {
                   <div key={item.id} className="p-4 flex items-center justify-between">
                     <div className="flex-1">
                       <div className="flex items-center gap-2">
-                        <span className={`w-2 h-2 rounded-full ${item.is_available ? 'bg-green-500' : 'bg-red-500'}`} />
+                        <span className={`w-2 h-2 rounded-full ${item.is_available ? 'bg-orange-500' : 'bg-red-500'}`} />
                         <span className="font-medium">{item.name}</span>
-                        <span className="text-green-700 font-semibold">{item.base_price?.toLocaleString()} FCFA</span>
+                        <span className="text-orange-700 font-semibold">{item.base_price?.toLocaleString()} FCFA</span>
                       </div>
                       {item.description && <p className="text-sm text-gray-500 mt-0.5">{item.description}</p>}
                     </div>

@@ -26,7 +26,7 @@ export default function ClientOrderDetail() {
   if (loading) {
     return (
       <div className="text-center py-12">
-        <div className="animate-spin rounded-full h-8 w-8 border-4 border-green-500 border-t-transparent mx-auto" />
+        <div className="animate-spin rounded-full h-8 w-8 border-4 border-orange-500 border-t-transparent mx-auto" />
       </div>
     );
   }
@@ -35,7 +35,7 @@ export default function ClientOrderDetail() {
     return (
       <div className="text-center py-12">
         <p className="text-gray-500">Commande non trouvée</p>
-        <Link to="/client/orders" className="text-green-700 mt-2 inline-block">Mes commandes</Link>
+        <Link to="/client/orders" className="text-orange-700 mt-2 inline-block">Mes commandes</Link>
       </div>
     );
   }
@@ -45,7 +45,7 @@ export default function ClientOrderDetail() {
 
   return (
     <div>
-      <Link to="/client/orders" className="inline-flex items-center gap-2 text-gray-600 hover:text-green-700 mb-4">
+      <Link to="/client/orders" className="inline-flex items-center gap-2 text-gray-600 hover:text-orange-700 mb-4">
         <FiArrowLeft /> Mes commandes
       </Link>
 
@@ -59,7 +59,7 @@ export default function ClientOrderDetail() {
           {statusSteps.map((step, index) => (
             <div key={step} className="flex flex-col items-center">
               <div className={`w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold ${
-                index <= currentStep ? 'bg-green-600 text-white' : 'bg-gray-200 text-gray-400'
+                index <= currentStep ? 'bg-orange-600 text-white' : 'bg-gray-200 text-gray-400'
               }`}>
                 {index + 1}
               </div>
@@ -77,11 +77,11 @@ export default function ClientOrderDetail() {
         </div>
         <div className="flex justify-between">
           <span className="text-gray-500">Total</span>
-          <span className="font-bold text-green-700">{order.total_amount?.toLocaleString()} FCFA</span>
+          <span className="font-bold text-orange-700">{order.total_amount?.toLocaleString()} FCFA</span>
         </div>
         <div className="flex justify-between">
           <span className="text-gray-500">Avance payée</span>
-          <span className="font-medium text-green-600">{order.deposit_amount?.toLocaleString()} FCFA</span>
+          <span className="font-medium text-orange-600">{order.deposit_amount?.toLocaleString()} FCFA</span>
         </div>
         <div className="flex justify-between">
           <span className="text-gray-500">Reste à payer</span>

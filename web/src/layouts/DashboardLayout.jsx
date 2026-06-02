@@ -41,7 +41,7 @@ export default function DashboardLayout({ role }) {
           <div className="fixed inset-0 bg-black/50" onClick={() => setSidebarOpen(false)} />
           <div className="fixed inset-y-0 left-0 w-72 bg-white shadow-2xl z-50">
             <div className="flex items-center justify-between p-4 border-b">
-              <h2 className="text-lg font-bold text-green-800">TOP 360°</h2>
+              <h2 className="text-lg font-bold text-orange-800">TOP 360°</h2>
               <button onClick={() => setSidebarOpen(false)} className="p-2 rounded-lg hover:bg-gray-100">
                 <FiX className="w-5 h-5" />
               </button>
@@ -55,10 +55,10 @@ export default function DashboardLayout({ role }) {
                     key={item.path}
                     to={item.path}
                     onClick={() => setSidebarOpen(false)}
-                    className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-colors ${
+                    className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${
                       isActive
-                        ? 'bg-green-100 text-green-800 font-medium'
-                        : 'text-gray-600 hover:bg-gray-100'
+                        ? 'bg-orange-500 text-white font-medium shadow-md'
+                        : 'text-gray-600 hover:bg-orange-50 hover:text-orange-600'
                     }`}
                   >
                     <Icon className="w-5 h-5" />
@@ -81,7 +81,7 @@ export default function DashboardLayout({ role }) {
       {/* Sidebar desktop */}
       <aside className="hidden lg:flex lg:flex-col lg:w-72 lg:fixed lg:inset-y-0 bg-white border-r border-gray-200">
         <div className="flex items-center h-16 px-6 border-b">
-          <Link to="/" className="text-xl font-bold text-green-800">TOP 360°</Link>
+          <Link to="/" className="text-xl font-bold text-orange-800">TOP 360°</Link>
         </div>
         <nav className="flex-1 px-4 py-6 space-y-1 overflow-y-auto">
           {menuItems.map((item) => {
@@ -93,7 +93,7 @@ export default function DashboardLayout({ role }) {
                 to={item.path}
                 className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-colors ${
                   isActive
-                    ? 'bg-green-100 text-green-800 font-medium'
+                    ? 'bg-orange-100 text-orange-800 font-medium'
                     : 'text-gray-600 hover:bg-gray-100'
                 }`}
               >
@@ -105,7 +105,7 @@ export default function DashboardLayout({ role }) {
         </nav>
         <div className="p-4 border-t">
           <div className="flex items-center gap-3 px-4 py-3">
-            <div className="w-8 h-8 rounded-full bg-green-700 flex items-center justify-center text-white text-sm font-medium">
+            <div className="w-8 h-8 rounded-full bg-orange-700 flex items-center justify-center text-white text-sm font-medium">
               {user?.fullname?.[0]?.toUpperCase()}
             </div>
             <div className="flex-1 min-w-0">
@@ -130,8 +130,8 @@ export default function DashboardLayout({ role }) {
           <button onClick={() => setSidebarOpen(true)} className="p-2 rounded-lg hover:bg-gray-100">
             <FiMenu className="w-6 h-6" />
           </button>
-          <Link to="/" className="text-lg font-bold text-green-800">TOP 360°</Link>
-          <div className="w-10 h-10 rounded-full bg-green-700 flex items-center justify-center text-white text-sm font-medium">
+          <Link to="/" className="text-lg font-bold text-orange-800">TOP 360°</Link>
+          <div className="w-10 h-10 rounded-full bg-orange-700 flex items-center justify-center text-white text-sm font-medium">
             {user?.fullname?.[0]?.toUpperCase()}
           </div>
         </div>

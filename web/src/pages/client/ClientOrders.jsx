@@ -25,8 +25,8 @@ export default function ClientOrders() {
     en_attente: 'text-yellow-600 bg-yellow-50',
     validee: 'text-blue-600 bg-blue-50',
     preparation: 'text-yellow-600 bg-yellow-50',
-    pret: 'text-green-600 bg-green-50',
-    livree: 'text-green-700 bg-green-100',
+    pret: 'text-orange-600 bg-orange-50',
+    livree: 'text-orange-700 bg-orange-100',
     annulee: 'text-red-600 bg-red-50',
   };
 
@@ -36,7 +36,7 @@ export default function ClientOrders() {
 
       {loading ? (
         <div className="text-center py-12">
-          <div className="animate-spin rounded-full h-8 w-8 border-4 border-green-500 border-t-transparent mx-auto" />
+          <div className="animate-spin rounded-full h-8 w-8 border-4 border-orange-500 border-t-transparent mx-auto" />
         </div>
       ) : (
         <div className="space-y-4">
@@ -60,7 +60,7 @@ export default function ClientOrders() {
           {orders.length === 0 && (
             <div className="text-center py-12 text-gray-500">
               <p className="text-lg mb-2">Aucune commande</p>
-              <Link to="/" className="text-green-700 font-medium">Découvrir les restaurants</Link>
+              <Link to="/" className="text-orange-700 font-medium">Découvrir les restaurants</Link>
             </div>
           )}
         </div>

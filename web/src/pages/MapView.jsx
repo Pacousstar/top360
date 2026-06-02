@@ -61,7 +61,7 @@ export default function MapView() {
               <button
                 onClick={() => setFilter('all')}
                 className={`whitespace-nowrap px-3 py-1.5 rounded-lg text-sm font-medium transition-colors ${
-                  filter === 'all' ? 'bg-green-700 text-white' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                  filter === 'all' ? 'bg-orange-700 text-white' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
                 }`}
               >
                 Tous
@@ -71,7 +71,7 @@ export default function MapView() {
                   key={mod}
                   onClick={() => setFilter(mod)}
                   className={`whitespace-nowrap px-3 py-1.5 rounded-lg text-sm font-medium transition-colors ${
-                    filter === mod ? 'bg-green-700 text-white' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                    filter === mod ? 'bg-orange-700 text-white' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
                   }`}
                 >
                   {MODULE_ICONS[mod] || '📍'} {mod.replace('top_', '').toUpperCase()}
@@ -129,7 +129,7 @@ export default function MapView() {
       {loading && (
         <div className="absolute inset-0 flex items-center justify-center bg-gray-50">
           <div className="text-center">
-            <div className="animate-spin rounded-full h-12 w-12 border-4 border-green-500 border-t-transparent mx-auto mb-4" />
+            <div className="animate-spin rounded-full h-12 w-12 border-4 border-orange-500 border-t-transparent mx-auto mb-4" />
             <p className="text-gray-500">Chargement de la carte...</p>
           </div>
         </div>

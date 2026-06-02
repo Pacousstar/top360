@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { supabase } from '../config/supabase.js';
+import { supabaseAdmin } from '../config/supabase.js';
 import { authenticate, requireRole } from '../middlewares/auth.js';
 
 const router = Router();
@@ -19,19 +19,19 @@ router.get('/dashboard', async (req, res) => {
       { count: totalRevenue },
       { count: pendingOrders },
     ] = await Promise.all([
-      supabase.from('restaurants').select('*', { count: 'exact', head: true }),
-      supabase.from('users').select('*', { count: 'exact', head: true }).eq('role', 'client'),
-      supabase.from('orders').select('*', { count: 'exact', head: true }),
-      supabase.from('subscriptions').select('*', { count: 'exact', head: true }).eq('status', 'active'),
-      supabase.from('subscriptions').select('amount', { count: 'exact' }).eq('status', 'active'),
-      supabase.from('orders').select('*', { count: 'exact', head: true }).in('status', ['en_attente', 'validee']),
+      supabaseAdmin.from('restaurants').select('*', { count: 'exact', head: true }),
+      supabaseAdmin.from('users').select('*', { count: 'exact', head: true }).eq('role', 'client'),
+      supabaseAdmin.from('orders').select('*', { count: 'exact', head: true }),
+      supabaseAdmin.from('subscriptions').select('*', { count: 'exact', head: true }).eq('status', 'active'),
+      supabaseAdmin.from('subscriptions').select('amount', { count: 'exact' }).eq('status', 'active'),
+      supabaseAdmin.from('orders').select('*', { count: 'exact', head: true }).in('status', ['en_attente', 'validee']),
     ]);
 
     // Calculer les revenus mensuels estimés
     const totalRevenueAmount = totalRevenue?.data?.reduce((sum, sub) => sum + (sub.amount || 0), 0) || 0;
 
     // Dernières inscriptions
-    const { data: recentRestaurants } = await supabase
+    const { data: recentRestaurants } = await supabaseAdmin
       .from('restaurants')
       .select('*, owner:owner_id ( fullname, email )')
       .order('created_at', { ascending: false })
@@ -59,7 +59,7 @@ router.get('/restaurants', async (req, res) => {
   try {
     const { page = 1, limit = 20, module, is_verified } = req.query;
 
-    let query = supabase
+    let query = supabaseAdmin
       .from('restaurants')
       .select('*, owner:owner_id ( fullname, email, phone )')
       .order('created_at', { ascending: false });
@@ -82,7 +82,7 @@ router.get('/restaurants', async (req, res) => {
 // PUT /api/admin/restaurants/:id/verify — Vérifier un restaurant
 router.put('/restaurants/:id/verify', async (req, res) => {
   try {
-    const { data: restaurant, error } = await supabase
+    const { data: restaurant, error } = await supabaseAdmin
       .from('restaurants')
       .update({ is_verified: true })
       .eq('id', req.params.id)
@@ -101,13 +101,13 @@ router.put('/restaurants/:id/verify', async (req, res) => {
 // PUT /api/admin/restaurants/:id/toggle-active — Activer/suspendre
 router.put('/restaurants/:id/toggle-active', async (req, res) => {
   try {
-    const { data: restaurant } = await supabase
+    const { data: restaurant } = await supabaseAdmin
       .from('restaurants')
       .select('is_verified')
       .eq('id', req.params.id)
       .single();
 
-    const { data: updated, error } = await supabase
+    const { data: updated, error } = await supabaseAdmin
       .from('restaurants')
       .update({ is_verified: !restaurant.is_verified })
       .eq('id', req.params.id)
@@ -129,7 +129,7 @@ router.put('/restaurants/:id/toggle-active', async (req, res) => {
 // GET /api/admin/subscriptions — Gérer abonnements
 router.get('/subscriptions', async (req, res) => {
   try {
-    const { data: subscriptions, error } = await supabase
+    const { data: subscriptions, error } = await supabaseAdmin
       .from('subscriptions')
       .select('*, restaurant:restaurant_id ( name, slug, owner_id )')
       .order('created_at', { ascending: false })
@@ -149,7 +149,7 @@ router.get('/users', async (req, res) => {
   try {
     const { role, page = 1, limit = 50 } = req.query;
 
-    let query = supabase
+    let query = supabaseAdmin
       .from('users')
       .select('id, fullname, email, phone, role, is_active, created_at')
       .order('created_at', { ascending: false });

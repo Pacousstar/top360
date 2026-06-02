@@ -37,7 +37,7 @@ export default function AdminUsers() {
           <button
             key={item.key}
             onClick={() => setFilter(item.key)}
-            className={`px-4 py-2 rounded-xl text-sm font-medium ${filter === item.key ? 'bg-green-700 text-white' : 'bg-gray-100 text-gray-600'}`}
+            className={`px-4 py-2 rounded-xl text-sm font-medium ${filter === item.key ? 'bg-orange-700 text-white' : 'bg-gray-100 text-gray-600'}`}
           >
             {item.label}
           </button>
@@ -46,7 +46,7 @@ export default function AdminUsers() {
 
       {loading ? (
         <div className="text-center py-12">
-          <div className="animate-spin rounded-full h-8 w-8 border-4 border-green-500 border-t-transparent mx-auto" />
+          <div className="animate-spin rounded-full h-8 w-8 border-4 border-orange-500 border-t-transparent mx-auto" />
         </div>
       ) : (
         <div className="card overflow-hidden">

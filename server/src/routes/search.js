@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { supabase } from '../config/supabase.js';
+import { supabaseAdmin } from '../config/supabase.js';
 
 const router = Router();
 
@@ -12,7 +12,7 @@ router.get('/', async (req, res) => {
       return res.status(400).json({ error: 'Paramètre de recherche requis (q, module, city)' });
     }
 
-    let query = supabase
+    let query = supabaseAdmin
       .from('restaurants')
       .select(`
         *,

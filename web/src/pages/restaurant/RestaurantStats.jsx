@@ -45,11 +45,11 @@ export default function RestaurantStats() {
         </div>
         <div className="card p-5">
           <p className="text-sm text-gray-500">Revenu total</p>
-          <p className="text-3xl font-bold text-green-700">{totalRevenue.toLocaleString()} FCFA</p>
+          <p className="text-3xl font-bold text-orange-700">{totalRevenue.toLocaleString()} FCFA</p>
         </div>
         <div className="card p-5">
           <p className="text-sm text-gray-500">Revenu aujourd'hui</p>
-          <p className="text-3xl font-bold text-green-700">{todayRevenue.toLocaleString()} FCFA</p>
+          <p className="text-3xl font-bold text-orange-700">{todayRevenue.toLocaleString()} FCFA</p>
         </div>
       </div>
 
@@ -60,9 +60,9 @@ export default function RestaurantStats() {
             <p className="text-2xl font-bold text-blue-700">{completedOrders}</p>
             <p className="text-sm text-blue-600">Commandes terminées</p>
           </div>
-          <div className="p-4 bg-green-50 rounded-xl">
-            <p className="text-2xl font-bold text-green-700">{orders.filter(o => ['en_attente', 'validee', 'preparation', 'pret'].includes(o.status)).length}</p>
-            <p className="text-sm text-green-600">Commandes en cours</p>
+          <div className="p-4 bg-orange-50 rounded-xl">
+            <p className="text-2xl font-bold text-orange-700">{orders.filter(o => ['en_attente', 'validee', 'preparation', 'pret'].includes(o.status)).length}</p>
+            <p className="text-sm text-orange-600">Commandes en cours</p>
           </div>
         </div>
       </div>

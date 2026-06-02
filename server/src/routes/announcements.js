@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { supabase } from '../config/supabase.js';
+import { supabaseAdmin } from '../config/supabase.js';
 import { authenticate } from '../middlewares/auth.js';
 
 const router = Router();
@@ -7,7 +7,7 @@ const router = Router();
 // GET /api/announcements/:restaurantId
 router.get('/:restaurantId', async (req, res) => {
   try {
-    const { data: announcements, error } = await supabase
+    const { data: announcements, error } = await supabaseAdmin
       .from('announcements')
       .select('*')
       .eq('restaurant_id', req.params.restaurantId)
@@ -30,7 +30,7 @@ router.post('/', authenticate, async (req, res) => {
       return res.status(400).json({ error: 'restaurant_id et title requis' });
     }
 
-    const { data: announcement, error } = await supabase
+    const { data: announcement, error } = await supabaseAdmin
       .from('announcements')
       .insert({ restaurant_id, title, content, image })
       .select()
@@ -47,7 +47,7 @@ router.post('/', authenticate, async (req, res) => {
 // DELETE /api/announcements/:id
 router.delete('/:id', authenticate, async (req, res) => {
   try {
-    await supabase.from('announcements').delete().eq('id', req.params.id);
+    await supabaseAdmin.from('announcements').delete().eq('id', req.params.id);
     res.json({ message: 'Annonce supprimée' });
   } catch (error) {
     res.status(500).json({ error: 'Erreur serveur' });

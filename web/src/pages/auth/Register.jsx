@@ -67,7 +67,7 @@ export default function Register() {
               onClick={() => setForm({ ...form, role: 'client' })}
               className={`p-3 rounded-xl border-2 text-center transition-all ${
                 form.role === 'client'
-                  ? 'border-green-500 bg-green-50 text-green-700'
+                  ? 'border-orange-500 bg-orange-50 text-orange-600'
                   : 'border-gray-200 text-gray-600 hover:border-gray-300'
               }`}
             >
@@ -79,7 +79,7 @@ export default function Register() {
               onClick={() => setForm({ ...form, role: 'restaurant' })}
               className={`p-3 rounded-xl border-2 text-center transition-all ${
                 form.role === 'restaurant'
-                  ? 'border-green-500 bg-green-50 text-green-700'
+                  ? 'border-orange-500 bg-orange-50 text-orange-700'
                   : 'border-gray-200 text-gray-600 hover:border-gray-300'
               }`}
             >
@@ -161,7 +161,7 @@ export default function Register() {
 
       <p className="mt-6 text-center text-sm text-gray-500">
         Déjà un compte ?{' '}
-        <Link to="/login" className="text-green-700 font-medium hover:underline">
+        <Link to="/login" className="text-orange-700 font-medium hover:underline">
           Se connecter
         </Link>
       </p>

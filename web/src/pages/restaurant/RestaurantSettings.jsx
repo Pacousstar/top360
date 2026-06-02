@@ -18,6 +18,8 @@ export default function RestaurantSettings() {
     phone: restaurant?.phone || '',
     address: restaurant?.address || '',
     city: restaurant?.city || '',
+    logo: restaurant?.logo || '',
+    banner: restaurant?.banner || '',
     opening_time: restaurant?.opening_time?.slice(0, 5) || '',
     closing_time: restaurant?.closing_time?.slice(0, 5) || '',
     module: restaurant?.module || 'top_delice',
@@ -72,6 +74,18 @@ export default function RestaurantSettings() {
               <textarea value={form.description} onChange={(e) => setForm({ ...form, description: e.target.value })} className="input-field" rows={3} />
             </div>
             <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Logo (URL)</label>
+              <div className="flex items-center gap-3">
+                {form.logo && <img src={form.logo} alt="logo" className="w-12 h-12 rounded-xl object-cover border" />}
+                <input type="text" value={form.logo} onChange={(e) => setForm({ ...form, logo: e.target.value })} className="input-field flex-1" placeholder="https://exemple.com/logo.png" />
+              </div>
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Bannière (URL)</label>
+              {form.banner && <div className="h-20 rounded-xl bg-gray-100 mb-2 overflow-hidden"><img src={form.banner} alt="banner" className="w-full h-full object-cover" /></div>}
+              <input type="text" value={form.banner} onChange={(e) => setForm({ ...form, banner: e.target.value })} className="input-field" placeholder="https://exemple.com/banniere.png" />
+            </div>
+            <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">Module</label>
               <select value={form.module} onChange={(e) => setForm({ ...form, module: e.target.value })} className="input-field">
                 <option value="top_delice">🍽️ TOP DÉLICE</option>
@@ -119,28 +133,28 @@ export default function RestaurantSettings() {
             {PLANS.map(plan => {
               const isActive = restaurant.subscription_plan === plan.key;
               return (
-                <div key={plan.key} className={`card p-6 ${isActive ? 'ring-2 ring-green-500' : ''}`}>
+                <div key={plan.key} className={`card p-6 ${isActive ? 'ring-2 ring-orange-500 shadow-lg shadow-orange-200' : ''}`}>
                   <div className="flex items-start justify-between mb-3">
                     <div>
                       <h3 className="font-bold text-lg">{plan.name}</h3>
                       <p className="text-sm text-gray-500">{plan.desc}</p>
                     </div>
-                    <p className="text-2xl font-bold text-green-700">{plan.price} <span className="text-sm font-normal">FCFA/mois</span></p>
+                    <p className="text-2xl font-bold text-orange-700">{plan.price} <span className="text-sm font-normal">FCFA/mois</span></p>
                   </div>
                   <ul className="space-y-1.5 mb-4">
                     {plan.features.map((f, i) => (
                       <li key={i} className="text-sm text-gray-600 flex items-center gap-2">
-                        <span className="w-1.5 h-1.5 rounded-full bg-green-500" /> {f}
+                        <span className="w-1.5 h-1.5 rounded-full bg-orange-500" /> {f}
                       </li>
                     ))}
                   </ul>
                   <button
                     onClick={() => handleSubscribe(plan.key)}
                     disabled={subscribing || isActive}
-                    className={`w-full py-2.5 rounded-xl font-medium transition-colors ${
+                    className={`w-full py-2.5 rounded-xl font-medium transition-all ${
                       isActive
-                        ? 'bg-green-100 text-green-700 cursor-default'
-                        : 'bg-green-700 text-white hover:bg-green-800'
+                        ? 'bg-orange-100 text-orange-700 cursor-default'
+                        : 'bg-orange-600 text-white hover:bg-orange-700 shadow-lg shadow-orange-200 hover:shadow-xl'
                     }`}
                   >
                     {isActive ? 'Plan actif' : `Souscrire à ${plan.name}`}

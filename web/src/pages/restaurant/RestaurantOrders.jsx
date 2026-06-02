@@ -70,7 +70,7 @@ export default function RestaurantOrders() {
       <div className="flex gap-2 overflow-x-auto scrollbar-hide mb-6 pb-2">
         <button
           onClick={() => setFilter('all')}
-          className={`whitespace-nowrap px-4 py-2 rounded-xl text-sm font-medium ${filter === 'all' ? 'bg-green-700 text-white' : 'bg-gray-100 text-gray-600'}`}
+          className={`whitespace-nowrap px-4 py-2 rounded-xl text-sm font-medium ${filter === 'all' ? 'bg-orange-700 text-white' : 'bg-gray-100 text-gray-600'}`}
         >
           Toutes
         </button>
@@ -78,7 +78,7 @@ export default function RestaurantOrders() {
           <button
             key={key}
             onClick={() => setFilter(key)}
-            className={`whitespace-nowrap px-4 py-2 rounded-xl text-sm font-medium ${filter === key ? 'bg-green-700 text-white' : 'bg-gray-100 text-gray-600'}`}
+            className={`whitespace-nowrap px-4 py-2 rounded-xl text-sm font-medium ${filter === key ? 'bg-orange-700 text-white' : 'bg-gray-100 text-gray-600'}`}
           >
             {label}
           </button>
@@ -87,7 +87,7 @@ export default function RestaurantOrders() {
 
       {loading ? (
         <div className="text-center py-12">
-          <div className="animate-spin rounded-full h-8 w-8 border-4 border-green-500 border-t-transparent mx-auto" />
+          <div className="animate-spin rounded-full h-8 w-8 border-4 border-orange-500 border-t-transparent mx-auto" />
         </div>
       ) : (
         <div className="space-y-4">
@@ -100,7 +100,7 @@ export default function RestaurantOrders() {
                   <p className="text-sm text-gray-400">{new Date(order.created_at).toLocaleString('fr-FR')}</p>
                 </div>
                 <div className="text-right">
-                  <p className="font-bold text-green-700">{order.total_amount?.toLocaleString()} FCFA</p>
+                  <p className="font-bold text-orange-700">{order.total_amount?.toLocaleString()} FCFA</p>
                   <p className="text-xs text-gray-400">{order.payment_status?.replace('_', ' ')}</p>
                 </div>
               </div>

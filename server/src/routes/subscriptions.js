@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { supabase } from '../config/supabase.js';
+import { supabaseAdmin } from '../config/supabase.js';
 import { authenticate } from '../middlewares/auth.js';
 
 const router = Router();
@@ -7,7 +7,7 @@ const router = Router();
 // GET /api/subscriptions/:restaurantId — Abonnement d'un restaurant
 router.get('/:restaurantId', authenticate, async (req, res) => {
   try {
-    const { data: subscription, error } = await supabase
+    const { data: subscription, error } = await supabaseAdmin
       .from('subscriptions')
       .select('*')
       .eq('restaurant_id', req.params.restaurantId)
@@ -45,7 +45,7 @@ router.post('/', authenticate, async (req, res) => {
     const endDate = new Date(now);
     endDate.setDate(endDate.getDate() + plans[plan].duration);
 
-    const { data: subscription, error } = await supabase
+    const { data: subscription, error } = await supabaseAdmin
       .from('subscriptions')
       .insert({
         restaurant_id,
@@ -61,7 +61,7 @@ router.post('/', authenticate, async (req, res) => {
     if (error) return res.status(500).json({ error: 'Erreur souscription' });
 
     // Mettre à jour le restaurant
-    await supabase
+    await supabaseAdmin
       .from('restaurants')
       .update({
         subscription_plan: plan,
@@ -82,7 +82,7 @@ router.post('/', authenticate, async (req, res) => {
 // GET /api/subscriptions/check/:restaurantId — Vérifier abonnement actif
 router.get('/check/:restaurantId', async (req, res) => {
   try {
-    const { data: sub } = await supabase
+    const { data: sub } = await supabaseAdmin
       .from('subscriptions')
       .select('*')
       .eq('restaurant_id', req.params.restaurantId)

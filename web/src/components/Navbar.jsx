@@ -32,7 +32,7 @@ export default function Navbar() {
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <Link to="/" className="flex items-center gap-2">
-            <span className="text-2xl font-bold text-green-800">TOP 360°</span>
+            <span className="text-2xl font-bold text-orange-800">TOP 360°</span>
           </Link>
 
           {/* Search bar */}
@@ -44,21 +44,21 @@ export default function Navbar() {
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Restaurant, service, produit..."
-                className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-gray-200 bg-gray-50 focus:bg-white focus:border-green-500 focus:ring-2 focus:ring-green-100 outline-none transition-all"
+                className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-gray-200 bg-gray-50 focus:bg-white focus:border-orange-500 focus:ring-2 focus:ring-orange-100 outline-none transition-all"
               />
             </div>
           </form>
 
           {/* Right side */}
           <div className="flex items-center gap-3">
-            <Link to="/map" className="hidden sm:flex items-center gap-1.5 px-3 py-2 text-sm text-gray-600 hover:text-green-700 hover:bg-green-50 rounded-xl transition-colors">
+            <Link to="/map" className="hidden sm:flex items-center gap-1.5 px-3 py-2 text-sm text-gray-600 hover:text-orange-600 hover:bg-orange-50 rounded-xl transition-colors">
               <FiMapPin className="w-4 h-4" />
               <span>Carte</span>
             </Link>
 
             {user ? (
               <div className="flex items-center gap-3">
-                <Link to={getDashboardLink()} className="hidden sm:flex items-center gap-2 px-4 py-2 bg-green-700 text-white text-sm rounded-xl hover:bg-green-800 transition-colors">
+                <Link to={getDashboardLink()} className="hidden sm:flex items-center gap-2 px-4 py-2 bg-orange-600 text-white text-sm rounded-xl hover:bg-orange-700 transition-all shadow-md">
                   <FiUser className="w-4 h-4" />
                   <span>Mon espace</span>
                 </Link>
@@ -72,10 +72,10 @@ export default function Navbar() {
               </div>
             ) : (
               <div className="flex items-center gap-2">
-                <Link to="/login" className="px-4 py-2 text-sm text-gray-700 hover:text-green-700 hover:bg-green-50 rounded-xl transition-colors">
+                <Link to="/login" className="px-4 py-2 text-sm text-gray-700 hover:text-orange-700 hover:bg-orange-50 rounded-xl transition-colors">
                   Connexion
                 </Link>
-                <Link to="/register" className="px-4 py-2 text-sm bg-green-700 text-white rounded-xl hover:bg-green-800 transition-colors">
+                <Link to="/register" className="px-4 py-2 text-sm bg-orange-700 text-white rounded-xl hover:bg-orange-800 transition-colors">
                   Inscription
                 </Link>
               </div>
@@ -109,7 +109,7 @@ export default function Navbar() {
             <FiMapPin /> Carte interactive
           </Link>
           {user && (
-            <Link to={getDashboardLink()} className="flex items-center gap-2 px-4 py-2 text-green-700 hover:bg-green-50 rounded-xl" onClick={() => setMobileMenu(false)}>
+            <Link to={getDashboardLink()} className="flex items-center gap-2 px-4 py-2 text-orange-700 hover:bg-orange-50 rounded-xl" onClick={() => setMobileMenu(false)}>
               <FiUser /> Mon espace
             </Link>
           )}

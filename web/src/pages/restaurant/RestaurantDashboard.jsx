@@ -66,53 +66,57 @@ export default function RestaurantDashboard() {
         <p className="text-gray-500 mt-1">{restaurant.name}</p>
       </div>
 
-      {/* Stats cards */}
+      {/* Stats cards - couleurs vives */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-        <div className="card p-4">
-          <div className="flex items-center justify-between mb-2">
-            <FiShoppingBag className="w-5 h-5 text-green-600" />
-            <span className="text-2xl font-bold">{stats.today_orders}</span>
+        <div className="relative bg-gradient-to-br from-orange-500 to-red-500 rounded-2xl p-5 text-white shadow-lg overflow-hidden">
+          <div className="absolute top-0 right-0 w-20 h-20 bg-white/10 rounded-full -mr-6 -mt-6" />
+          <div className="relative">
+            <FiShoppingBag className="w-6 h-6 mb-2 opacity-80" />
+            <p className="text-3xl font-bold mb-1">{stats.today_orders}</p>
+            <p className="text-sm text-orange-100">Commandes aujourd'hui</p>
           </div>
-          <p className="text-sm text-gray-500">Commandes aujourd'hui</p>
         </div>
-        <div className="card p-4">
-          <div className="flex items-center justify-between mb-2">
-            <FiClock className="w-5 h-5 text-yellow-600" />
-            <span className="text-2xl font-bold">{stats.pending_orders}</span>
+        <div className="relative bg-gradient-to-br from-yellow-400 to-yellow-600 rounded-2xl p-5 text-white shadow-lg overflow-hidden">
+          <div className="absolute top-0 right-0 w-20 h-20 bg-white/10 rounded-full -mr-6 -mt-6" />
+          <div className="relative">
+            <FiClock className="w-6 h-6 mb-2 opacity-80" />
+            <p className="text-3xl font-bold mb-1">{stats.pending_orders}</p>
+            <p className="text-sm text-yellow-100">En attente</p>
           </div>
-          <p className="text-sm text-gray-500">En attente</p>
         </div>
-        <div className="card p-4">
-          <div className="flex items-center justify-between mb-2">
-            <FiDollarSign className="w-5 h-5 text-green-600" />
-            <span className="text-2xl font-bold">{stats.today_revenue.toLocaleString()}</span>
+        <div className="relative bg-gradient-to-br from-blue-500 to-blue-700 rounded-2xl p-5 text-white shadow-lg overflow-hidden">
+          <div className="absolute top-0 right-0 w-20 h-20 bg-white/10 rounded-full -mr-6 -mt-6" />
+          <div className="relative">
+            <FiDollarSign className="w-6 h-6 mb-2 opacity-80" />
+            <p className="text-3xl font-bold mb-1">{stats.today_revenue.toLocaleString()}</p>
+            <p className="text-sm text-blue-100">Revenus (FCFA)</p>
           </div>
-          <p className="text-sm text-gray-500">Revenus aujourd'hui (FCFA)</p>
         </div>
-        <div className="card p-4">
-          <div className="flex items-center justify-between mb-2">
-            <FiTrendingUp className="w-5 h-5 text-blue-600" />
-            <span className="text-2xl font-bold">{stats.total_orders}</span>
+        <div className="relative bg-gradient-to-br from-purple-500 to-purple-700 rounded-2xl p-5 text-white shadow-lg overflow-hidden">
+          <div className="absolute top-0 right-0 w-20 h-20 bg-white/10 rounded-full -mr-6 -mt-6" />
+          <div className="relative">
+            <FiTrendingUp className="w-6 h-6 mb-2 opacity-80" />
+            <p className="text-3xl font-bold mb-1">{stats.total_orders}</p>
+            <p className="text-sm text-purple-100">Total commandes</p>
           </div>
-          <p className="text-sm text-gray-500">Total commandes</p>
         </div>
       </div>
 
       {/* Quick actions */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-8">
-        <Link to="/restaurant/menu" className="card p-4 text-center hover:bg-green-50">
+        <Link to="/restaurant/menu" className="card p-4 text-center hover:bg-orange-50">
           <span className="text-2xl block mb-1">📋</span>
           <span className="text-sm font-medium">Gérer le menu</span>
         </Link>
-        <Link to="/restaurant/orders" className="card p-4 text-center hover:bg-green-50">
+        <Link to="/restaurant/orders" className="card p-4 text-center hover:bg-orange-50">
           <span className="text-2xl block mb-1">📦</span>
           <span className="text-sm font-medium">Commandes</span>
         </Link>
-        <Link to="/restaurant/stats" className="card p-4 text-center hover:bg-green-50">
+        <Link to="/restaurant/stats" className="card p-4 text-center hover:bg-orange-50">
           <span className="text-2xl block mb-1">📊</span>
           <span className="text-sm font-medium">Statistiques</span>
         </Link>
-        <Link to="/restaurant/settings" className="card p-4 text-center hover:bg-green-50">
+        <Link to="/restaurant/settings" className="card p-4 text-center hover:bg-orange-50">
           <span className="text-2xl block mb-1">⚙️</span>
           <span className="text-sm font-medium">Paramètres</span>
         </Link>
@@ -131,7 +135,7 @@ export default function RestaurantDashboard() {
               loadDashboard();
             }}
             className={`relative w-16 h-8 rounded-full transition-colors ${
-              restaurant.is_open ? 'bg-green-500' : 'bg-gray-300'
+              restaurant.is_open ? 'bg-orange-500' : 'bg-gray-300'
             }`}
           >
             <div className={`absolute top-1 w-6 h-6 rounded-full bg-white shadow transition-transform ${

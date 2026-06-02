@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { supabase } from '../config/supabase.js';
+import { supabaseAdmin } from '../config/supabase.js';
 import { authenticate } from '../middlewares/auth.js';
 
 const router = Router();
@@ -7,7 +7,7 @@ const router = Router();
 // GET /api/notifications — Mes notifications
 router.get('/', authenticate, async (req, res) => {
   try {
-    const { data: notifications, error } = await supabase
+    const { data: notifications, error } = await supabaseAdmin
       .from('notifications')
       .select('*')
       .eq('user_id', req.user.id)
@@ -27,7 +27,7 @@ router.get('/', authenticate, async (req, res) => {
 // PUT /api/notifications/:id/read — Marquer comme lu
 router.put('/:id/read', authenticate, async (req, res) => {
   try {
-    await supabase
+    await supabaseAdmin
       .from('notifications')
       .update({ is_read: true })
       .eq('id', req.params.id)
@@ -42,7 +42,7 @@ router.put('/:id/read', authenticate, async (req, res) => {
 // PUT /api/notifications/read-all — Tout marquer comme lu
 router.put('/read-all', authenticate, async (req, res) => {
   try {
-    await supabase
+    await supabaseAdmin
       .from('notifications')
       .update({ is_read: true })
       .eq('user_id', req.user.id)

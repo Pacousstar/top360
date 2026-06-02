@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { supabase } from '../config/supabase.js';
+import { supabaseAdmin } from '../config/supabase.js';
 import { authenticate } from '../middlewares/auth.js';
 
 const router = Router();
@@ -7,7 +7,7 @@ const router = Router();
 // GET /api/reviews/:restaurantId
 router.get('/:restaurantId', async (req, res) => {
   try {
-    const { data: reviews, error } = await supabase
+    const { data: reviews, error } = await supabaseAdmin
       .from('reviews')
       .select('*, client:client_id ( id, fullname, avatar )')
       .eq('restaurant_id', req.params.restaurantId)
@@ -42,7 +42,7 @@ router.post('/', authenticate, async (req, res) => {
     }
 
     // Vérifier si déjà noté
-    const { data: existing } = await supabase
+    const { data: existing } = await supabaseAdmin
       .from('reviews')
       .select('id')
       .eq('client_id', req.user.id)
@@ -53,7 +53,7 @@ router.post('/', authenticate, async (req, res) => {
       return res.status(409).json({ error: 'Vous avez déjà noté ce restaurant' });
     }
 
-    const { data: review, error } = await supabase
+    const { data: review, error } = await supabaseAdmin
       .from('reviews')
       .insert({
         client_id: req.user.id,

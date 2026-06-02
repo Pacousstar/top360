@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import multer from 'multer';
-import { supabase } from '../config/supabase.js';
+import { supabaseAdmin } from '../config/supabase.js';
 import { authenticate } from '../middlewares/auth.js';
 
 const router = Router();
@@ -27,7 +27,7 @@ router.post('/', authenticate, upload.single('file'), async (req, res) => {
 
     const fileName = `${Date.now()}-${Math.random().toString(36).substring(7)}.${req.file.mimetype.split('/')[1]}`;
 
-    const { data, error } = await supabase.storage
+    const { data, error } = await supabaseAdmin.storage
       .from('top360-uploads')
       .upload(fileName, req.file.buffer, {
         contentType: req.file.mimetype,
@@ -39,7 +39,7 @@ router.post('/', authenticate, upload.single('file'), async (req, res) => {
       return res.status(500).json({ error: "Erreur lors de l'upload" });
     }
 
-    const { data: { publicUrl } } = supabase.storage
+    const { data: { publicUrl } } = supabaseAdmin.storage
       .from('top360-uploads')
       .getPublicUrl(fileName);
 

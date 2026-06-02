@@ -48,7 +48,7 @@ export default function SearchResults() {
       ) : (
         <div className="space-y-4">
           {results.map(r => (
-            <Link key={r.id} to={`/restaurant/${r.slug}`} className="card p-4 flex items-start gap-4 hover:bg-green-50 transition-colors">
+            <Link key={r.id} to={`/restaurant/${r.slug}`} className="card p-4 flex items-start gap-4 hover:bg-orange-50 transition-colors">
               <div className="w-14 h-14 rounded-xl bg-gray-100 flex items-center justify-center text-2xl flex-shrink-0">
                 {r.logo ? <img src={r.logo} alt="" className="w-full h-full rounded-xl object-cover" /> : '🏪'}
               </div>

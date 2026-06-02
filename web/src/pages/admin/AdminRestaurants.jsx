@@ -38,7 +38,7 @@ export default function AdminRestaurants() {
 
       {loading ? (
         <div className="text-center py-12">
-          <div className="animate-spin rounded-full h-8 w-8 border-4 border-green-500 border-t-transparent mx-auto" />
+          <div className="animate-spin rounded-full h-8 w-8 border-4 border-orange-500 border-t-transparent mx-auto" />
         </div>
       ) : (
         <div className="card overflow-hidden">
@@ -82,7 +82,7 @@ export default function AdminRestaurants() {
                     <td className="p-4">
                       <button
                         onClick={() => toggleVerify(r.id)}
-                        className={`px-3 py-1.5 rounded-lg text-xs font-medium ${r.is_verified ? 'bg-red-100 text-red-700 hover:bg-red-200' : 'bg-green-100 text-green-700 hover:bg-green-200'}`}
+                        className={`px-3 py-1.5 rounded-lg text-xs font-medium ${r.is_verified ? 'bg-red-100 text-red-700 hover:bg-red-200' : 'bg-orange-100 text-orange-700 hover:bg-orange-200'}`}
                       >
                         {r.is_verified ? 'Suspendre' : 'Activer'}
                       </button>

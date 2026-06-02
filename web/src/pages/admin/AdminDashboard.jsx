@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import { supabase } from '../../services/api';
 import { adminAPI } from '../../services/api';
 import { Link } from 'react-router-dom';
 import { FiUsers, FiShoppingBag, FiCreditCard, FiTrendingUp, FiMapPin, FiDollarSign } from 'react-icons/fi';
@@ -26,7 +25,7 @@ export default function AdminDashboard() {
   if (loading) {
     return (
       <div className="flex items-center justify-center py-20">
-        <div className="animate-spin rounded-full h-10 w-10 border-4 border-green-500 border-t-transparent" />
+        <div className="animate-spin rounded-full h-10 w-10 border-4 border-orange-500 border-t-transparent" />
       </div>
     );
   }
@@ -38,77 +37,82 @@ export default function AdminDashboard() {
         <p className="text-gray-500 mt-1">Vue globale de la plateforme TOP 360°</p>
       </div>
 
-      {/* Stats globales */}
+      {/* Stats globales — couleurs vives */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-        <div className="card p-5">
-          <div className="flex items-center justify-between mb-3">
-            <div className="w-10 h-10 rounded-xl bg-green-100 flex items-center justify-center">
-              <FiMapPin className="w-5 h-5 text-green-600" />
-            </div>
+        <div className="relative bg-gradient-to-br from-orange-500 to-red-500 rounded-2xl p-5 text-white shadow-lg overflow-hidden">
+          <div className="absolute top-0 right-0 w-24 h-24 bg-white/10 rounded-full -mr-8 -mt-8" />
+          <div className="relative">
+            <FiMapPin className="w-6 h-6 mb-2 opacity-80" />
+            <p className="text-3xl font-bold mb-1">{stats?.total_restaurants || 0}</p>
+            <p className="text-sm text-orange-100">Restaurants inscrits</p>
           </div>
-          <p className="text-3xl font-bold">{stats?.total_restaurants || 0}</p>
-          <p className="text-sm text-gray-500">Restaurants inscrits</p>
         </div>
-        <div className="card p-5">
-          <div className="flex items-center justify-between mb-3">
-            <div className="w-10 h-10 rounded-xl bg-blue-100 flex items-center justify-center">
-              <FiUsers className="w-5 h-5 text-blue-600" />
-            </div>
+        <div className="relative bg-gradient-to-br from-blue-500 to-blue-700 rounded-2xl p-5 text-white shadow-lg overflow-hidden">
+          <div className="absolute top-0 right-0 w-24 h-24 bg-white/10 rounded-full -mr-8 -mt-8" />
+          <div className="relative">
+            <FiUsers className="w-6 h-6 mb-2 opacity-80" />
+            <p className="text-3xl font-bold mb-1">{stats?.total_clients || 0}</p>
+            <p className="text-sm text-blue-100">Clients inscrits</p>
           </div>
-          <p className="text-3xl font-bold">{stats?.total_clients || 0}</p>
-          <p className="text-sm text-gray-500">Clients inscrits</p>
         </div>
-        <div className="card p-5">
-          <div className="flex items-center justify-between mb-3">
-            <div className="w-10 h-10 rounded-xl bg-yellow-100 flex items-center justify-center">
-              <FiCreditCard className="w-5 h-5 text-yellow-600" />
-            </div>
+        <div className="relative bg-gradient-to-br from-yellow-400 to-yellow-600 rounded-2xl p-5 text-white shadow-lg overflow-hidden">
+          <div className="absolute top-0 right-0 w-24 h-24 bg-white/10 rounded-full -mr-8 -mt-8" />
+          <div className="relative">
+            <FiCreditCard className="w-6 h-6 mb-2 opacity-80" />
+            <p className="text-3xl font-bold mb-1">{stats?.active_subscriptions || 0}</p>
+            <p className="text-sm text-yellow-100">Abonnements actifs</p>
           </div>
-          <p className="text-3xl font-bold">{stats?.active_subscriptions || 0}</p>
-          <p className="text-sm text-gray-500">Abonnements actifs</p>
         </div>
-        <div className="card p-5">
-          <div className="flex items-center justify-between mb-3">
-            <div className="w-10 h-10 rounded-xl bg-purple-100 flex items-center justify-center">
-              <FiDollarSign className="w-5 h-5 text-purple-600" />
-            </div>
+        <div className="relative bg-gradient-to-br from-purple-500 to-purple-700 rounded-2xl p-5 text-white shadow-lg overflow-hidden">
+          <div className="absolute top-0 right-0 w-24 h-24 bg-white/10 rounded-full -mr-8 -mt-8" />
+          <div className="relative">
+            <FiDollarSign className="w-6 h-6 mb-2 opacity-80" />
+            <p className="text-3xl font-bold mb-1">{stats?.monthly_revenue?.toLocaleString() || 0}</p>
+            <p className="text-sm text-purple-100">Revenus mensuels (FCFA)</p>
           </div>
-          <p className="text-3xl font-bold">{stats?.monthly_revenue?.toLocaleString() || 0}</p>
-          <p className="text-sm text-gray-500">Revenus mensuels (FCFA)</p>
         </div>
       </div>
 
       {/* Second row */}
       <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
-        <div className="card p-5">
-          <p className="text-2xl font-bold">{stats?.total_orders || 0}</p>
-          <p className="text-sm text-gray-500">Commandes totales</p>
+        <div className="relative bg-gradient-to-br from-cyan-500 to-cyan-700 rounded-2xl p-5 text-white shadow-lg overflow-hidden">
+          <div className="absolute top-0 right-0 w-20 h-20 bg-white/10 rounded-full -mr-6 -mt-6" />
+          <div className="relative">
+            <p className="text-3xl font-bold mb-1">{stats?.total_orders || 0}</p>
+            <p className="text-sm text-cyan-100">Commandes totales</p>
+          </div>
         </div>
-        <div className="card p-5">
-          <p className="text-2xl font-bold">{stats?.pending_orders || 0}</p>
-          <p className="text-sm text-gray-500">Commandes en attente</p>
+        <div className="relative bg-gradient-to-br from-pink-500 to-pink-700 rounded-2xl p-5 text-white shadow-lg overflow-hidden">
+          <div className="absolute top-0 right-0 w-20 h-20 bg-white/10 rounded-full -mr-6 -mt-6" />
+          <div className="relative">
+            <p className="text-3xl font-bold mb-1">{stats?.pending_orders || 0}</p>
+            <p className="text-sm text-pink-100">Commandes en attente</p>
+          </div>
         </div>
-        <div className="card p-5">
-          <p className="text-2xl font-bold">
-            {stats?.total_restaurants > 0
-              ? Math.round((stats?.active_subscriptions / stats?.total_restaurants) * 100)
-              : 0}%
-          </p>
-          <p className="text-sm text-gray-500">Taux d'abonnement</p>
+        <div className="relative bg-gradient-to-br from-emerald-500 to-emerald-700 rounded-2xl p-5 text-white shadow-lg overflow-hidden">
+          <div className="absolute top-0 right-0 w-20 h-20 bg-white/10 rounded-full -mr-6 -mt-6" />
+          <div className="relative">
+            <p className="text-3xl font-bold mb-1">
+              {stats?.total_restaurants > 0
+                ? Math.round((stats?.active_subscriptions / stats?.total_restaurants) * 100)
+                : 0}%
+            </p>
+            <p className="text-sm text-emerald-100">Taux d'abonnement</p>
+          </div>
         </div>
       </div>
 
       {/* Links rapides */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-        <Link to="/admin/restaurants" className="card p-4 text-center hover:bg-green-50">
+        <Link to="/admin/restaurants" className="card p-4 text-center hover:bg-orange-50">
           <span className="text-2xl block mb-1">🏪</span>
           <span className="text-sm font-medium">Restaurants</span>
         </Link>
-        <Link to="/admin/subscriptions" className="card p-4 text-center hover:bg-green-50">
+        <Link to="/admin/subscriptions" className="card p-4 text-center hover:bg-orange-50">
           <span className="text-2xl block mb-1">💳</span>
           <span className="text-sm font-medium">Abonnements</span>
         </Link>
-        <Link to="/admin/users" className="card p-4 text-center hover:bg-green-50">
+        <Link to="/admin/users" className="card p-4 text-center hover:bg-orange-50">
           <span className="text-2xl block mb-1">👥</span>
           <span className="text-sm font-medium">Utilisateurs</span>
         </Link>

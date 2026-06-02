@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import bcrypt from 'bcryptjs';
-import { supabase } from '../config/supabase.js';
+import { supabaseAdmin } from '../config/supabase.js';
 import { authenticate, generateToken } from '../middlewares/auth.js';
 
 const router = Router();
@@ -20,11 +20,11 @@ router.post('/register', async (req, res) => {
     }
 
     // Vérifier si l'email existe déjà
-    const { data: existing } = await supabase
+    const { data: existing } = await supabaseAdmin
       .from('users')
       .select('id')
       .eq('email', email)
-      .single();
+      .maybeSingle();
 
     if (existing) {
       return res.status(409).json({ error: 'Cet email est déjà utilisé' });
@@ -37,7 +37,7 @@ router.post('/register', async (req, res) => {
     // Créer l'utilisateur
     const userRole = role === 'restaurant' ? 'restaurant' : 'client';
 
-    const { data: user, error } = await supabase
+    const { data: user, error } = await supabaseAdmin
       .from('users')
       .insert({
         fullname,
@@ -57,7 +57,7 @@ router.post('/register', async (req, res) => {
     // Si c'est un restaurateur, créer automatiquement son restaurant
     if (userRole === 'restaurant') {
       const slug = email.split('@')[0].toLowerCase().replace(/[^a-z0-9]/g, '-');
-      await supabase.from('restaurants').insert({
+      await supabaseAdmin.from('restaurants').insert({
         owner_id: user.id,
         name: fullname,
         slug: `${slug}-${Date.now()}`,
@@ -95,7 +95,7 @@ router.post('/login', async (req, res) => {
     }
 
     // Chercher l'utilisateur
-    const { data: user, error } = await supabase
+    const { data: user, error } = await supabaseAdmin
       .from('users')
       .select('*')
       .eq('email', email)
@@ -118,11 +118,11 @@ router.post('/login', async (req, res) => {
     // Récupérer le restaurant si l'utilisateur est restaurateur
     let restaurant = null;
     if (user.role === 'restaurant') {
-      const { data: resto } = await supabase
+      const { data: resto } = await supabaseAdmin
         .from('restaurants')
         .select('*')
         .eq('owner_id', user.id)
-        .single();
+        .maybeSingle();
       restaurant = resto;
     }
 
@@ -150,7 +150,7 @@ router.post('/login', async (req, res) => {
 // GET /api/auth/me — Profil actuel
 router.get('/me', authenticate, async (req, res) => {
   try {
-    const { data: user } = await supabase
+    const { data: user } = await supabaseAdmin
       .from('users')
       .select('id, fullname, email, phone, role, avatar, is_active, created_at')
       .eq('id', req.user.id)
@@ -162,7 +162,7 @@ router.get('/me', authenticate, async (req, res) => {
 
     let restaurant = null;
     if (user.role === 'restaurant') {
-      const { data: resto } = await supabase
+      const { data: resto } = await supabaseAdmin
         .from('restaurants')
         .select('*')
         .eq('owner_id', user.id)
@@ -187,7 +187,7 @@ router.put('/profile', authenticate, async (req, res) => {
     if (phone !== undefined) updates.phone = phone;
     if (avatar) updates.avatar = avatar;
 
-    const { data: user, error } = await supabase
+    const { data: user, error } = await supabaseAdmin
       .from('users')
       .update(updates)
       .eq('id', req.user.id)

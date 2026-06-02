@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { supabase } from '../config/supabase.js';
+import { supabaseAdmin } from '../config/supabase.js';
 import { authenticate } from '../middlewares/auth.js';
 
 const router = Router();
@@ -7,7 +7,7 @@ const router = Router();
 // GET /api/menus/:restaurantId — Menu complet d'un restaurant
 router.get('/:restaurantId', async (req, res) => {
   try {
-    const { data: categories, error } = await supabase
+    const { data: categories, error } = await supabaseAdmin
       .from('menu_categories')
       .select(`
         *,
@@ -36,7 +36,7 @@ router.post('/category', authenticate, async (req, res) => {
       return res.status(400).json({ error: 'restaurant_id et name requis' });
     }
 
-    const { data: category, error } = await supabase
+    const { data: category, error } = await supabaseAdmin
       .from('menu_categories')
       .insert({ restaurant_id, name })
       .select()
@@ -54,7 +54,7 @@ router.post('/category', authenticate, async (req, res) => {
 // PUT /api/menus/category/:id — Modifier une catégorie
 router.put('/category/:id', authenticate, async (req, res) => {
   try {
-    const { data: category, error } = await supabase
+    const { data: category, error } = await supabaseAdmin
       .from('menu_categories')
       .update({ name: req.body.name })
       .eq('id', req.params.id)
@@ -73,7 +73,7 @@ router.put('/category/:id', authenticate, async (req, res) => {
 // DELETE /api/menus/category/:id — Supprimer une catégorie
 router.delete('/category/:id', authenticate, async (req, res) => {
   try {
-    await supabase.from('menu_categories').delete().eq('id', req.params.id);
+    await supabaseAdmin.from('menu_categories').delete().eq('id', req.params.id);
     res.json({ message: 'Catégorie supprimée' });
   } catch (error) {
     console.error('Erreur delete category:', error);
@@ -93,7 +93,7 @@ router.post('/item', authenticate, async (req, res) => {
       return res.status(400).json({ error: 'restaurant_id, name et base_price requis' });
     }
 
-    const { data: item, error } = await supabase
+    const { data: item, error } = await supabaseAdmin
       .from('menu_items')
       .insert({
         restaurant_id,
@@ -137,7 +137,7 @@ router.put('/item/:id', authenticate, async (req, res) => {
     if (accompaniments) updates.accompaniments = accompaniments;
     if (category_id !== undefined) updates.category_id = category_id;
 
-    const { data: item, error } = await supabase
+    const { data: item, error } = await supabaseAdmin
       .from('menu_items')
       .update(updates)
       .eq('id', req.params.id)
@@ -156,13 +156,13 @@ router.put('/item/:id', authenticate, async (req, res) => {
 // PATCH /api/menus/item/:id/toggle — Activer/désactiver un plat
 router.patch('/item/:id/toggle', authenticate, async (req, res) => {
   try {
-    const { data: item } = await supabase
+    const { data: item } = await supabaseAdmin
       .from('menu_items')
       .select('is_available')
       .eq('id', req.params.id)
       .single();
 
-    const { data: updated } = await supabase
+    const { data: updated } = await supabaseAdmin
       .from('menu_items')
       .update({ is_available: !item.is_available })
       .eq('id', req.params.id)
@@ -179,7 +179,7 @@ router.patch('/item/:id/toggle', authenticate, async (req, res) => {
 // DELETE /api/menus/item/:id — Supprimer un plat
 router.delete('/item/:id', authenticate, async (req, res) => {
   try {
-    await supabase.from('menu_items').delete().eq('id', req.params.id);
+    await supabaseAdmin.from('menu_items').delete().eq('id', req.params.id);
     res.json({ message: 'Plat supprimé' });
   } catch (error) {
     console.error('Erreur delete item:', error);

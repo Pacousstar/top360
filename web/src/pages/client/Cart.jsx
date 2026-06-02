@@ -64,7 +64,7 @@ export default function Cart() {
 
   return (
     <div className="max-w-lg mx-auto px-4 py-6">
-      <Link to={`/restaurant/${restaurant.slug}`} className="inline-flex items-center gap-2 text-gray-600 hover:text-green-700 mb-4">
+      <Link to={`/restaurant/${restaurant.slug}`} className="inline-flex items-center gap-2 text-gray-600 hover:text-orange-700 mb-4">
         <FiArrowLeft /> Retour au menu
       </Link>
 
@@ -115,9 +115,9 @@ export default function Cart() {
             <span className="text-gray-500">Total commande</span>
             <span className="font-medium">{cartTotal.toLocaleString()} FCFA</span>
           </div>
-          <div className="flex justify-between text-green-700">
+          <div className="flex justify-between text-orange-600">
             <span>Avance obligatoire (30%)</span>
-            <span className="font-semibold">{depositAmount.toLocaleString()} FCFA</span>
+            <span className="font-bold">{depositAmount.toLocaleString()} FCFA</span>
           </div>
           <div className="flex justify-between text-gray-500">
             <span>Reste à payer au retrait</span>

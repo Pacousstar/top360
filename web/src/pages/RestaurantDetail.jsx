@@ -73,7 +73,7 @@ export default function RestaurantDetail() {
     return (
       <div className="max-w-4xl mx-auto px-4 py-16 text-center">
         <p className="text-xl text-gray-500">Restaurant non trouvé</p>
-        <Link to="/" className="text-green-700 mt-4 inline-block">Retour à l'accueil</Link>
+        <Link to="/" className="text-orange-700 mt-4 inline-block">Retour à l'accueil</Link>
       </div>
     );
   }
@@ -81,12 +81,12 @@ export default function RestaurantDetail() {
   return (
     <div className="max-w-4xl mx-auto px-4 py-6">
       {/* Back button */}
-      <Link to="/" className="inline-flex items-center gap-2 text-gray-600 hover:text-green-700 mb-4">
+      <Link to="/" className="inline-flex items-center gap-2 text-gray-600 hover:text-orange-700 mb-4">
         <FiArrowLeft /> Retour
       </Link>
 
       {/* Hero */}
-      <div className="h-48 sm:h-64 rounded-2xl bg-gradient-to-br from-green-700 to-green-900 relative overflow-hidden mb-6">
+      <div className="h-48 sm:h-64 rounded-2xl bg-gradient-to-br from-orange-500 to-red-600 relative overflow-hidden mb-6">
         {restaurant.banner && <img src={restaurant.banner} alt="" className="w-full h-full object-cover" />}
         <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
         <div className="absolute bottom-4 left-4 right-4">
@@ -98,7 +98,7 @@ export default function RestaurantDetail() {
               <h1 className="text-2xl font-bold">{restaurant.name}</h1>
               <div className="flex items-center gap-3 text-sm text-white/80 mt-1">
                 {restaurant.is_open ? (
-                  <span className="status-open text-green-300">🟢 Ouvert</span>
+                  <span className="status-open text-orange-300">🟢 Ouvert</span>
                 ) : (
                   <span className="status-closed">🔴 Fermé</span>
                 )}
@@ -114,19 +114,19 @@ export default function RestaurantDetail() {
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
         {restaurant.city && (
           <div className="flex items-center gap-2 text-gray-600 bg-white rounded-xl p-3 border">
-            <FiMapPin className="text-green-600" />
+            <FiMapPin className="text-orange-600" />
             <span className="text-sm">{restaurant.city} {restaurant.address ? `- ${restaurant.address}` : ''}</span>
           </div>
         )}
         {restaurant.phone && (
-          <a href={`tel:${restaurant.phone}`} className="flex items-center gap-2 text-gray-600 bg-white rounded-xl p-3 border hover:bg-green-50">
-            <FiPhone className="text-green-600" />
+          <a href={`tel:${restaurant.phone}`} className="flex items-center gap-2 text-gray-600 bg-white rounded-xl p-3 border hover:bg-orange-50">
+            <FiPhone className="text-orange-600" />
             <span className="text-sm">{restaurant.phone}</span>
           </a>
         )}
         {restaurant.opening_time && (
           <div className="flex items-center gap-2 text-gray-600 bg-white rounded-xl p-3 border">
-            <FiClock className="text-green-600" />
+            <FiClock className="text-orange-600" />
             <span className="text-sm">{restaurant.opening_time?.slice(0, 5)} - {restaurant.closing_time?.slice(0, 5)}</span>
           </div>
         )}
@@ -147,7 +147,7 @@ export default function RestaurantDetail() {
                 onClick={() => setSelectedCategory(cat.id)}
                 className={`whitespace-nowrap px-4 py-2 rounded-xl text-sm font-medium transition-colors ${
                   selectedCategory === cat.id
-                    ? 'bg-green-700 text-white'
+                    ? 'bg-orange-700 text-white'
                     : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
                 }`}
               >
@@ -171,7 +171,7 @@ export default function RestaurantDetail() {
                             <p className="text-sm text-gray-500 mt-0.5">{item.description}</p>
                           )}
                         </div>
-                        <span className="font-semibold text-green-700 whitespace-nowrap">
+                        <span className="font-semibold text-orange-700 whitespace-nowrap">
                           {item.base_price?.toLocaleString()} FCFA
                         </span>
                       </div>
@@ -214,7 +214,7 @@ export default function RestaurantDetail() {
         <div className="fixed bottom-4 left-4 right-4 z-40 max-w-md mx-auto">
           <button
             onClick={() => setShowCart(true)}
-            className="w-full glass-card px-6 py-4 flex items-center justify-between text-green-900"
+            className="w-full glass-card px-6 py-4 flex items-center justify-between text-orange-900"
           >
             <span className="flex items-center gap-2">
               <FiShoppingCart className="w-5 h-5" />
@@ -245,7 +245,7 @@ export default function RestaurantDetail() {
                       <button onClick={() => updateCartItem(item.id, 'quantity', Math.max(1, item.quantity - 1))} className="w-7 h-7 rounded-full bg-gray-200 flex items-center justify-center">-</button>
                       <span className="font-medium">{item.quantity}</span>
                       <button onClick={() => updateCartItem(item.id, 'quantity', item.quantity + 1)} className="w-7 h-7 rounded-full bg-gray-200 flex items-center justify-center">+</button>
-                      <span className="text-green-700 font-medium ml-auto">{(item.base_price * item.quantity).toLocaleString()} FCFA</span>
+                      <span className="text-orange-700 font-medium ml-auto">{(item.base_price * item.quantity).toLocaleString()} FCFA</span>
                     </div>
                   </div>
                 </div>

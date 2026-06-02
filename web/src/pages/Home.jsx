@@ -40,17 +40,18 @@ export default function Home() {
   return (
     <div>
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-br from-green-900 via-green-800 to-yellow-800 text-white overflow-hidden">
-        <div className="absolute inset-0 opacity-10">
-          <div className="absolute top-10 left-10 w-72 h-72 bg-yellow-400 rounded-full blur-3xl" />
-          <div className="absolute bottom-10 right-10 w-96 h-96 bg-green-400 rounded-full blur-3xl" />
+      <section className="relative bg-gradient-to-r from-orange-600 via-orange-500 to-red-500 text-white overflow-hidden">
+        <div className="absolute inset-0">
+          <div className="absolute -top-20 -left-20 w-80 h-80 bg-orange-300 rounded-full blur-3xl opacity-30" />
+          <div className="absolute -bottom-20 -right-20 w-96 h-96 bg-yellow-300 rounded-full blur-3xl opacity-20" />
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-white rounded-full blur-[100px] opacity-5" />
         </div>
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24">
           <div className="text-center max-w-2xl mx-auto">
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-4">
-              Bienvenue sur <span className="text-yellow-400">TOP 360°</span>
+              Bienvenue sur <span className="text-yellow-300">TOP 360°</span>
             </h1>
-            <p className="text-lg sm:text-xl text-green-100 mb-8">
+            <p className="text-lg sm:text-xl text-orange-100 mb-8">
               La plateforme digitale des commerces et services locaux
             </p>
             <div className="relative max-w-lg mx-auto">
@@ -60,10 +61,10 @@ export default function Home() {
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
                 placeholder="Que cherchez-vous ? (restaurant, quincaillerie, hôtel...)"
-                className="w-full pl-12 pr-4 py-4 rounded-xl text-gray-900 bg-white shadow-lg focus:ring-2 focus:ring-yellow-400 outline-none text-base"
+                className="w-full pl-12 pr-4 py-4 rounded-xl text-gray-900 bg-white shadow-lg focus:ring-2 focus:ring-orange-400 outline-none text-base"
               />
             </div>
-            <Link to="/map" className="inline-flex items-center gap-2 mt-6 px-6 py-3 bg-yellow-500 text-green-900 font-semibold rounded-xl hover:bg-yellow-400 transition-colors">
+            <Link to="/map" className="inline-flex items-center gap-2 mt-6 px-6 py-3 bg-yellow-400 text-orange-900 font-bold rounded-xl hover:bg-yellow-300 transition-all hover:scale-105 shadow-lg">
               <FiMapPin className="w-5 h-5" />
               Explorer la carte interactive
             </Link>
@@ -99,7 +100,7 @@ export default function Home() {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {featured.map((r) => (
               <Link key={r.id} to={`/restaurant/${r.slug}`} className="card group">
-                <div className="h-40 bg-gradient-to-br from-green-600 to-green-800 relative overflow-hidden">
+                <div className="h-40 bg-gradient-to-br from-orange-500 to-red-500 relative overflow-hidden">
                   {r.banner && <img src={r.banner} alt="" className="w-full h-full object-cover" />}
                   <div className="absolute top-3 right-3">
                     <span className="badge bg-yellow-400 text-yellow-900">⭐ Sponsorisé</span>
@@ -112,7 +113,7 @@ export default function Home() {
                 </div>
                 <div className="p-4">
                   <div className="flex items-start gap-3">
-                    <div className="w-12 h-12 rounded-xl bg-green-100 flex items-center justify-center text-xl flex-shrink-0">
+                    <div className="w-12 h-12 rounded-xl bg-orange-100 flex items-center justify-center text-xl flex-shrink-0">
                       {r.logo ? <img src={r.logo} alt="" className="w-full h-full rounded-xl object-cover" /> : '🍽️'}
                     </div>
                     <div className="flex-1 min-w-0">
@@ -138,7 +139,7 @@ export default function Home() {
           <h2 className="text-2xl font-bold text-gray-900 flex items-center gap-2">
             <FiTrendingUp /> Découvrir
           </h2>
-          <Link to="/search" className="text-green-700 hover:text-green-800 font-medium text-sm flex items-center gap-1">
+          <Link to="/search" className="text-orange-700 hover:text-orange-800 font-medium text-sm flex items-center gap-1">
             Voir tout <FiChevronRight />
           </Link>
         </div>
@@ -159,7 +160,7 @@ export default function Home() {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {restaurants.map((r) => (
               <Link key={r.id} to={`/restaurant/${r.slug}`} className="card group">
-                <div className="h-40 bg-gradient-to-br from-green-600 to-green-800 relative overflow-hidden">
+                <div className="h-40 bg-gradient-to-br from-orange-500 to-red-500 relative overflow-hidden">
                   <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
                   {r.is_open ? (
                     <span className="absolute top-3 left-3 badge-green">🟢 Ouvert</span>
@@ -199,13 +200,16 @@ export default function Home() {
       </section>
 
       {/* CTA Inscription */}
-      <section className="bg-gradient-to-r from-green-800 to-green-700 text-white py-16">
-        <div className="max-w-7xl mx-auto px-4 text-center">
+      <section className="relative bg-gradient-to-r from-orange-600 to-red-600 text-white py-16 overflow-hidden">
+        <div className="absolute inset-0">
+          <div className="absolute top-0 right-0 w-64 h-64 bg-yellow-300 rounded-full blur-3xl opacity-20" />
+        </div>
+        <div className="relative max-w-7xl mx-auto px-4 text-center">
           <h2 className="text-3xl font-bold mb-4">Vous êtes un commerce ou un prestataire ?</h2>
-          <p className="text-green-100 mb-8 max-w-2xl mx-auto">
+          <p className="text-orange-100 mb-8 max-w-2xl mx-auto">
             Créez votre vitrine numérique, gérez vos commandes, et faites-vous connaître des milliers de clients.
           </p>
-          <Link to="/register" className="inline-flex items-center gap-2 px-8 py-4 bg-yellow-500 text-green-900 font-bold text-lg rounded-xl hover:bg-yellow-400 transition-colors">
+          <Link to="/register" className="inline-flex items-center gap-2 px-8 py-4 bg-white text-orange-700 font-bold text-lg rounded-xl hover:bg-orange-50 transition-all hover:scale-105 shadow-lg">
             Créer ma vitrine gratuitement
           </Link>
         </div>

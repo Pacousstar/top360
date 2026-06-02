@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { supabase } from '../config/supabase.js';
+import { supabaseAdmin } from '../config/supabase.js';
 import { authenticate, requireRole } from '../middlewares/auth.js';
 
 const router = Router();
@@ -17,7 +17,7 @@ router.get('/', async (req, res) => {
       limit = 20,
     } = req.query;
 
-    let query = supabase
+    let query = supabaseAdmin
       .from('restaurants')
       .select(`
         *,
@@ -76,7 +76,7 @@ router.get('/', async (req, res) => {
 // GET /api/restaurants/:slug — Détail d'un restaurant
 router.get('/:slug', async (req, res) => {
   try {
-    const { data: restaurant, error } = await supabase
+    const { data: restaurant, error } = await supabaseAdmin
       .from('restaurants')
       .select(`
         *,
@@ -123,7 +123,7 @@ router.put('/:id', authenticate, async (req, res) => {
     const restaurantId = req.params.id;
 
     // Vérifier que l'utilisateur est propriétaire
-    const { data: existing } = await supabase
+    const { data: existing } = await supabaseAdmin
       .from('restaurants')
       .select('owner_id')
       .eq('id', restaurantId)
@@ -158,7 +158,7 @@ router.put('/:id', authenticate, async (req, res) => {
     if (banner) updates.banner = banner;
     if (module) updates.module = module;
 
-    const { data: restaurant, error } = await supabase
+    const { data: restaurant, error } = await supabaseAdmin
       .from('restaurants')
       .update(updates)
       .eq('id', restaurantId)
@@ -179,7 +179,7 @@ router.put('/:id', authenticate, async (req, res) => {
 // PATCH /api/restaurants/:id/toggle-open — Ouvrir/fermer
 router.patch('/:id/toggle-open', authenticate, async (req, res) => {
   try {
-    const { data: restaurant } = await supabase
+    const { data: restaurant } = await supabaseAdmin
       .from('restaurants')
       .select('owner_id, is_open')
       .eq('id', req.params.id)
@@ -190,7 +190,7 @@ router.patch('/:id/toggle-open', authenticate, async (req, res) => {
       return res.status(403).json({ error: 'Accès non autorisé' });
     }
 
-    const { data: updated } = await supabase
+    const { data: updated } = await supabaseAdmin
       .from('restaurants')
       .update({ is_open: !restaurant.is_open })
       .eq('id', req.params.id)
