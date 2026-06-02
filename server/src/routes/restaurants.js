@@ -41,7 +41,7 @@ router.get('/', async (req, res) => {
 
     if (error) {
       console.error('Erreur liste restaurants:', error);
-      return res.status(500).json({ error: 'Erreur lors du chargement des restaurants' });
+      return res.status(500).json({ error: 'Erreur lors du chargement des restaurants', details: error.message });
     }
 
     // Récupérer les notes pour chaque restaurant
