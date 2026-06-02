@@ -13,18 +13,18 @@ export default function Footer() {
           </div>
           <div>
             <h4 className="font-semibold mb-3">Plateformes</h4>
-            <ul className="space-y-2 text-sm text-orange-200">
-              <li>🍽️ TOP DÉLICE</li>
-              <li>🏗️ TOP BAT</li>
-              <li>🏨 TOP HOTEL</li>
-              <li>🛍️ TOP SHOP</li>
-              <li>🚗 TOP AUTO</li>
-              <li>🏥 TOP SANTÉ</li>
-              <li>🎓 TOP ÉDUCATION</li>
-              <li>🏠 TOP IMMO</li>
-              <li>🎉 TOP EVENT</li>
-              <li>⚖️ TOP SERVICES</li>
-            </ul>
+            <div className="grid grid-cols-5 gap-x-2 gap-y-1 text-sm text-orange-200">
+              <span>🍽️ TOP DÉLICE</span>
+              <span>🏗️ TOP BAT</span>
+              <span>🏨 TOP HOTEL</span>
+              <span>🛍️ TOP SHOP</span>
+              <span>🚗 TOP AUTO</span>
+              <span>🏥 TOP SANTÉ</span>
+              <span>🎓 TOP ÉDUCATION</span>
+              <span>🏠 TOP IMMO</span>
+              <span>🎉 TOP EVENT</span>
+              <span>⚖️ TOP SERVICES</span>
+            </div>
           </div>
           <div>
             <h4 className="font-semibold mb-3">Liens utiles</h4>
