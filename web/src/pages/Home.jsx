@@ -46,13 +46,13 @@ export default function Home() {
       {/* Hero Section */}
       <section className="relative bg-gradient-to-r from-orange-600 via-orange-500 to-red-500 text-white overflow-hidden">
         <div className="absolute inset-0">
-          <div className="absolute -top-20 -left-20 w-80 h-80 bg-orange-300 rounded-full blur-3xl opacity-30" />
-          <div className="absolute -bottom-20 -right-20 w-96 h-96 bg-yellow-300 rounded-full blur-3xl opacity-20" />
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-white rounded-full blur-[100px] opacity-5" />
+          <div className="absolute -top-20 -left-20 w-80 h-80 bg-orange-300 rounded-full blur-3xl opacity-30 hidden sm:block" />
+          <div className="absolute -bottom-20 -right-20 w-96 h-96 bg-yellow-300 rounded-full blur-3xl opacity-20 hidden sm:block" />
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-white rounded-full blur-[100px] opacity-5 hidden sm:block" />
         </div>
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24">
           <div className="text-center max-w-2xl mx-auto">
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-4">
+            <h1 className="text-3xl sm:text-5xl lg:text-6xl font-bold mb-4">
               Bienvenue sur <span className="text-forest-700">TOP 360°</span>
             </h1>
             <p className="text-lg sm:text-xl text-orange-100 mb-8">
@@ -64,11 +64,11 @@ export default function Home() {
                 type="text"
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
-                placeholder="Que cherchez-vous ? (restaurant, quincaillerie, hôtel...)"
+                placeholder="Que cherchez-vous ?"
                 className="w-full pl-12 pr-4 py-4 rounded-xl text-gray-900 bg-white shadow-lg focus:ring-2 focus:ring-orange-400 outline-none text-base"
               />
             </div>
-            <Link to="/map" className="inline-flex items-center gap-2 mt-6 px-6 py-3 bg-forest-700 text-white font-bold rounded-xl hover:bg-forest-600 transition-all hover:scale-105 shadow-lg">
+            <Link to="/map" className="w-full sm:inline-flex items-center justify-center gap-2 mt-6 px-6 py-3 bg-forest-700 text-white font-bold rounded-xl hover:bg-forest-600 transition-all hover:scale-105 shadow-lg">
               <FiMapPin className="w-5 h-5" />
               Explorer la carte interactive
             </Link>
@@ -210,11 +210,11 @@ export default function Home() {
           <div className="absolute top-0 right-0 w-64 h-64 bg-yellow-300 rounded-full blur-3xl opacity-20" />
         </div>
         <div className="relative max-w-7xl mx-auto px-4 text-center">
-          <h2 className="text-3xl font-bold mb-4">Vous êtes un commerce ou un prestataire ?</h2>
+          <h2 className="text-2xl sm:text-3xl font-bold mb-4">Vous êtes un commerce ou un prestataire ?</h2>
           <p className="text-orange-100 mb-8 max-w-2xl mx-auto">
             Créez votre vitrine numérique, gérez vos commandes, et faites-vous connaître des milliers de clients.
           </p>
-          <Link to="/register" className="inline-flex items-center gap-2 px-8 py-4 bg-forest-700 text-white font-bold text-lg rounded-xl hover:bg-forest-600 transition-all hover:scale-105 shadow-lg">
+          <Link to="/register" className="w-full sm:inline-flex items-center justify-center gap-2 px-8 py-4 bg-forest-700 text-white font-bold text-lg rounded-xl hover:bg-forest-600 transition-all hover:scale-105 shadow-lg">
             Créer ma vitrine gratuitement
           </Link>
         </div>

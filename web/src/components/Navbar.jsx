@@ -66,7 +66,7 @@ export default function Navbar() {
                 </Link>
                 <button
                   onClick={() => { logout(); navigate('/'); }}
-                  className="p-2 text-gray-500 hover:text-red-500 hover:bg-red-50 rounded-xl transition-colors"
+                  className="p-3 text-gray-500 hover:text-red-500 hover:bg-red-50 rounded-xl transition-colors"
                   title="Déconnexion"
                 >
                   <FiLogOut className="w-5 h-5" />
@@ -95,8 +95,8 @@ export default function Navbar() {
       </div>
 
       {/* Mobile menu */}
-      {mobileMenu && (
-        <div className="md:hidden border-t bg-white px-4 py-4 space-y-3">
+      <div className={`md:hidden border-t bg-white overflow-hidden transition-all duration-300 ${mobileMenu ? 'max-h-64' : 'max-h-0'}`}>
+        <div className="px-4 py-4 space-y-3">
           <form onSubmit={handleSearch} className="relative">
             <FiSearch className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
             <input
@@ -116,7 +116,7 @@ export default function Navbar() {
             </Link>
           )}
         </div>
-      )}
+      </div>
     </nav>
   );
 }
