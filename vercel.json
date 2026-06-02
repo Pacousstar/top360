@@ -1,5 +1,4 @@
 {
-  "project": "top360",
   "rewrites": [{ "source": "/(.*)", "destination": "/" }],
   "buildCommand": "cd web && npm run build",
   "outputDirectory": "web/dist",
