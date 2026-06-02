@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { supabaseAdmin } from '../config/supabase.js';
+import { supabase, supabaseAdmin } from '../config/supabase.js';
 import { authenticate } from '../middlewares/auth.js';
 
 const router = Router();
@@ -7,7 +7,7 @@ const router = Router();
 // GET /api/menus/:restaurantId — Menu complet d'un restaurant
 router.get('/:restaurantId', async (req, res) => {
   try {
-    const { data: categories, error } = await supabaseAdmin
+    const { data: categories, error } = await supabase
       .from('menu_categories')
       .select(`
         *,

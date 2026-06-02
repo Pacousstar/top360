@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { supabaseAdmin } from '../config/supabase.js';
+import { supabase, supabaseAdmin } from '../config/supabase.js';
 import { authenticate, requireRole } from '../middlewares/auth.js';
 
 const router = Router();
@@ -17,7 +17,7 @@ router.get('/', async (req, res) => {
       limit = 20,
     } = req.query;
 
-    let query = supabaseAdmin
+    let query = supabase
       .from('restaurants')
       .select('*', { count: 'exact' });
 
@@ -48,7 +48,7 @@ router.get('/', async (req, res) => {
     const restaurantIds = restaurants.map(r => r.id);
     let ratingsMap = {};
     if (restaurantIds.length > 0) {
-      const { data: reviews } = await supabaseAdmin
+      const { data: reviews } = await supabase
         .from('reviews')
         .select('restaurant_id, rating')
         .in('restaurant_id', restaurantIds);
@@ -88,7 +88,7 @@ router.get('/', async (req, res) => {
 // GET /api/restaurants/:slug — Détail d'un restaurant
 router.get('/:slug', async (req, res) => {
   try {
-    const { data: restaurant, error } = await supabaseAdmin
+    const { data: restaurant, error } = await supabase
       .from('restaurants')
       .select(`
         *,
@@ -107,7 +107,7 @@ router.get('/:slug', async (req, res) => {
     }
 
     // Récupérer les avis séparément
-    const { data: reviews } = await supabaseAdmin
+    const { data: reviews } = await supabase
       .from('reviews')
       .select('*, client:client_id ( fullname, avatar )')
       .eq('restaurant_id', restaurant.id)
