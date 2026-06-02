@@ -49,7 +49,7 @@ export default function Home() {
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24">
           <div className="text-center max-w-2xl mx-auto">
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-4">
-              Bienvenue sur <span className="text-yellow-300">TOP 360°</span>
+              Bienvenue sur <span className="text-forest-700">TOP 360°</span>
             </h1>
             <p className="text-lg sm:text-xl text-orange-100 mb-8">
               La plateforme digitale des commerces et services locaux
@@ -64,7 +64,7 @@ export default function Home() {
                 className="w-full pl-12 pr-4 py-4 rounded-xl text-gray-900 bg-white shadow-lg focus:ring-2 focus:ring-orange-400 outline-none text-base"
               />
             </div>
-            <Link to="/map" className="inline-flex items-center gap-2 mt-6 px-6 py-3 bg-yellow-400 text-orange-900 font-bold rounded-xl hover:bg-yellow-300 transition-all hover:scale-105 shadow-lg">
+            <Link to="/map" className="inline-flex items-center gap-2 mt-6 px-6 py-3 bg-forest-700 text-white font-bold rounded-xl hover:bg-forest-600 transition-all hover:scale-105 shadow-lg">
               <FiMapPin className="w-5 h-5" />
               Explorer la carte interactive
             </Link>

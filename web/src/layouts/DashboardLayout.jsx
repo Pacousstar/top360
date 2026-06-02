@@ -41,7 +41,7 @@ export default function DashboardLayout({ role }) {
           <div className="fixed inset-0 bg-black/50" onClick={() => setSidebarOpen(false)} />
           <div className="fixed inset-y-0 left-0 w-72 bg-white shadow-2xl z-50">
             <div className="flex items-center justify-between p-4 border-b">
-              <h2 className="text-lg font-bold text-orange-800">TOP 360°</h2>
+              <h2 className="text-lg font-bold text-forest-700">TOP 360°</h2>
               <button onClick={() => setSidebarOpen(false)} className="p-2 rounded-lg hover:bg-gray-100">
                 <FiX className="w-5 h-5" />
               </button>
@@ -81,7 +81,7 @@ export default function DashboardLayout({ role }) {
       {/* Sidebar desktop */}
       <aside className="hidden lg:flex lg:flex-col lg:w-72 lg:fixed lg:inset-y-0 bg-white border-r border-gray-200">
         <div className="flex items-center h-16 px-6 border-b">
-          <Link to="/" className="text-xl font-bold text-orange-800">TOP 360°</Link>
+          <Link to="/" className="text-xl font-bold text-forest-700">TOP 360°</Link>
         </div>
         <nav className="flex-1 px-4 py-6 space-y-1 overflow-y-auto">
           {menuItems.map((item) => {
@@ -130,7 +130,7 @@ export default function DashboardLayout({ role }) {
           <button onClick={() => setSidebarOpen(true)} className="p-2 rounded-lg hover:bg-gray-100">
             <FiMenu className="w-6 h-6" />
           </button>
-          <Link to="/" className="text-lg font-bold text-orange-800">TOP 360°</Link>
+          <Link to="/" className="text-lg font-bold text-forest-700">TOP 360°</Link>
           <div className="w-10 h-10 rounded-full bg-orange-700 flex items-center justify-center text-white text-sm font-medium">
             {user?.fullname?.[0]?.toUpperCase()}
           </div>

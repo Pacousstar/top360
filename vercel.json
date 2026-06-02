@@ -1,6 +1,7 @@
 {
+  "project": "top360",
   "rewrites": [{ "source": "/(.*)", "destination": "/" }],
-  "buildCommand": "cd web && npm install && npm run build",
+  "buildCommand": "cd web && npm run build",
   "outputDirectory": "web/dist",
   "framework": "vite",
   "installCommand": "cd web && npm install"

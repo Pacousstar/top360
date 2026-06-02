@@ -7,7 +7,7 @@ export default function AuthLayout() {
         <div className="w-full max-w-md">
           <div className="text-center mb-8">
             <Link to="/" className="inline-block">
-              <h1 className="text-3xl font-bold text-orange-800">TOP 360°</h1>
+              <h1 className="text-3xl font-bold text-forest-700">TOP 360°</h1>
               <p className="text-sm text-gray-500 mt-1">Plateforme digitale des commerces</p>
             </Link>
           </div>

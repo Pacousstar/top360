@@ -12,7 +12,7 @@ export default defineConfig({
         name: 'TOP 360°',
         short_name: 'TOP360',
         description: 'La plateforme digitale des commerces et services locaux',
-        theme_color: '#166534',
+        theme_color: '#FF6E00',
         background_color: '#ffffff',
         display: 'standalone',
         orientation: 'portrait',
