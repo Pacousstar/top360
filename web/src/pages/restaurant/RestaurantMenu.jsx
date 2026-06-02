@@ -210,16 +210,17 @@ export default function RestaurantMenu() {
               </div>
               <div className="divide-y">
                 {cat.menu_items?.map(item => (
-                  <div key={item.id} className="p-4 flex items-center justify-between">
-                    <div className="flex-1">
+                  <div key={item.id} className="p-4 flex items-center gap-3">
+                    {item.image && <img src={item.image} alt="" className="w-14 h-14 rounded-xl object-cover border flex-shrink-0" />}
+                    <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-2">
                         <span className={`w-2 h-2 rounded-full ${item.is_available ? 'bg-orange-500' : 'bg-red-500'}`} />
-                        <span className="font-medium">{item.name}</span>
-                        <span className="text-orange-700 font-semibold">{item.base_price?.toLocaleString()} FCFA</span>
+                        <span className="font-medium truncate">{item.name}</span>
+                        <span className="text-orange-700 font-semibold whitespace-nowrap">{item.base_price?.toLocaleString()} FCFA</span>
                       </div>
-                      {item.description && <p className="text-sm text-gray-500 mt-0.5">{item.description}</p>}
+                      {item.description && <p className="text-sm text-gray-500 mt-0.5 truncate">{item.description}</p>}
                     </div>
-                    <div className="flex items-center gap-2">
+                    <div className="flex items-center gap-2 flex-shrink-0">
                       <button onClick={() => toggleItem(item.id)} className="p-2 hover:bg-gray-100 rounded-lg" title="Activer/Désactiver">
                         <FiToggleLeft className="w-4 h-4" />
                       </button>

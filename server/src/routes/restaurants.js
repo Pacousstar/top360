@@ -19,11 +19,7 @@ router.get('/', async (req, res) => {
 
     let query = supabaseAdmin
       .from('restaurants')
-      .select(`
-        *,
-        owner:owner_id ( fullname, phone ),
-        reviews:reviews ( rating )
-      `);
+      .select('*', { count: 'exact' });
 
     // Filtres
     if (module) query = query.eq('module', module);
@@ -48,9 +44,24 @@ router.get('/', async (req, res) => {
       return res.status(500).json({ error: 'Erreur lors du chargement des restaurants' });
     }
 
-    // Calculer la moyenne des notes
+    // Récupérer les notes pour chaque restaurant
+    const restaurantIds = restaurants.map(r => r.id);
+    let ratingsMap = {};
+    if (restaurantIds.length > 0) {
+      const { data: reviews } = await supabaseAdmin
+        .from('reviews')
+        .select('restaurant_id, rating')
+        .in('restaurant_id', restaurantIds);
+      if (reviews) {
+        reviews.forEach(rev => {
+          if (!ratingsMap[rev.restaurant_id]) ratingsMap[rev.restaurant_id] = [];
+          ratingsMap[rev.restaurant_id].push(rev.rating);
+        });
+      }
+    }
+
     const enriched = restaurants.map(r => {
-      const ratings = r.reviews?.map(rev => rev.rating).filter(Boolean) || [];
+      const ratings = ratingsMap[r.id]?.filter(Boolean) || [];
       const avgRating = ratings.length
         ? Math.round((ratings.reduce((a, b) => a + b, 0) / ratings.length) * 10) / 10
         : 0;
@@ -66,9 +77,10 @@ router.get('/', async (req, res) => {
       restaurants: enriched,
       page: parseInt(page),
       limit: parseInt(limit),
+      total: count || 0,
     });
   } catch (error) {
-    console.error('Erreur restaurants:', error);
+    console.error('Erreur restaurants:', error.message);
     res.status(500).json({ error: 'Erreur serveur' });
   }
 });
@@ -83,13 +95,7 @@ router.get('/:slug', async (req, res) => {
         owner:owner_id ( fullname, phone, email, avatar ),
         menu_categories (
           *,
-          menu_items (
-            *
-          )
-        ),
-        reviews (
-          *,
-          client:client_id ( fullname, avatar )
+          menu_items (*)
         ),
         announcements (*)
       `)
@@ -100,19 +106,27 @@ router.get('/:slug', async (req, res) => {
       return res.status(404).json({ error: 'Restaurant non trouvé' });
     }
 
+    // Récupérer les avis séparément
+    const { data: reviews } = await supabaseAdmin
+      .from('reviews')
+      .select('*, client:client_id ( fullname, avatar )')
+      .eq('restaurant_id', restaurant.id)
+      .order('created_at', { ascending: false });
+
     // Calculer la note moyenne
-    const ratings = restaurant.reviews?.map(r => r.rating).filter(Boolean) || [];
+    const ratings = reviews?.map(r => r.rating).filter(Boolean) || [];
     const avgRating = ratings.length
       ? Math.round((ratings.reduce((a, b) => a + b, 0) / ratings.length) * 10) / 10
       : 0;
 
     res.json({
       ...restaurant,
+      reviews: reviews || [],
       avg_rating: avgRating,
       review_count: ratings.length,
     });
   } catch (error) {
-    console.error('Erreur détail restaurant:', error);
+    console.error('Erreur détail restaurant:', error.message);
     res.status(500).json({ error: 'Erreur serveur' });
   }
 });

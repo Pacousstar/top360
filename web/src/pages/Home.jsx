@@ -161,6 +161,7 @@ export default function Home() {
             {restaurants.map((r) => (
               <Link key={r.id} to={`/restaurant/${r.slug}`} className="card group">
                 <div className="h-40 bg-gradient-to-br from-orange-500 to-red-500 relative overflow-hidden">
+                  {r.banner && <img src={r.banner} alt="" className="w-full h-full object-cover" />}
                   <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
                   {r.is_open ? (
                     <span className="absolute top-3 left-3 badge-green">🟢 Ouvert</span>
