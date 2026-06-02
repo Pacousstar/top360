@@ -13,16 +13,16 @@ export default function Footer() {
           </div>
           <div>
             <h4 className="font-semibold mb-3">Plateformes</h4>
-            <div className="grid grid-cols-5 gap-x-2 gap-y-1 text-sm text-orange-200">
+            <div className="grid grid-cols-2 gap-x-4 gap-y-1 text-sm text-orange-200">
               <span>🍽️ TOP DÉLICE</span>
-              <span>🏗️ TOP BAT</span>
-              <span>🏨 TOP HOTEL</span>
-              <span>🛍️ TOP SHOP</span>
-              <span>🚗 TOP AUTO</span>
               <span>🏥 TOP SANTÉ</span>
+              <span>🏗️ TOP BAT</span>
               <span>🎓 TOP ÉDUCATION</span>
+              <span>🏨 TOP HOTEL</span>
               <span>🏠 TOP IMMO</span>
+              <span>🛍️ TOP SHOP</span>
               <span>🎉 TOP EVENT</span>
+              <span>🚗 TOP AUTO</span>
               <span>⚖️ TOP SERVICES</span>
             </div>
           </div>
