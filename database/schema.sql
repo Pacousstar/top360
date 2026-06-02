@@ -278,7 +278,30 @@ CREATE INDEX idx_stories_restaurant ON stories(restaurant_id);
 CREATE INDEX idx_stories_active ON stories(is_active) WHERE is_active = true;
 
 -- ==========================================================
--- 16. ROW LEVEL SECURITY (RLS)
+-- 16. FONCTIONS UTILITAIRES (déclarées AVANT les politiques RLS)
+-- ==========================================================
+
+-- Vérifier si l'utilisateur est admin
+CREATE OR REPLACE FUNCTION is_admin()
+RETURNS BOOLEAN AS $$
+BEGIN
+  RETURN EXISTS (
+    SELECT 1 FROM users WHERE id = auth.uid() AND role = 'admin'
+  );
+END;
+$$ LANGUAGE plpgsql SECURITY DEFINER;
+
+-- Mettre à jour le champ updated_at automatiquement
+CREATE OR REPLACE FUNCTION update_updated_at()
+RETURNS TRIGGER AS $$
+BEGIN
+  NEW.updated_at = NOW();
+  RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+-- ==========================================================
+-- 17. ROW LEVEL SECURITY (RLS)
 -- ==========================================================
 
 -- Enable RLS on all tables
@@ -297,7 +320,7 @@ ALTER TABLE favorites ENABLE ROW LEVEL SECURITY;
 ALTER TABLE stories ENABLE ROW LEVEL SECURITY;
 
 -- ==========================================================
--- 17. POLICIES RLS
+-- 18. POLICIES RLS
 -- ==========================================================
 
 -- users: chacun voit/modifie son propre profil
@@ -323,29 +346,6 @@ CREATE POLICY orders_update_status ON orders FOR UPDATE USING (auth.uid() = clie
 -- notifications: lecture par utilisateur concerné
 CREATE POLICY notifications_select ON notifications FOR SELECT USING (auth.uid() = user_id);
 CREATE POLICY notifications_update ON notifications FOR UPDATE USING (auth.uid() = user_id);
-
--- ==========================================================
--- 18. FONCTIONS UTILITAIRES
--- ==========================================================
-
--- Vérifier si l'utilisateur est admin
-CREATE OR REPLACE FUNCTION is_admin()
-RETURNS BOOLEAN AS $$
-BEGIN
-  RETURN EXISTS (
-    SELECT 1 FROM users WHERE id = auth.uid() AND role = 'admin'
-  );
-END;
-$$ LANGUAGE plpgsql SECURITY DEFINER;
-
--- Mettre à jour le champ updated_at automatiquement
-CREATE OR REPLACE FUNCTION update_updated_at()
-RETURNS TRIGGER AS $$
-BEGIN
-  NEW.updated_at = NOW();
-  RETURN NEW;
-END;
-$$ LANGUAGE plpgsql;
 
 -- Triggers pour updated_at
 CREATE TRIGGER users_updated_at BEFORE UPDATE ON users FOR EACH ROW EXECUTE FUNCTION update_updated_at();
