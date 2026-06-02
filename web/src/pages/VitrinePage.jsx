@@ -8,6 +8,10 @@ import VitrineShop from './vitrine/VitrineShop';
 import VitrineBat from './vitrine/VitrineBat';
 import VitrineAuto from './vitrine/VitrineAuto';
 import VitrineServices from './vitrine/VitrineServices';
+import VitrineSante from './vitrine/VitrineSante';
+import VitrineEducation from './vitrine/VitrineEducation';
+import VitrineImmo from './vitrine/VitrineImmo';
+import VitrineEvent from './vitrine/VitrineEvent';
 
 const MODULE_LABELS = {
   top_delice: { emoji: '🍽️', name: 'TOP DÉLICE' },
@@ -16,6 +20,10 @@ const MODULE_LABELS = {
   top_shop: { emoji: '🛍️', name: 'TOP SHOP' },
   top_auto: { emoji: '🚗', name: 'TOP AUTO' },
   top_services: { emoji: '⚖️', name: 'TOP SERVICES' },
+  top_sante: { emoji: '🏥', name: 'TOP SANTÉ' },
+  top_education: { emoji: '🎓', name: 'TOP ÉDUCATION' },
+  top_immo: { emoji: '🏠', name: 'TOP IMMO' },
+  top_event: { emoji: '🎉', name: 'TOP EVENT' },
 };
 
 const CONTENT = {
@@ -25,6 +33,10 @@ const CONTENT = {
   top_shop: VitrineShop,
   top_auto: VitrineAuto,
   top_services: VitrineServices,
+  top_sante: VitrineSante,
+  top_education: VitrineEducation,
+  top_immo: VitrineImmo,
+  top_event: VitrineEvent,
 };
 
 export default function VitrinePage() {

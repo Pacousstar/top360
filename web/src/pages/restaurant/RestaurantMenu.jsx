@@ -12,6 +12,10 @@ const MODULE_LABELS = {
   top_shop: { item: 'produit', items: 'produits', title: 'Gestion des produits', name: 'Nom du produit', img: 'Image du produit', cooking: false },
   top_auto: { item: 'véhicule', items: 'véhicules', title: 'Gestion des véhicules', name: 'Modèle', img: 'Photo du véhicule', cooking: false },
   top_services: { item: 'prestation', items: 'prestations', title: 'Gestion des prestations', name: 'Nom du service', img: 'Image', cooking: false },
+  top_sante: { item: 'service', items: 'services', title: 'Gestion des services médicaux', name: 'Nom du service', img: 'Image', cooking: false },
+  top_education: { item: 'formation', items: 'formations', title: 'Gestion des formations', name: 'Nom de la formation', img: 'Image', cooking: false },
+  top_immo: { item: 'bien', items: 'biens', title: 'Gestion des biens', name: 'Type de bien', img: 'Photo du bien', cooking: false },
+  top_event: { item: 'prestation', items: 'prestations', title: 'Gestion des prestations', name: 'Nom de la prestation', img: 'Image', cooking: false },
 };
 
 export default function RestaurantMenu() {

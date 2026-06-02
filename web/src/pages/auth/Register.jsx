@@ -12,6 +12,10 @@ export default function Register() {
     { key: 'top_shop', label: 'TOP SHOP', emoji: '🛍️', desc: 'Boutique, magasin, superette' },
     { key: 'top_auto', label: 'TOP AUTO', emoji: '🚗', desc: 'Garage, vente auto, location' },
     { key: 'top_services', label: 'TOP SERVICES', emoji: '⚖️', desc: 'Conseil, transport, services' },
+    { key: 'top_sante', label: 'TOP SANTÉ', emoji: '🏥', desc: 'Cabinet médical, clinique, pharmacie' },
+    { key: 'top_education', label: 'TOP ÉDUCATION', emoji: '🎓', desc: 'École, formation, cours particuliers' },
+    { key: 'top_immo', label: 'TOP IMMO', emoji: '🏠', desc: 'Agence immobilière, location, vente' },
+    { key: 'top_event', label: 'TOP EVENT', emoji: '🎉', desc: 'Organisation d\'événements, mariage, séminaire' },
   ];
 
   const [form, setForm] = useState({
