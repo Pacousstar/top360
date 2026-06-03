@@ -1,10 +1,37 @@
 import { useState } from 'react';
-import { FiCalendar, FiZap } from 'react-icons/fi';
+import { FiCalendar, FiZap, FiSend } from 'react-icons/fi';
+import { appointmentAPI } from '../../services/api';
 import toast from 'react-hot-toast';
 
 export default function VitrineAuto({ restaurant }) {
   const categories = restaurant.menu_categories || [];
   const [selectedCat, setSelectedCat] = useState(categories[0]?.id || null);
+  const [contact, setContact] = useState({ item: null, name: '', phone: '', date: '', message: '' });
+  const [loading, setLoading] = useState(false);
+
+  const openContact = (item) => setContact({ item, name: '', phone: '', date: '', message: `Bonjour, je suis intéressé par ${item.name}.` });
+
+  const submitContact = async () => {
+    if (!contact.name || !contact.phone) { toast.error('Nom et téléphone requis'); return; }
+    setLoading(true);
+    try {
+      await appointmentAPI.create({
+        restaurant_id: restaurant.id,
+        type: 'auto',
+        item_name: contact.item.name,
+        client_name: contact.name,
+        client_phone: contact.phone,
+        preferred_date: contact.date || null,
+        message: contact.message || null,
+      });
+      toast.success('Demande envoyée au vendeur !');
+      setContact({ item: null, name: '', phone: '', date: '', message: '' });
+    } catch (error) {
+      toast.error(error.response?.data?.error || 'Erreur lors de l\'envoi');
+    } finally {
+      setLoading(false);
+    }
+  };
 
   if (!categories.length) {
     return <div className="text-center py-12 text-gray-500"><p>Annonces à venir</p></div>;
@@ -40,8 +67,8 @@ export default function VitrineAuto({ restaurant }) {
                     <span className="text-xl font-bold text-orange-700">
                       {item.base_price?.toLocaleString()} <span className="text-sm font-normal">FCFA</span>
                     </span>
-                    <button className="btn-primary text-sm px-4 py-2" onClick={() => toast.success('Demande envoyée au vendeur')}>
-                      Contacter
+                    <button onClick={() => openContact(item)} className="btn-primary text-sm px-4 py-2 flex items-center gap-1">
+                      <FiSend /> Contacter
                     </button>
                   </div>
                 )}
@@ -50,6 +77,32 @@ export default function VitrineAuto({ restaurant }) {
           ))}
         </div>
       ))}
+
+      {contact.item && (
+        <div className="fixed inset-0 z-50 bg-black/50 flex items-center justify-center p-4">
+          <div className="bg-white rounded-2xl w-full max-w-md p-6">
+            <h3 className="text-lg font-bold mb-1">Contact : {contact.item.name}</h3>
+            <p className="text-sm text-gray-500 mb-4">{contact.item.base_price?.toLocaleString()} FCFA</p>
+            <div className="space-y-3">
+              <input type="text" placeholder="Votre nom" value={contact.name}
+                onChange={e => setContact({ ...contact, name: e.target.value })} className="input-field" />
+              <input type="tel" placeholder="Téléphone" value={contact.phone}
+                onChange={e => setContact({ ...contact, phone: e.target.value })} className="input-field" />
+              <input type="date" placeholder="Date souhaitée" value={contact.date}
+                onChange={e => setContact({ ...contact, date: e.target.value })} className="input-field" />
+              <textarea placeholder="Votre message..." value={contact.message}
+                onChange={e => setContact({ ...contact, message: e.target.value })} className="input-field" rows={3} />
+              <div className="flex gap-2">
+                <button onClick={submitContact} disabled={loading} className="btn-primary flex-1 flex items-center justify-center gap-2">
+                  {loading ? <span className="animate-spin w-4 h-4 border-2 border-white border-t-transparent rounded-full" /> : <FiSend />}
+                  {loading ? 'Envoi...' : 'Envoyer'}
+                </button>
+                <button onClick={() => setContact({ ...contact, item: null })} className="btn-outline flex-1">Annuler</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

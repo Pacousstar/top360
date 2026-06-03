@@ -13,7 +13,7 @@ router.post('/', async (req, res) => {
       return res.status(400).json({ error: 'restaurant_id, type, item_name, client_name et client_phone requis' });
     }
 
-    const validTypes = ['service', 'sante', 'education', 'immo', 'event'];
+    const validTypes = ['service', 'sante', 'education', 'immo', 'event', 'hotel', 'bat', 'auto'];
     if (!validTypes.includes(type)) {
       return res.status(400).json({ error: 'Type invalide' });
     }

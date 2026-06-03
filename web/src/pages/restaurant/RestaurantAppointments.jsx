@@ -17,6 +17,9 @@ const TYPE_LABELS = {
   education: 'Éducation',
   immo: 'Immobilier',
   event: 'Événementiel',
+  hotel: 'Hôtel',
+  bat: 'Bâtiment',
+  auto: 'Auto',
 };
 
 export default function RestaurantAppointments() {

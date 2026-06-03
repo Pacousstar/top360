@@ -234,7 +234,7 @@ CREATE INDEX idx_reviews_client ON reviews(client_id);
 -- ==========================================================
 -- 12b. TABLE: appointments (réservations & rendez-vous)
 -- ==========================================================
-CREATE TYPE appointment_type AS ENUM ('service', 'sante', 'education', 'immo', 'event');
+CREATE TYPE appointment_type AS ENUM ('service', 'sante', 'education', 'immo', 'event', 'hotel', 'bat', 'auto');
 CREATE TYPE appointment_status AS ENUM ('en_attente', 'confirme', 'refuse', 'annule');
 
 CREATE TABLE appointments (
