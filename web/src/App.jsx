@@ -37,6 +37,7 @@ import AdminDashboard from './pages/admin/AdminDashboard';
 import AdminRestaurants from './pages/admin/AdminRestaurants';
 import AdminSubscriptions from './pages/admin/AdminSubscriptions';
 import AdminUsers from './pages/admin/AdminUsers';
+import AdminAppointments from './pages/admin/AdminAppointments';
 
 function ProtectedRoute({ children, roles }) {
   const { user, loading } = useAuth();
@@ -118,6 +119,7 @@ export default function App() {
         <Route path="/admin/restaurants" element={<AdminRestaurants />} />
         <Route path="/admin/subscriptions" element={<AdminSubscriptions />} />
         <Route path="/admin/users" element={<AdminUsers />} />
+        <Route path="/admin/appointments" element={<AdminAppointments />} />
       </Route>
     </Routes>
   );

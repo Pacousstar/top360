@@ -70,6 +70,7 @@ export const adminAPI = {
   toggleActive: (id) => api.put(`/admin/restaurants/${id}/toggle-active`),
   subscriptions: () => api.get('/admin/subscriptions'),
   users: (params) => api.get('/admin/users', { params }),
+  appointments: (params) => api.get('/admin/appointments', { params }),
 };
 
 // Abonnements

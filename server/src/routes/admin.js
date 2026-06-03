@@ -144,6 +144,31 @@ router.get('/subscriptions', async (req, res) => {
   }
 });
 
+// GET /api/admin/appointments — Tous les rendez-vous
+router.get('/appointments', async (req, res) => {
+  try {
+    const { status, type, page = 1, limit = 50 } = req.query;
+
+    let query = supabaseAdmin
+      .from('appointments')
+      .select('*, restaurant:restaurant_id ( id, name, slug, module, owner_id )')
+      .order('created_at', { ascending: false });
+
+    if (status) query = query.eq('status', status);
+    if (type) query = query.eq('type', type);
+
+    const from = (page - 1) * limit;
+    const { data: appointments, error, count } = await query.range(from, from + limit - 1);
+
+    if (error) return res.status(500).json({ error: 'Erreur chargement' });
+
+    res.json({ appointments, page: parseInt(page), limit: parseInt(limit) });
+  } catch (error) {
+    console.error('Erreur admin appointments:', error);
+    res.status(500).json({ error: 'Erreur serveur' });
+  }
+});
+
 // GET /api/admin/users — Liste utilisateurs
 router.get('/users', async (req, res) => {
   try {

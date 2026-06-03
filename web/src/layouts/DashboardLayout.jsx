@@ -1,7 +1,8 @@
 import { Outlet, Link, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
-import { FiHome, FiShoppingBag, FiClipboard, FiSettings, FiBarChart2, FiUsers, FiCreditCard, FiLogOut, FiBell, FiMenu, FiX, FiMapPin, FiCalendar } from 'react-icons/fi';
+import { FiHome, FiShoppingBag, FiClipboard, FiSettings, FiBarChart2, FiUsers, FiCreditCard, FiLogOut, FiBell, FiMenu, FiX, FiMapPin, FiCalendar, FiClock } from 'react-icons/fi';
 import { useState } from 'react';
+import NotificationBell from '../components/NotificationBell';
 
 export default function DashboardLayout({ role }) {
   const { user, logout } = useAuth();
@@ -30,6 +31,7 @@ export default function DashboardLayout({ role }) {
     { icon: FiMapPin, label: 'Restaurants', path: '/admin/restaurants' },
     { icon: FiCreditCard, label: 'Abonnements', path: '/admin/subscriptions' },
     { icon: FiUsers, label: 'Utilisateurs', path: '/admin/users' },
+    { icon: FiClock, label: 'Rendez-vous', path: '/admin/appointments' },
   ];
 
   const menuItems = role === 'client' ? clientMenu : role === 'restaurant' ? restaurantMenu : adminMenu;
@@ -106,6 +108,7 @@ export default function DashboardLayout({ role }) {
         </nav>
         <div className="p-4 border-t">
           <div className="flex items-center gap-3 px-4 py-3">
+            <NotificationBell />
             <div className="w-8 h-8 rounded-full bg-orange-700 flex items-center justify-center text-white text-sm font-medium">
               {user?.fullname?.[0]?.toUpperCase()}
             </div>
@@ -132,8 +135,11 @@ export default function DashboardLayout({ role }) {
             <FiMenu className="w-6 h-6" />
           </button>
           <Link to="/" className="text-lg font-bold text-forest-700">TOP 360°</Link>
-          <div className="w-10 h-10 rounded-full bg-orange-700 flex items-center justify-center text-white text-sm font-medium">
-            {user?.fullname?.[0]?.toUpperCase()}
+          <div className="flex items-center gap-1">
+            <NotificationBell />
+            <div className="w-10 h-10 rounded-full bg-orange-700 flex items-center justify-center text-white text-sm font-medium">
+              {user?.fullname?.[0]?.toUpperCase()}
+            </div>
           </div>
         </div>
 
